@@ -1,1 +1,69 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @import 'tailwindcss';
+
+body {
+  font-family: 'Pretendard', ui-sans-serif, system-ui, sans-serif;
+  background-color: var(--color-background);
+}
+
+* {
+  line-height: 120% !important;
+}
+
+@theme {
+  /* 디자인시스템 색상표 */
+  --color-custom-black: #222124;
+  --color-custom-gray-900: #383838;
+  --color-custom-gray-800: #494949;
+  --color-custom-gray-700: #5a5a5a;
+  --color-custom-gray-600: #6d6d6d;
+  --color-custom-gray-500: #a8a8a8;
+  --color-custom-gray-400: #c6c6c6;
+  --color-custom-gray-300: #dcdcdc;
+  --color-custom-gray-200: #f2f2f2;
+  --color-custom-gray-100: #f8f8f8;
+  --color-text-primary: #ededed;
+
+  --color-background: #0f0f10;
+  --color-background-surface: #111113;
+  --color-surface-elevated: #18181b;
+  --color-border: #26262a;
+
+  --color-brand-primary: #00ffbf;
+  --color-brand-primary-cta: #57ff85;
+  --color-brand-primary-light: #0fe56e;
+
+  --color-brand-secondary: #9b28ff;
+  --color-brand-secondary-light: #b07bff;
+
+  /* 특수한 색상 */
+  --color-text-primary-gradient: radial-gradient(circle, #dcdcdc 0%, #dcdcdce6 70%, #dcdcdcb3 90%);
+
+  /* 애니메이션 */
+  @keyframes move-right-left {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(12px);
+    }
+  }
+  --animate-wiggle-right: move-right-left 1s ease-in-out infinite;
+}
+
+@layer utilities {
+  .text-primary-gradient {
+    background: var(--color-text-primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
