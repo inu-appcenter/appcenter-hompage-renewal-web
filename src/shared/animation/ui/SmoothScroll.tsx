@@ -1,34 +1,30 @@
 'use client';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [contentHeight, setContentHeight] = useState(0);
-
-  const { scrollY } = useScroll();
-
-  const smoothY = useSpring(scrollY, {
-    stiffness: 10000,
-    damping: 1200,
-    restDelta: 0.01
-  });
-
-  const y = useTransform(smoothY, (value) => -value);
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+    const lenis = new Lenis({
+      duration: 1.2,
+      lerp: 0.1,
+      smoothWheel: true
+    });
+
+    lenisRef.current = lenis;
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
     }
-  }, [children]);
 
-  return (
-    <>
-      <div style={{ height: contentHeight }} />
+    requestAnimationFrame(raf);
 
-      <motion.div ref={contentRef} style={{ y, position: 'fixed', top: 0, left: 0, width: '100%', overflow: 'hidden' }}>
-        {children}
-      </motion.div>
-    </>
-  );
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
+  return <>{children}</>;
 }
