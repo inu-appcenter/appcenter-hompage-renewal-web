@@ -4,7 +4,9 @@ import Link from 'next/link';
 export const LandingSection = () => {
   return (
     <section className="relative flex h-screen flex-col justify-center gap-8">
-      <HomePageBackground />
+      <div className="absolute inset-0 overflow-hidden">
+        <HomePageBackground />
+      </div>
       <h1 className="text-primary-gradient text-[120px] font-normal">
         APP <span className="text-brand-primary-light">CENTER</span>
       </h1>
