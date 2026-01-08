@@ -2,9 +2,9 @@
 import { MoveRight } from 'lucide-react';
 import { Carousel, SectionTitle } from './Components';
 import Image from 'next/image';
-import myImage from 'shared/image/image.jpg';
-import Link from 'next/link';
 import { motion } from 'motion/react';
+import Link from 'next/link';
+import myImage from 'shared/image/image.jpg';
 
 interface Project {
   title: string;
