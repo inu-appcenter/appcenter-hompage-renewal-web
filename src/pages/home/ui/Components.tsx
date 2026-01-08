@@ -2,23 +2,23 @@
 import { useState, useRef } from 'react';
 import { useScroll, useMotionValueEvent } from 'motion/react';
 
-export const SectionTitle = ({ title, description }: { title: string; description: string }) => {
+export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
-    <div className="flex flex-col gap-5">
+    <div className={`flex- flex-row ${className}`}>
+      <h2 className="text-brand-primary-cta text-[80px]/37.5 font-bold">{title}</h2>
+      <p className="text-custom-gray-400 px-2.5 text-[40px]/7">{subtitle}</p>
+    </div>
+  );
+};
+
+export const SectionTitle = ({ title, description, className = '' }: { title: string; description: string; className?: string }) => {
+  return (
+    <div className={`flex flex-col gap-5 ${className}`}>
       <h2 className="text-primary-gradient mb-8 text-[40px] font-normal">
         <span className="text-brand-primary-cta">{title.charAt(0)}</span>
         {title.slice(1)}
       </h2>
       <p className="text-primary-gradient mb-4 text-xl font-semibold">{description}</p>
-    </div>
-  );
-};
-
-export const SectionDetailTitle = ({ title, subtitle }: { title: string; subtitle: string }) => {
-  return (
-    <div>
-      <h2 className="text-brand-primary-cta text-[80px] font-bold">{title}</h2>
-      <p className="text-custom-gray-400 px-2.5 text-[40px]">{subtitle}</p>
     </div>
   );
 };

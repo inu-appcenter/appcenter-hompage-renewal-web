@@ -6,10 +6,6 @@ body {
   background-color: var(--color-background);
 }
 
-* {
-  line-height: 120% !important;
-}
-
 @theme {
   /* 디자인시스템 색상표 */
   --color-custom-black: #222124;

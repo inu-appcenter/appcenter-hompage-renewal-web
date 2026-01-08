@@ -1,5 +1,3 @@
-import { Header } from 'widgets/header';
-import { Footer } from 'widgets/footer';
 import { LandingSection } from './LandingSection';
 import { AboutSection } from './AboutSection';
 import { ProjectSection } from './ProjectSection';
@@ -11,17 +9,13 @@ import { ActivitiesSection } from './ActivitiesSection';
 export const HomePage = () => {
   return (
     <>
-      <Header />
-      <main className="mx-30">
-        <LandingSection />
-        <AboutSection />
-        <ProjectSection />
-        <ActivitySection />
-        <OurTeamSection />
-        <WorkshopSection />
-        <ActivitiesSection />
-      </main>
-      <Footer />
+      <LandingSection />
+      <AboutSection />
+      <ProjectSection />
+      <ActivitySection />
+      <OurTeamSection />
+      <WorkshopSection />
+      <ActivitiesSection />
     </>
   );
 };

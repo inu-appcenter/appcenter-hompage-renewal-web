@@ -21,7 +21,7 @@ export const WorkshopSection = () => {
     <section className="my-20 flex h-screen flex-col gap-16">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
-        <p className="text-primary-gradient w-150 text-xl">
+        <p className="text-primary-gradient w-150 text-xl/7">
           프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에
           대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다.
         </p>
