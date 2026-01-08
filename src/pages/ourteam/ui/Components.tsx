@@ -93,7 +93,7 @@ const SectionDetailTitle = ({ title }: { title: string }) => {
           className="absolute inset-[-200%] z-0 bg-[conic-gradient(from_0deg,transparent_70%,var(--color-brand-secondary)_85%,var(--color-brand-secondary-light)_95%,#ffffff_100%)]"
         />
 
-        <div className="bg-background-surface relative z-10 flex items-center justify-center rounded-[40px] px-10 py-4 transition-colors group-hover:bg-[#1a1a1c]">
+        <div className="bg-background-surface group-hover:bg-surface-elevated relative z-10 flex items-center justify-center rounded-[40px] px-10 py-4 transition-colors">
           <span className="text-primary-gradient text-[28px] font-bold">바로 지원하러 가기</span>
           <span className="ml-2 text-white/60">→</span>
         </div>

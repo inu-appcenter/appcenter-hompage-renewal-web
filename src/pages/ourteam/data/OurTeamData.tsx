@@ -77,8 +77,8 @@ export const OurTeamData: OurTeam[] = [
     icon: <Basic />,
     motionProps: {
       x: ['0%', '36%'],
-      y: ['0%', '780px'],
-      scale: [1, 0.7],
+      y: ['0%', '700px'],
+      scale: [1, 0.8],
       rotate: [-12, 0]
     }
   }

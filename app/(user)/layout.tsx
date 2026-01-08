@@ -1,2 +1,2 @@
-import { UserLayout } from 'app/layout';
+import { UserLayout } from 'app/UserLayout';
 export default UserLayout;

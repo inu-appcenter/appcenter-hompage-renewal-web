@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Header } from 'widgets/header';
-import { Footer } from 'widgets/footer';
 
 export const metadata: Metadata = {
   title: '인천대학교 앱센터',
@@ -26,15 +24,5 @@ export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>
     <html lang="ko">
       <body className="antialiased">{children}</body>
     </html>
-  );
-}
-
-export function UserLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return (
-    <>
-      <Header />
-      <main className="mx-30">{children}</main>
-      <Footer />
-    </>
   );
 }
