@@ -8,17 +8,17 @@ export const IntroduceSection = () => {
   const [selected, setSelected] = useState(0);
 
   return (
-    <section className="flex h-screen flex-col items-center justify-center gap-10">
-      <div className="relative flex flex-row gap-10">
+    <section className="mx-20 flex h-screen flex-col items-center justify-center gap-10">
+      <div className="relative flex flex-row gap-30">
         {TABS.map((tab, index) => (
           <SelectButton key={index} text={tab} isSelected={selected === index} onClick={() => setSelected(index)} />
         ))}
       </div>
 
-      <div className="bg-custom-black flex h-118.5 w-380 items-center justify-center overflow-hidden rounded-2xl px-28 py-11.5 text-5xl text-white">
+      <div className="bg-custom-black flex h-118.5 w-full items-center justify-center overflow-hidden rounded-2xl px-28 py-11.5 text-5xl whitespace-pre-line text-white">
         <AnimatePresence mode="wait">
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-            {selected === 0 && '백엔드 생기면 넣을 예정1'}
+            {selected === 0 && '백엔드 생기면 넣을 예정1\n 아래 사진과 글을 자유롭게 움직이고 줄여보세요'}
             {selected === 1 && '백엔드 생기면 넣을 예정2'}
             {selected === 2 && '백엔드 생기면 넣을 예정3'}
           </motion.div>

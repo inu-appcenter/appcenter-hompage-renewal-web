@@ -1,3 +1,4 @@
+import { GridSection } from './GridSection';
 import { IntroduceSection } from './IntroduceSection';
 import { MainSection } from './MainSection';
 
@@ -6,6 +7,7 @@ export const ProjectDetailPage = () => {
     <>
       <MainSection />
       <IntroduceSection />
+      <GridSection />
     </>
   );
 };
