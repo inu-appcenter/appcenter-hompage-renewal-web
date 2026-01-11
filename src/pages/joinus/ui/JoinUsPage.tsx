@@ -1,3 +1,13 @@
+import { ApplySection } from './ApplySection';
+import { DescriptionSection } from './DescriptionSection';
+import { MainSection } from './MainSection';
+
 export const JoinUsPage = () => {
-  return <div>Join Us Page</div>;
+  return (
+    <>
+      <MainSection />
+      <ApplySection />
+      <DescriptionSection />
+    </>
+  );
 };

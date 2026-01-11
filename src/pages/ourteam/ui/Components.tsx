@@ -35,12 +35,7 @@ export const PartDescriptionSection = ({
           </motion.div>
         </div>
         <div className="bg-surface-elevated relative flex w-full rounded-2xl px-15 py-15">
-          <div
-            className="pointer-events-none absolute inset-0 z-50"
-            style={{
-              background: 'linear-gradient(to top, rgba(17, 17, 19, 0.6) 0%, rgba(17, 17, 19, 0) 47%)'
-            }}
-          />
+          <div className="from-background-surface/60 to-background-surface/0 pointer-events-none absolute inset-0 z-50 bg-linear-to-t to-47%" />
           <div className="space-y-20 pt-10">
             <Hello />
             <p className="text-primary-gradient text-7xl/23 font-bold">
