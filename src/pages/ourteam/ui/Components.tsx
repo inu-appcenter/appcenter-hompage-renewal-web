@@ -80,7 +80,7 @@ const SectionDetailTitle = ({ title }: { title: string }) => {
   return (
     <div className="flex flex-1 flex-col gap-9">
       <h2 className="text-brand-primary-cta text-[120px]/[1] font-bold">{title}</h2>
-      <Link href="/link" className="group relative inline-block w-fit overflow-hidden rounded-[40px] bg-white/10 p-[1.5px]">
+      <Link href="/joinus" className="group relative inline-block w-fit overflow-hidden rounded-[40px] bg-white/10 p-[1.5px]">
         <motion.div
           animate={{
             rotate: [0, 360]
