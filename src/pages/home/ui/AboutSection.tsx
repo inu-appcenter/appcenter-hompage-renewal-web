@@ -10,7 +10,7 @@ export const AboutSection = () => {
   ];
 
   return (
-    <section className="bg-background-surface relative flex h-screen flex-col justify-center gap-17">
+    <section className="relative flex h-screen flex-col justify-center gap-17">
       <SectionTitle title="about" description="앱센터에 대한 간단한 설명이 있었으면 좋겠어요" />
       <ul className="flex flex-row justify-between gap-20">
         {aboutData.map((data, index) => (
