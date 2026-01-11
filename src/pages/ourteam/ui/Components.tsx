@@ -35,12 +35,7 @@ export const PartDescriptionSection = ({
           </motion.div>
         </div>
         <div className="bg-surface-elevated relative flex w-full rounded-2xl px-15 py-15">
-          <div
-            className="pointer-events-none absolute inset-0 z-50"
-            style={{
-              background: 'linear-gradient(to top, rgba(17, 17, 19, 0.6) 0%, rgba(17, 17, 19, 0) 47%)'
-            }}
-          />
+          <div className="from-background-surface/60 to-background-surface/0 pointer-events-none absolute inset-0 z-50 bg-linear-to-t to-47%" />
           <div className="space-y-20 pt-10">
             <Hello />
             <p className="text-primary-gradient text-7xl/23 font-bold">
@@ -80,7 +75,7 @@ const SectionDetailTitle = ({ title }: { title: string }) => {
   return (
     <div className="flex flex-1 flex-col gap-9">
       <h2 className="text-brand-primary-cta text-[120px]/[1] font-bold">{title}</h2>
-      <Link href="/link" className="group relative inline-block w-fit overflow-hidden rounded-[40px] bg-white/10 p-[1.5px]">
+      <Link href="/joinus" className="group relative inline-block w-fit overflow-hidden rounded-[40px] bg-white/10 p-[1.5px]">
         <motion.div
           animate={{
             rotate: [0, 360]

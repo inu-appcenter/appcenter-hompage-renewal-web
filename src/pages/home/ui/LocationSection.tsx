@@ -16,7 +16,8 @@ export const LocationSection = () => {
 
       <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
         <div className="relative h-150 flex-1 overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
-          <Map center={POSITION} style={{ width: '100%', height: '100%' }} level={3}>
+          {/* data-lenis-prevent : Lenis 스크롤링 제외 */}
+          <Map data-lenis-prevent center={POSITION} style={{ width: '100%', height: '100%' }} level={3}>
             <CustomOverlayMap position={POSITION}>
               <div className="relative flex flex-col items-center">
                 <div className="bg-brand-primary-cta mb-2 rounded-lg px-4 py-2 shadow-lg ring-1 ring-black/5">

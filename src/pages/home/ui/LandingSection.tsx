@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const LandingSection = () => {
   return (
     <section className="relative flex h-screen flex-col justify-center gap-8">
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="absolute inset-0 -z-10 overflow-hidden">
         <HomePageBackground />
       </div>
       <h1 className="text-primary-gradient text-[120px] font-normal">
@@ -14,7 +14,7 @@ export const LandingSection = () => {
       <p className="text-primary-gradient text-xl font-semibold whitespace-pre-line">
         {'인천대학교 학생들이 애플리케이션과 서비스를 직접 만드는 공간입니다.\n활동에 필요한 비용의 일부를 소속 기관으로부터 지원받고 있습니다.'}
       </p>
-      <Link className="border-custom-gray-100 text-custom-black bg-brand-primary-light w-fit rounded-[60px] border px-8 py-4 text-xl font-semibold shadow-[0_0_48px_0_#00FFBF99]" href="#">
+      <Link className="border-custom-gray-100 text-custom-black bg-brand-primary-light w-fit rounded-[60px] border px-8 py-4 text-xl font-semibold shadow-[0_0_48px_0_#00FFBF99]" href="/joinus">
         앱센터 모집 지원하러 가기
       </Link>
     </section>
