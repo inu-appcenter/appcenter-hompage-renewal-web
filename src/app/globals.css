@@ -6,6 +6,9 @@ body {
   background-color: var(--color-background);
 }
 
+button {
+  cursor: pointer;
+}
 @theme {
   /* 디자인시스템 색상표 */
   --color-custom-black: #222124;

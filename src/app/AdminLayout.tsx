@@ -1,72 +1,68 @@
 'use client';
-import { Users, Layout as ProjectIcon, ImageIcon, MessageCircle, LogOut, ChevronRight, Activity, Loader2 } from 'lucide-react';
-import { usePathname } from 'next/navigation';
-import { useLogout } from 'features/login';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { AdminLogoutButton } from 'features/sign';
 
-const menuGroups = [
-  {
-    group: '동아리 관리',
-    items: [
-      { name: '동아리원 관리', href: '/admin/members', icon: <Users size={18} /> },
-      { name: '기수 관리', href: '/admin/generations', icon: <Activity size={18} /> },
-      { name: '역할 관리', href: '/admin/roles', icon: <ChevronRight size={18} /> }
-    ]
-  },
-  {
-    group: '콘텐츠 관리',
-    items: [
-      { name: '프로젝트 관리', href: '/admin/projects', icon: <ProjectIcon size={18} /> },
-      { name: '사진게시판 관리', href: '/admin/gallery', icon: <ImageIcon size={18} /> },
-      { name: '질문 관리 (FAQ)', href: '/admin/faq', icon: <MessageCircle size={18} /> }
-    ]
-  }
-];
+import { Logo } from 'shared/icon/Logo';
+import { ADMIN_MENU } from 'shared/constants/adminMenu';
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { handleLogout, isLoggingOut } = useLogout();
   const pathname = usePathname();
 
   return (
     <div className="flex min-h-screen bg-[#F8F9FA]">
       <aside className="fixed inset-y-0 left-0 w-64 border-r border-slate-200 bg-white px-4 py-8">
         <div className="mb-10 flex items-center gap-2 px-4 text-xl font-bold tracking-tight">
-          <div className="h-7 w-7 rounded-lg bg-slate-900" />
-          <span>AppCenter</span>
+          <Link href="/admin/home">
+            <Logo className="h-7 w-7" />
+          </Link>
         </div>
-        <nav className="space-y-8">
-          {menuGroups.map((group) => (
-            <div key={group.group}>
-              <p className="mb-3 px-4 text-[11px] font-bold tracking-wider text-slate-400 uppercase">{group.group}</p>
+
+        <nav className="space-y-6">
+          {ADMIN_MENU.map((item) => (
+            <div key={item.group}>
+              <p className="mb-3 px-4 text-[11px] font-bold tracking-wider text-slate-400 uppercase">{item.group}</p>
+
               <div className="space-y-1">
-                {group.items.map((item) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all ${
-                        isActive ? 'bg-slate-900 text-white shadow-lg shadow-slate-200' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
-                      }`}
-                    >
-                      {item.icon}
-                      {item.name}
-                    </Link>
-                  );
-                })}
+                {item.subMenu
+                  ? // 서브메뉴가 있는 경우 (동아리 관리 등)
+                    item.subMenu.map((sub) => {
+                      const isActive = pathname === sub.href;
+                      return (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all ${
+                            isActive ? 'bg-slate-900 text-white shadow-lg shadow-slate-200' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                          }`}
+                        >
+                          <sub.icon size={18} />
+                          {sub.name}
+                        </Link>
+                      );
+                    })
+                  : // 서브메뉴가 없는 단일 항목인 경우
+                    (() => {
+                      const isActive = pathname === item.path;
+                      return (
+                        <Link
+                          href={item.path}
+                          className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all ${
+                            isActive ? 'bg-slate-900 text-white shadow-lg shadow-slate-200' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
+                          }`}
+                        >
+                          <item.icon size={18} />
+                          {item.group}
+                        </Link>
+                      );
+                    })()}
               </div>
             </div>
           ))}
         </nav>
+
         <div className="absolute right-4 bottom-8 left-4">
-          <button
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-500 transition-colors hover:bg-red-50 disabled:opacity-50"
-          >
-            {isLoggingOut ? <Loader2 size={18} className="animate-spin" /> : <LogOut size={18} />}
-            {isLoggingOut ? 'Logging out...' : 'Logout'}
-          </button>
+          <AdminLogoutButton />
         </div>
       </aside>
 

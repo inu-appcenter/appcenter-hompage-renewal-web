@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export function useLogout() {
+export function useAdminLogout() {
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
