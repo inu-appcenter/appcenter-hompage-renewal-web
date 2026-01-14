@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { LandingSection } from './LandingSection';
 import { AboutSection } from './AboutSection';
 import { ProjectSection } from './ProjectSection';
@@ -10,7 +11,7 @@ import { LocationSection } from './LocationSection';
 
 export const HomePage = () => {
   return (
-    <>
+    <Suspense>
       <LandingSection />
       <AboutSection />
       <ProjectSection />
@@ -20,6 +21,6 @@ export const HomePage = () => {
       <ActivitiesSection />
       <FAQSection />
       <LocationSection />
-    </>
+    </Suspense>
   );
 };
