@@ -4,16 +4,16 @@ import { ChevronDown, CornerDownRight } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Faq } from 'entities/faq';
 
-const CATEGORY = ['Common', 'Android', 'Design', 'iOS', 'Web', 'Server', 'Basic'] as const;
-type Category = (typeof CATEGORY)[number];
+import { PART } from 'shared/constants/part';
+import { Part } from 'shared/types/part';
 
 export const FAQList = ({ data }: { data: Faq[] }) => {
-  const [selectedCategory, setSelectedCategory] = useState<Category>('Common');
+  const [selectedCategory, setSelectedCategory] = useState<Part>('Common');
 
   return (
     <div className="flex flex-row gap-16">
       <div className="flex flex-col gap-13">
-        {CATEGORY.map((category) => (
+        {PART.map((category) => (
           <button
             key={category}
             className={`cursor-pointer rounded-2xl text-2xl font-bold transition-all duration-300 ${selectedCategory === category ? 'text-brand-primary-cta' : 'text-primary-gradient hover:text-brand-primary-light'}`}
@@ -32,7 +32,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
   );
 };
 
-const FAQItem = ({ data, category }: { data: Faq; category: Category }) => {
+const FAQItem = ({ data, category }: { data: Faq; category: Part }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   if (data.part !== category) return null;
