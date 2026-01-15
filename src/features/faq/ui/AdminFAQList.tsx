@@ -7,37 +7,39 @@ import { PART, PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
 
 import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
+import { useFAQs } from '../hooks/useFAQActions';
 
 export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
+  const { data } = useFAQs(initialData);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPart, setSelectedPart] = useState<Part | 'All'>('All');
 
   const filterOptions: Array<Part | 'All'> = ['All', ...PART];
 
   const filteredFaqs = useMemo(() => {
-    return initialData.filter((faq) => {
+    return data.filter((faq) => {
       const matchesSearch = faq.question.toLowerCase().includes(searchTerm.toLowerCase()) || faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPart = selectedPart === 'All' || faq.part === selectedPart;
       return matchesSearch && matchesPart;
     });
-  }, [searchTerm, selectedPart, initialData]);
+  }, [searchTerm, selectedPart, data]);
 
   return (
     <>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-4 rounded-3xl border border-slate-200 bg-white p-2 shadow-sm">
-          <div className="flex items-center gap-1 rounded-2xl bg-slate-50 p-1">
+        <div className="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
+          <div className="flex items-center gap-1 rounded-xl bg-slate-50 p-1">
             {filterOptions.map((part) => (
               <button
                 key={part}
                 onClick={() => setSelectedPart(part)}
-                className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${selectedPart === part ? `${PART_COLORS[part]?.bg} ${PART_COLORS[part]?.text} shadow-sm` : 'text-slate-400'}`}
+                className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${selectedPart === part ? `${PART_COLORS[part]?.bg} ${PART_COLORS[part]?.text} shadow-sm` : 'text-slate-400'}`}
               >
                 {part}
               </button>
             ))}
           </div>
-          <div className="relative flex-1 rounded-2xl border border-slate-200 bg-slate-50">
+          <div className="relative flex-1 rounded-xl border border-slate-200 bg-slate-50">
             <Search className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-300" size={16} />
             <input
               type="text"
@@ -51,7 +53,7 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
         <AddFAQForm />
       </div>
 
-      <div className="overflow-hidden rounded-4xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         <table className="w-full table-fixed border-collapse text-left text-sm">
           <thead className="border-b border-slate-100 bg-slate-50/50">
             <tr>

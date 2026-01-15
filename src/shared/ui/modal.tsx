@@ -33,7 +33,7 @@ export const Modal = ({ trigger, children, title }: ModalProps) => {
 
   const modalContent = (
     <div className="fixed inset-0 z-9999 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-xs" onClick={handleClose}>
-      <div className="animate-in zoom-in relative w-full max-w-xl rounded-4xl bg-white p-10 shadow-2xl duration-200" onClick={(e) => e.stopPropagation()}>
+      <div className="animate-in zoom-in relative w-full max-w-xl rounded-2xl bg-white p-10 shadow-2xl duration-200" onClick={(e) => e.stopPropagation()}>
         <div className="mb-8 flex items-center justify-between">
           {title && <h3 className="text-2xl font-bold text-slate-900">{title}</h3>}
           <button onClick={handleClose} className="absolute top-6 right-6 rounded-xl p-2 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-900">

@@ -17,7 +17,7 @@ export function Breadcrumbs() {
   return (
     <>
       <div className="mb-8">
-        <Link href="/admin" className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-slate-900">
+        <Link href="/admin/home" className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-400 transition-colors hover:text-slate-900">
           <ArrowLeft size={16} />
           대시보드로 돌아가기
         </Link>

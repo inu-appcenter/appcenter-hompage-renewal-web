@@ -1,20 +1,26 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleProxy(req, params.path);
+type RouteParams = { params: Promise<{ path: string[] }> };
+
+export async function GET(req: NextRequest, { params }: RouteParams) {
+  const { path } = await params;
+  return handleProxy(req, path);
 }
 
-export async function POST(req: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleProxy(req, params.path);
+export async function POST(req: NextRequest, { params }: RouteParams) {
+  const { path } = await params;
+  return handleProxy(req, path);
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleProxy(req, params.path);
+export async function PATCH(req: NextRequest, { params }: RouteParams) {
+  const { path } = await params;
+  return handleProxy(req, path);
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { path: string[] } }) {
-  return handleProxy(req, params.path);
+export async function DELETE(req: NextRequest, { params }: RouteParams) {
+  const { path } = await params;
+  return handleProxy(req, path);
 }
 
 async function handleProxy(req: NextRequest, pathSegments: string[]) {
@@ -25,7 +31,6 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
   const cookieStore = await cookies();
   const token = cookieStore.get('admin_access_token')?.value;
 
-  // 1. 요청 바디 추출
   let body: any = null;
   if (!['GET', 'HEAD'].includes(req.method)) {
     try {

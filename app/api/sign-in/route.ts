@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     cookieStore.set('admin_access_token', data.token[0], {
       httpOnly: true,
       sameSite: 'strict',
+      secure: true,
       path: '/'
     });
 

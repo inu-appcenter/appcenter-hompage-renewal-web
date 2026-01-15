@@ -8,3 +8,9 @@ export interface Faq {
   createDate: string;
   lastModifiedDate: string;
 }
+
+export interface FAQForm {
+  part: Part;
+  question: string;
+  answer: string;
+}

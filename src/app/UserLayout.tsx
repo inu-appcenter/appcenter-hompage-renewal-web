@@ -1,4 +1,4 @@
-import { SmoothScroll } from 'shared/animation/ui/SmoothScroll';
+import { SmoothScroll } from 'shared/animation/SmoothScroll';
 import { Footer } from 'widgets/footer';
 import { Header } from 'widgets/header';
 

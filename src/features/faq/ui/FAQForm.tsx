@@ -1,17 +1,22 @@
+'use client';
+
 import { useState } from 'react';
-import { Pencil, Plus, Save, Trash2 } from 'lucide-react';
-import { Faq } from 'entities/faq';
+import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
+import type { Faq, FAQForm as FAQFormType } from 'entities/faq';
+import { useFAQActions } from '../hooks/useFAQActions';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
 import type { Part } from 'shared/types/part';
 import { Modal } from 'shared/ui/modal';
 
 export const AddFAQForm = () => {
+  const { addMutation } = useFAQActions();
+
   return (
     <Modal
       title="FAQ 질문 등록"
       trigger={
-        <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 text-sm font-bold text-white transition-all hover:bg-emerald-600">
+        <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 font-bold text-white transition-all hover:bg-emerald-600">
           <Plus size={18} /> 새 질문 등록
         </button>
       }
@@ -19,8 +24,9 @@ export const AddFAQForm = () => {
       {(close) => (
         <FAQForm
           initialPart="Common"
-          onSubmit={(data) => {
-            console.log(data);
+          isPending={addMutation.isPending}
+          onSubmit={async (data) => {
+            await addMutation.mutateAsync(data);
             close();
           }}
         />
@@ -29,7 +35,10 @@ export const AddFAQForm = () => {
   );
 };
 
+// --- 2. 수정 버튼 ---
 export const EditFAQForm = ({ data }: { data: Faq }) => {
+  const { editMutation } = useFAQActions();
+
   return (
     <Modal
       title="FAQ 질문 수정"
@@ -42,8 +51,9 @@ export const EditFAQForm = ({ data }: { data: Faq }) => {
       {(close) => (
         <FAQForm
           initialData={data}
-          onSubmit={(data) => {
-            console.log(data);
+          isPending={editMutation.isPending}
+          onSubmit={async (formData) => {
+            await editMutation.mutateAsync({ id: data.id, data: formData });
             close();
           }}
         />
@@ -52,21 +62,26 @@ export const EditFAQForm = ({ data }: { data: Faq }) => {
   );
 };
 
+// --- 3. 삭제 버튼 ---
 export const DeleteFAQButton = ({ faqId }: { faqId: number }) => {
+  const { deleteMutation } = useFAQActions();
+
+  const handleDelete = () => {
+    if (confirm('정말 삭제하시겠습니까?')) {
+      deleteMutation.mutate(faqId);
+    }
+  };
+
   return (
-    <button className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500" onClick={() => console.log(`Delete FAQ with ID: ${faqId}`)}>
-      <Trash2 size={16} />
+    <button disabled={deleteMutation.isPending} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 disabled:opacity-50" onClick={handleDelete}>
+      {deleteMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
     </button>
   );
 };
 
-interface FAQForm {
-  part: Part;
-  question: string;
-  answer: string;
-}
-const FAQForm = ({ initialData, initialPart, onSubmit }: { initialData?: Faq; initialPart?: Part; onSubmit: (data: FAQForm) => void }) => {
-  const [formData, setFormData] = useState({
+// --- 4. 공통 폼 컴포넌트 ---
+const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialData?: Faq; initialPart?: Part; onSubmit: (data: FAQFormType) => void; isPending: boolean }) => {
+  const [formData, setFormData] = useState<FAQFormType>({
     part: initialData?.part || initialPart || 'Common',
     question: initialData?.question || '',
     answer: initialData?.answer || ''
@@ -80,8 +95,11 @@ const FAQForm = ({ initialData, initialPart, onSubmit }: { initialData?: Faq; in
           {PART.map((p) => (
             <button
               key={p}
+              disabled={isPending}
               onClick={() => setFormData({ ...formData, part: p })}
-              className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${formData.part === p ? `${PART_COLORS[p]?.bg} ${PART_COLORS[p]?.text}` : 'bg-slate-50 text-slate-400'}`}
+              className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${
+                formData.part === p ? `${PART_COLORS[p]?.bg} ${PART_COLORS[p]?.text}` : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
+              } disabled:opacity-50`}
             >
               {p}
             </button>
@@ -89,19 +107,26 @@ const FAQForm = ({ initialData, initialPart, onSubmit }: { initialData?: Faq; in
         </div>
       </div>
       <input
-        className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20"
+        disabled={isPending}
+        className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
         placeholder="질문 내용"
         value={formData.question}
         onChange={(e) => setFormData({ ...formData, question: e.target.value })}
       />
       <textarea
-        className="min-h-35 w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20"
+        disabled={isPending}
+        className="min-h-35 w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
         placeholder="답변 내용"
         value={formData.answer}
         onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
       />
-      <button onClick={() => onSubmit(formData)} className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600">
-        <Save size={18} /> {initialData ? '변경사항 저장' : '데이터베이스에 저장'}
+      <button
+        disabled={isPending || !formData.question || !formData.answer}
+        onClick={() => onSubmit(formData)}
+        className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
+      >
+        {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+        {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '데이터베이스에 저장'}
       </button>
     </div>
   );

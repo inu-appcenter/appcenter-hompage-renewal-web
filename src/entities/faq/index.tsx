@@ -1,2 +1,2 @@
 export { getFaqs } from './api/getFaqs';
-export type { Faq } from './types/faq';
+export type { Faq, FAQForm } from './types/faq';

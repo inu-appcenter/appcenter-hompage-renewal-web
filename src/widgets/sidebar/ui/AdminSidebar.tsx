@@ -1,11 +1,12 @@
 'use client';
 import { useState } from 'react';
-import Link from 'next/link';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
+
 import { AdminLogoutButton } from 'features/sign';
 import { Logo } from 'shared/icon/Logo';
 import { ADMIN_MENU } from 'shared/constants/adminMenu';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export function AdminSidebar() {
   const pathname = usePathname();
@@ -24,7 +25,6 @@ export function AdminSidebar() {
         <Link href="/admin/home">
           <Logo className="h-7 w-7" />
         </Link>
-        {!isCollapsed && <span className="truncate">Admin</span>}
       </div>
 
       <nav className="space-y-6">

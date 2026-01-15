@@ -1,8 +1,10 @@
 import { Part } from 'shared/types/part';
 
+// 파트를 추가하게 될 경우 여기에 추가해주세요.
 export const PART = ['Common', 'Android', 'Design', 'iOS', 'Web', 'Server', 'Basic'] as const;
 
-export const PART_COLORS: Record<Part | 'All', { bg: string; text: string }> = {
+// 색상은 관리자 페이지에만 적용됩니다.
+export const PART_COLORS: Record<Part | 'All', { bg: `bg-${string}`; text: `text-${string}` }> = {
   Common: { bg: 'bg-indigo-100', text: 'text-indigo-700' },
   Android: { bg: 'bg-green-100', text: 'text-green-700' },
   Design: { bg: 'bg-purple-100', text: 'text-purple-700' },
