@@ -59,10 +59,10 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
             <tr>
               <th className="w-25 px-8 py-5 font-bold text-slate-400 uppercase">ID</th>
 
-              <th className="w-30 px-6 py-5 font-bold text-slate-400 uppercase">Part</th>
-              <th className="px-6 py-5 font-bold text-slate-400 uppercase">Question & Answer</th>
+              <th className="w-30 px-6 py-5 font-bold text-slate-400 uppercase">파트명</th>
+              <th className="px-6 py-5 font-bold text-slate-400 uppercase">질문 및 답변</th>
 
-              <th className="w-35 px-6 py-5 text-right font-bold text-slate-400 uppercase">Actions</th>
+              <th className="w-35 px-6 py-5 text-right font-bold text-slate-400 uppercase">작업</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">

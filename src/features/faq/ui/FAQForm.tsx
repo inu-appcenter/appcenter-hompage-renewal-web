@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
-import type { Faq, FAQForm as FAQFormType } from 'entities/faq';
+import type { Faq, FAQForm } from 'entities/faq';
 import { useFAQActions } from '../hooks/useFAQActions';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
@@ -80,8 +80,8 @@ export const DeleteFAQButton = ({ faqId }: { faqId: number }) => {
 };
 
 // --- 4. 공통 폼 컴포넌트 ---
-const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialData?: Faq; initialPart?: Part; onSubmit: (data: FAQFormType) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<FAQFormType>({
+const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialData?: Faq; initialPart?: Part; onSubmit: (data: FAQForm) => void; isPending: boolean }) => {
+  const [formData, setFormData] = useState<FAQForm>({
     part: initialData?.part || initialPart || 'Common',
     question: initialData?.question || '',
     answer: initialData?.answer || ''

@@ -1,3 +1,8 @@
-export const PageTitle = ({ title }: { title: string }) => {
-  return <h2 className="mb-10 text-4xl font-extrabold tracking-tight">{title}</h2>;
+export const PageTitle = ({ title, description }: { title: string; description: string }) => {
+  return (
+    <>
+      <h2 className="mb-2 text-4xl font-extrabold tracking-tight">{title}</h2>
+      <p className="text-md mt-1 mb-6 text-slate-500">{description}</p>
+    </>
+  );
 };
