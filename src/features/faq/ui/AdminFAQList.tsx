@@ -8,6 +8,7 @@ import { Part } from 'shared/types/part';
 
 import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
 import { useFAQs } from '../hooks/useFAQActions';
+import { EmptyResult } from 'shared/error/EmptyResult';
 
 export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
   const { data } = useFAQs(initialData);
@@ -69,13 +70,7 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
             {filteredFaqs.map((faq) => (
               <Item key={faq.id} faq={faq} />
             ))}
-            {filteredFaqs.length === 0 && (
-              <tr>
-                <td colSpan={4} className="px-6 py-10 text-center text-sm text-slate-400">
-                  검색 결과가 없습니다.
-                </td>
-              </tr>
-            )}
+            {filteredFaqs.length === 0 && <EmptyResult />}
           </tbody>
         </table>
       </div>

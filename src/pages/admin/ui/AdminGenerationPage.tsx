@@ -1,3 +1,9 @@
+import { PageTitle } from './Components';
+
 export const AdminGenerationPage = () => {
-  return <div>Admin Generations Page</div>;
+  return (
+    <>
+      <PageTitle title="기수 관리" description="기수의 정보를 관리합니다." />
+    </>
+  );
 };

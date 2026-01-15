@@ -1,15 +1,14 @@
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import type { Role, RoleForm } from 'entities/role';
 
-export const useRoles = (initialData: Role[]) => {
-  return useQuery<Role[]>({
+export const useRoles = () => {
+  return useSuspenseQuery<Role[]>({
     queryKey: ['roles'],
     queryFn: async () => {
       const res = await fetch('/api/roles/all-roles');
       if (!res.ok) throw new Error('불러오기 실패');
       return res.json();
-    },
-    initialData: initialData
+    }
   });
 };
 

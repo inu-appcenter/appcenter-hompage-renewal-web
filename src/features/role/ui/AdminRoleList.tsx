@@ -1,17 +1,11 @@
 'use client';
-import { Role } from 'entities/role';
-import { Calendar, Search, ShieldCheck } from 'lucide-react';
+import { Calendar, ShieldCheck } from 'lucide-react';
 import { useRoles } from '../hooks/useRoleActions';
 import { AddRoleForm, DeleteRoleButton, EditRoleForm } from './RoleForm';
+import { EmptyResult } from 'shared/error/EmptyResult';
 
-const INITIAL_ROLES: Role[] = [
-  { roleId: 1, roleName: '센터장', createdDate: '2024-02-13T23:53:03', lastModifiedDate: '2024-02-13T23:53:03' },
-  { roleId: 2, roleName: '파트장', createdDate: '2024-02-13T23:53:07', lastModifiedDate: '2024-02-13T23:53:07' },
-  { roleId: 3, roleName: '파트원', createdDate: '2024-02-13T23:53:10', lastModifiedDate: '2024-02-13T23:53:10' },
-  { roleId: 7, roleName: '앱센터리뉴얼', createdDate: '2024-12-18T05:13:39', lastModifiedDate: '2024-12-18T05:13:39' }
-];
 export const AdminRoleList = () => {
-  const { data } = useRoles(INITIAL_ROLES);
+  const { data } = useRoles();
 
   return (
     <div className="flex flex-col items-end gap-6">
@@ -21,10 +15,8 @@ export const AdminRoleList = () => {
           <thead className="border-b border-slate-100 bg-slate-50/80">
             <tr>
               <th className="w-25 px-8 py-5 font-bold text-slate-400 uppercase">ID</th>
-
               <th className="px-6 py-5 font-bold text-slate-400 uppercase">역할명</th>
               <th className="w-80 px-6 py-5 font-bold text-slate-400 uppercase">업데이트 일자</th>
-
               <th className="w-35 px-6 py-5 text-right font-bold text-slate-400 uppercase">작업</th>
             </tr>
           </thead>
@@ -57,18 +49,7 @@ export const AdminRoleList = () => {
               </tr>
             ))}
 
-            {data.length === 0 && (
-              <tr>
-                <td colSpan={4} className="px-6 py-24 text-center">
-                  <div className="flex flex-col items-center justify-center">
-                    <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-slate-50">
-                      <Search className="text-slate-300" size={24} />
-                    </div>
-                    <p className="font-medium text-slate-500">역할이 없습니다. 추가해보세요.</p>
-                  </div>
-                </td>
-              </tr>
-            )}
+            {data.length === 0 && <EmptyResult />}
           </tbody>
         </table>
       </div>
