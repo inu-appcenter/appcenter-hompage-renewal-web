@@ -26,39 +26,39 @@ export async function DELETE(req: NextRequest, { params }: RouteParams) {
 async function handleProxy(req: NextRequest, pathSegments: string[]) {
   const path = pathSegments?.join('/') || '';
   const searchParams = req.nextUrl.search;
-  const backendUrl = `${process.env.API_URL}/${path}${searchParams}`;
 
   const cookieStore = await cookies();
   const token = cookieStore.get('admin_access_token')?.value;
 
-  let body: any = null;
-  if (!['GET', 'HEAD'].includes(req.method)) {
-    try {
-      body = await req.text();
-    } catch (e) {
-      console.error('Request body read error:', e);
-    }
+  const headers = new Headers();
+  const contentType = req.headers.get('content-type');
+
+  if (contentType) {
+    headers.set('content-type', contentType);
   }
+  headers.set('X-AUTH-TOKEN', token || '');
+  headers.set('Accept', 'application/json');
 
   try {
-    const response = await fetch(backendUrl, {
+    const fetchOptions: RequestInit = {
       method: req.method,
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'X-AUTH-TOKEN': token || ''
-      },
-      body: body
-    });
-
-    if (response.status === 204) {
-      return new NextResponse(null, { status: 204 });
+      headers: headers
+    };
+    if (!['GET', 'HEAD'].includes(req.method)) {
+      const arrayBuffer = await req.arrayBuffer();
+      fetchOptions.body = arrayBuffer;
+      // @ts-expect-error
+      fetchOptions.duplex = 'half';
     }
 
-    const data = await response.json();
-    return NextResponse.json(data, { status: response.status });
+    const response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);
+
+    if (response.status === 204) return new NextResponse(null, { status: 204 });
+
+    const resData = await response.json();
+    return NextResponse.json(resData, { status: response.status });
   } catch (error) {
-    console.error('BFF Proxy Error:', error);
-    return NextResponse.json({ message: '서버 응답 처리 중 오류가 발생했습니다.' }, { status: 500 });
+    console.error('BFF Error:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
