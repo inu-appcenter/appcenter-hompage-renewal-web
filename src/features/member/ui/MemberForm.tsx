@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2, Phone, Mail, User, GraduationCap, Github, Palette, LinkIcon, FileText, Camera, X, Hash } from 'lucide-react';
 
 import { Modal } from 'shared/ui/modal';
-import { useMemberActions } from '../hooks/useMemberActions';
+import { useMemberActions } from 'entities/member';
 import type { Member, MemberForm } from 'entities/member';
 
 export const AddMemberForm = () => {
@@ -13,7 +13,7 @@ export const AddMemberForm = () => {
     <Modal
       title="동아리원 등록"
       trigger={
-        <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 font-bold text-white transition-all hover:bg-emerald-600">
+        <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
           <Plus size={18} /> 새 동아리원 등록
         </button>
       }
@@ -134,7 +134,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
               disabled={isPending}
               className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm font-semibold outline-none focus:ring-2 focus:ring-slate-900/10"
               placeholder="이름 (필수)"
-              value={formData.name}
+              value={formData.name || ''}
               onChange={(e) => handleChange('name', e.target.value)}
             />
           </div>
@@ -169,8 +169,8 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
             <Hash className="absolute top-2.5 left-4 text-slate-300" size={16} />
             <input
               disabled={isPending}
-              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm outline-none focus:ring-2 focus:ring-slate-900/10"
-              placeholder="학번"
+              className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm font-semibold outline-none focus:ring-2 focus:ring-slate-900/10"
+              placeholder="학번 (필수)"
               value={formData.studentNumber || ''}
               onChange={(e) => handleChange('studentNumber', e.target.value)}
             />

@@ -1,14 +1,15 @@
 'use client';
 import { useState, useMemo } from 'react';
-import { Search } from 'lucide-react';
-import { Faq } from 'entities/faq';
+import type { Faq } from 'entities/faq';
+import { useFAQs } from 'entities/faq';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
 
 import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
-import { useFAQs } from '../hooks/useFAQActions';
 import { EmptyResult } from 'shared/error/EmptyResult';
+import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
+import { SearchBar } from 'shared/ui/searchbar';
 
 export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
   const { data } = useFAQs(initialData);
@@ -28,71 +29,54 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
   return (
     <>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-1 items-center gap-4 rounded-2xl border border-slate-200 bg-white p-2 shadow-sm">
-          <div className="flex items-center gap-1 rounded-xl bg-slate-50 p-1">
-            {filterOptions.map((part) => (
-              <button
-                key={part}
-                onClick={() => setSelectedPart(part)}
-                className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${selectedPart === part ? `${PART_COLORS[part]?.bg} ${PART_COLORS[part]?.text} shadow-sm` : 'text-slate-400'}`}
-              >
-                {part}
-              </button>
-            ))}
-          </div>
-          <div className="relative flex-1 rounded-xl border border-slate-200 bg-slate-50">
-            <Search className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-300" size={16} />
-            <input
-              type="text"
-              placeholder="검색어 입력..."
-              className="w-full bg-transparent py-2 pl-10 text-sm focus:outline-none"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
+        <div className="flex items-center gap-1 rounded-xl bg-slate-50 p-1">
+          {filterOptions.map((part) => (
+            <button
+              key={part}
+              onClick={() => setSelectedPart(part)}
+              className={`rounded-lg px-4 py-2 text-xs font-bold transition-all ${selectedPart === part ? `${PART_COLORS[part].bg} ${PART_COLORS[part].text} shadow-sm` : 'text-slate-400'}`}
+            >
+              {part}
+            </button>
+          ))}
         </div>
+        <SearchBar placeholder="질문 또는 답변 입력..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <AddFAQForm />
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        <table className="w-full table-fixed border-collapse text-left text-sm">
-          <thead className="border-b border-slate-100 bg-slate-50/50">
-            <tr>
-              <th className="w-25 px-8 py-5 font-bold text-slate-400 uppercase">ID</th>
-
-              <th className="w-30 px-6 py-5 font-bold text-slate-400 uppercase">파트명</th>
-              <th className="px-6 py-5 font-bold text-slate-400 uppercase">질문 및 답변</th>
-
-              <th className="w-35 px-6 py-5 text-right font-bold text-slate-400 uppercase">작업</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-50">
-            {filteredFaqs.map((faq) => (
-              <Item key={faq.id} faq={faq} />
-            ))}
-            {filteredFaqs.length === 0 && <EmptyResult />}
-          </tbody>
-        </table>
-      </div>
+      <Table>
+        <TableHeader>
+          <TableHeaderCell className="w-25">ID</TableHeaderCell>
+          <TableHeaderCell className="w-30">파트명</TableHeaderCell>
+          <TableHeaderCell className="px-6">질문 및 답변</TableHeaderCell>
+          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+        </TableHeader>
+        <TableBody>
+          {filteredFaqs.map((faq) => (
+            <Item key={faq.id} data={faq} />
+          ))}
+          {filteredFaqs.length === 0 && <EmptyResult />}
+        </TableBody>
+      </Table>
     </>
   );
 };
 
-const Item = ({ faq }: { faq: Faq }) => {
+const Item = ({ data }: { data: ReturnType<typeof useFAQs>['data'][number] }) => {
   return (
-    <tr key={faq.id} className="group transition-colors hover:bg-slate-50/80">
-      <td className="px-8 py-5 font-mono text-xs text-slate-400">#{faq.id}</td>
+    <tr key={data.id} className="group transition-colors hover:bg-slate-50/80">
+      <td className="px-8 py-5 text-slate-400">#{data.id}</td>
       <td className="px-6 py-5">
-        <span className={`inline-flex rounded-lg px-2.5 py-1 text-xs font-bold ${PART_COLORS[faq.part].bg} ${PART_COLORS[faq.part].text}`}>{faq.part}</span>
+        <span className={`inline-flex rounded-lg px-2.5 py-1 text-xs font-bold ${PART_COLORS[data.part].bg} ${PART_COLORS[data.part].text}`}>{data.part}</span>
       </td>
       <td className="px-6 py-5">
-        <p className="font-bold text-slate-900">{faq.question}</p>
-        <p className="mt-1 text-xs text-slate-400">{faq.answer}</p>
+        <p className="font-bold text-slate-900">{data.question}</p>
+        <p className="mt-1 text-xs text-slate-400">{data.answer}</p>
       </td>
       <td className="px-6 py-5 text-right">
         <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-          <EditFAQForm data={faq} />
-          <DeleteFAQButton faqId={faq.id} />
+          <EditFAQForm data={data} />
+          <DeleteFAQButton faqId={data.id} />
         </div>
       </td>
     </tr>

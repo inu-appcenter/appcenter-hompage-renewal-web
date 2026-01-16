@@ -55,7 +55,13 @@ const Submenu = ({ name, href }: { name: string; href: string }) => {
   const router = useRouter();
 
   return (
-    <button onClick={() => router.push(href)} className="flex w-full items-center gap-1.5 text-[13px] font-semibold text-slate-400 transition-colors hover:text-emerald-500">
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        router.push(href);
+      }}
+      className="flex w-full items-center gap-1.5 text-[13px] font-semibold text-slate-400 transition-colors hover:text-emerald-500"
+    >
       <ArrowRight size={12} className="rotate-45" />
       {name}
     </button>

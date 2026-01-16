@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
 import type { Faq, FAQForm } from 'entities/faq';
-import { useFAQActions } from '../hooks/useFAQActions';
+import { useFAQActions } from 'entities/faq';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
 import type { Part } from 'shared/types/part';
@@ -16,7 +16,7 @@ export const AddFAQForm = () => {
     <Modal
       title="FAQ 질문 등록"
       trigger={
-        <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-4 font-bold text-white transition-all hover:bg-emerald-600">
+        <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
           <Plus size={18} /> 새 질문 등록
         </button>
       }
@@ -98,7 +98,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
               disabled={isPending}
               onClick={() => setFormData({ ...formData, part: p })}
               className={`rounded-xl px-4 py-2 text-xs font-bold transition-all ${
-                formData.part === p ? `${PART_COLORS[p]?.bg} ${PART_COLORS[p]?.text}` : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
+                formData.part === p ? `${PART_COLORS[p].bg} ${PART_COLORS[p].text}` : 'bg-slate-50 text-slate-400 hover:bg-slate-100'
               } disabled:opacity-50`}
             >
               {p}

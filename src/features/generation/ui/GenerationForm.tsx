@@ -1,28 +1,28 @@
 'use client';
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
-import type { Role, RoleForm } from 'entities/role';
-import { useRoleActions } from 'entities/role';
 
 import { Modal } from 'shared/ui/modal';
+import { useGenerationActions } from 'entities/generation';
+import type { Generation, GenerationForm } from 'entities/generation';
 
-export const AddRoleForm = () => {
-  const { addMutation } = useRoleActions();
+export const AddGenerationForm = () => {
+  const { addMutation } = useGenerationActions();
 
   return (
     <Modal
-      title="역할 등록"
+      title="기수 등록"
       trigger={
         <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
-          <Plus size={18} /> 새 역할 등록
+          <Plus size={18} /> 새 기수 등록
         </button>
       }
     >
       {(close) => (
-        <RoleForm
+        <GenerationForm
           isPending={addMutation.isPending}
           onSubmit={async (data) => {
-            await addMutation.mutateAsync({ roleName: data.roleName });
+            await addMutation.mutateAsync({ ...data });
             close();
           }}
         />
@@ -31,8 +31,8 @@ export const AddRoleForm = () => {
   );
 };
 
-export const EditRoleForm = ({ data }: { data: Role }) => {
-  const { editMutation } = useRoleActions();
+export const EditGenerationForm = ({ data }: { data: Generation }) => {
+  const { editMutation } = useGenerationActions();
 
   return (
     <Modal
@@ -44,11 +44,11 @@ export const EditRoleForm = ({ data }: { data: Role }) => {
       }
     >
       {(close) => (
-        <RoleForm
+        <GenerationForm
           initialData={data}
           isPending={editMutation.isPending}
           onSubmit={async (formData) => {
-            await editMutation.mutateAsync({ id: data.roleId, data: formData });
+            await editMutation.mutateAsync({ id: data.group_id, data: formData });
             close();
           }}
         />
@@ -57,12 +57,12 @@ export const EditRoleForm = ({ data }: { data: Role }) => {
   );
 };
 
-export const DeleteRoleButton = ({ roleId }: { roleId: number }) => {
-  const { deleteMutation } = useRoleActions();
+export const DeleteGenerationButton = ({ generationId }: { generationId: number }) => {
+  const { deleteMutation } = useGenerationActions();
 
   const handleDelete = () => {
     if (confirm('정말 삭제하시겠습니까?')) {
-      deleteMutation.mutate(roleId);
+      deleteMutation.mutate(generationId);
     }
   };
 
@@ -73,10 +73,12 @@ export const DeleteRoleButton = ({ roleId }: { roleId: number }) => {
   );
 };
 
-const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; onSubmit: (data: RoleForm) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<RoleForm>({
-    roleName: initialData?.roleName || ''
-  });
+const GenerationForm = ({ initialData, onSubmit, isPending }: { initialData?: Generation; onSubmit: (data: GenerationForm) => void; isPending: boolean }) => {
+  const [formData, setFormData] = useState<GenerationForm>(initialData || DEFAULT_FORM);
+
+  const handleChange = (field: keyof GenerationForm, value: string | null) => {
+    setFormData((prev) => ({ ...prev, [field]: value === '' ? null : value }));
+  };
 
   return (
     <div className="space-y-6">
