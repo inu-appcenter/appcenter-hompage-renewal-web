@@ -6,7 +6,10 @@ export const useFAQs = (initialData: Faq[]) => {
     queryKey: ['faqs'],
     queryFn: async () => {
       const res = await fetch('/api/faqs/public/all-faq-boards');
-      if (!res.ok) throw new Error('불러오기 실패');
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
+      }
       return res.json();
     },
     initialData: initialData

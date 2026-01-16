@@ -1,0 +1,128 @@
+'use client';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Search, Loader2, Check, AlertCircle } from 'lucide-react';
+import { Member } from 'entities/member';
+
+interface SearchMemberProps {
+  initialName?: string;
+  onSelect: (member: Member) => void;
+  isPending?: boolean;
+}
+export const SearchMember = ({ initialName = '', onSelect, isPending: externalPending }: SearchMemberProps) => {
+  const [query, setQuery] = useState(initialName);
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [hasSearched, setHasSearched] = useState(false);
+
+  const {
+    data: searchResults,
+    isLoading,
+    isFetching,
+    refetch,
+    isError
+  } = useQuery<Member[]>({
+    queryKey: ['memberSearch', query],
+    queryFn: async () => {
+      const response = await fetch(`/api/members/id/${encodeURIComponent(query.trim())}`);
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    },
+    enabled: false,
+    retry: false
+  });
+
+  const handleSearch = () => {
+    if (!query.trim() || query.trim().length < 2) return;
+    setHasSearched(true);
+    refetch();
+  };
+
+  const handleSelect = (member: Member) => {
+    setSelectedId(member.member_id);
+    setQuery(member.name);
+    setHasSearched(false);
+    onSelect(member);
+  };
+
+  const isSearching = isLoading || isFetching;
+  const noResults = hasSearched && !isSearching && searchResults?.length === 0;
+
+  return (
+    <div className="relative space-y-3">
+      <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">역할을 추가할 동아리원 이름 검색</label>
+      <div className="flex gap-2">
+        <div className="relative flex-1">
+          <input
+            disabled={externalPending || isSearching}
+            className={`w-full rounded-2xl border bg-slate-50 px-3 py-3 pl-5 text-sm transition-all outline-none ${
+              selectedId ? 'border-emerald-500/50' : 'border-slate-100 focus:border-indigo-500/30'
+            } ${noResults ? 'border-amber-400' : ''}`}
+            placeholder="이름을 입력하세요 (2글자 이상)"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setSelectedId(null);
+              if (hasSearched) setHasSearched(false);
+            }}
+            onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+          />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleSearch}
+          disabled={externalPending || isSearching || query.trim().length < 2}
+          className="flex items-center justify-center rounded-2xl bg-indigo-600 px-6 text-white transition-all hover:bg-indigo-700 active:scale-95 disabled:bg-slate-200 disabled:text-slate-400"
+        >
+          {isSearching ? <Loader2 size={20} className="animate-spin" /> : <Search size={20} />}
+        </button>
+      </div>
+
+      <div className="min-h-5 px-1">
+        {noResults && (
+          <p className="animate-in fade-in slide-in-from-top-1 flex items-center gap-1 text-[11px] font-bold text-amber-600">
+            <AlertCircle size={12} /> 해당 이름의 동아리원을 찾을 수 없습니다.
+          </p>
+        )}
+        {isError && (
+          <p className="flex items-center gap-1 text-[11px] font-bold text-red-500">
+            <AlertCircle size={12} /> 검색 중 오류가 발생했습니다. 다시 시도해주세요.
+          </p>
+        )}
+        {selectedId && !hasSearched && (
+          <p className="animate-in zoom-in-95 flex items-center gap-1 text-[11px] font-bold text-emerald-600">
+            <Check size={12} /> 선택됨: {query} (ID: {selectedId})
+          </p>
+        )}
+      </div>
+
+      {hasSearched && searchResults && searchResults.length > 0 && (
+        <div className="animate-in fade-in zoom-in-95 absolute z-50 mt-1 max-h-52 w-full overflow-y-auto rounded-xl border border-slate-100 bg-white shadow-2xl">
+          {searchResults.map((m) => (
+            <button
+              key={m.member_id}
+              type="button"
+              onClick={() => handleSelect(m)}
+              className="flex w-full items-center justify-between border-b border-slate-50 px-5 py-2.5 text-sm transition-colors last:border-none hover:bg-indigo-50/50"
+            >
+              <div className="flex flex-row items-center">
+                <div className="h-10 w-10 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
+                  {m.profileImage ? (
+                    <img src={m.profileImage} alt={m.name} className="h-full w-full object-cover" />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-slate-200 text-xl text-slate-400">{m.name.charAt(0)}</div>
+                  )}
+                </div>
+                <div className="ml-3 flex flex-col items-start">
+                  <span className="font-bold text-slate-900">{m.name}</span>
+                  <span className="text-[10px] font-medium tracking-wider text-slate-400">ID : {m.member_id}</span>
+                </div>
+              </div>
+              <Check size={16} className={selectedId === m.member_id ? 'text-emerald-500' : 'text-slate-100'} />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};

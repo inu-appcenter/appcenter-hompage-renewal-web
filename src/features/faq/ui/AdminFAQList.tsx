@@ -46,7 +46,7 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
 
       <Table>
         <TableHeader>
-          <TableHeaderCell className="w-25">ID</TableHeaderCell>
+          <TableHeaderCell className="w-16">ID</TableHeaderCell>
           <TableHeaderCell className="w-30">파트명</TableHeaderCell>
           <TableHeaderCell className="px-6">질문 및 답변</TableHeaderCell>
           <TableHeaderCell className="w-30">작업</TableHeaderCell>
@@ -65,7 +65,7 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
 const Item = ({ data }: { data: ReturnType<typeof useFAQs>['data'][number] }) => {
   return (
     <tr key={data.id} className="group transition-colors hover:bg-slate-50/80">
-      <td className="px-8 py-5 text-slate-400">#{data.id}</td>
+      <td className="px-6 py-5 text-slate-400">#{data.id}</td>
       <td className="px-6 py-5">
         <span className={`inline-flex rounded-lg px-2.5 py-1 text-xs font-bold ${PART_COLORS[data.part].bg} ${PART_COLORS[data.part].text}`}>{data.part}</span>
       </td>

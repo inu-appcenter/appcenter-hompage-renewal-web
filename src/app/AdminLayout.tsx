@@ -1,5 +1,6 @@
 import { AdminSidebar } from 'widgets/sidebar';
 import { Breadcrumbs } from 'shared/ui/breadcrumbs';
+import { ScrollToTopButton } from 'shared/ui/ScrollToTopButton';
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </main>
+      <ScrollToTopButton />
     </div>
   );
 }

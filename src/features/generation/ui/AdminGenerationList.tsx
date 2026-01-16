@@ -1,27 +1,31 @@
 'use client';
-import { useMemo, useState } from 'react';
 import Link from 'next/link';
+import { useMemo, useState } from 'react';
 import { Github, NotebookPen, ExternalLink, RotateCcw, Mail } from 'lucide-react';
 
-import { AddGenerationForm, EditGenerationForm, DeleteGenerationButton } from './GenerationForm';
+import { DeleteGenerationButton } from './DeleteGenerationButton';
 
-import { useGeneration, useGroupYear } from 'entities/generation';
+import { useGeneration, useGroupYear, usePart } from 'entities/generation';
 
 import { EmptyResult } from 'shared/error/EmptyResult';
-import { PART_COLORS, PART } from 'shared/constants/part';
+import { PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { SearchBar } from 'shared/ui/searchbar';
+import { AddGenerationForm } from './AddForm';
+import { EditGenerationForm } from './EditForm';
 
 export const AdminGenerationList = () => {
   const { data } = useGeneration();
   const { data: yearList } = useGroupYear();
+  const { data: parts } = usePart();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPart, setSelectedPart] = useState<'All' | Part>('All');
   const [selectedYear, setSelectedYear] = useState<'All' | number>('All');
 
-  const partOptions: Array<Part | 'All'> = ['All', ...PART];
+  const partOptions: Array<Part | 'All'> = ['All', ...parts.parts];
+
   const yearOptions: Array<number | 'All'> = useMemo(() => {
     if (!yearList) return ['All'];
     return ['All', ...[...yearList.yearList].sort((a, b) => b - a)];
@@ -35,7 +39,7 @@ export const AdminGenerationList = () => {
 
   const filteredData = useMemo(() => {
     return data.filter((item) => {
-      const matchesSearch = item.member.toLowerCase().includes(searchTerm.toLowerCase()) || (item.email?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+      const matchesSearch = item.member.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPart = selectedPart === 'All' || item.part === selectedPart;
       const matchesYear = selectedYear === 'All' || item.year === selectedYear;
 
@@ -92,7 +96,7 @@ export const AdminGenerationList = () => {
           </div>
         </div>
 
-        <SearchBar placeholder="멤버명 또는 이메일로 검색..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <SearchBar placeholder="이름으로 검색하세요..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
 
       {/* 테이블 영역 */}
@@ -120,7 +124,7 @@ const Item = ({ data }: { data: ReturnType<typeof useGeneration>['data'][number]
   const partStyle = PART_COLORS[data.part] || { bg: 'bg-slate-100', text: 'text-slate-700' };
 
   return (
-    <tr key={data.group_id} className="group transition-colors hover:bg-slate-50/50">
+    <tr key={data.group_id} className="group transition-colors hover:bg-slate-50/80">
       <td className="px-6 py-5 text-slate-400">#{data.group_id}</td>
       <td className="px-6 py-5 font-bold text-slate-600">{data.year}기</td>
 
