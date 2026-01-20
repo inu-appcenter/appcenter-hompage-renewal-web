@@ -26,9 +26,9 @@ export function Error({ error, reset }: ErrorProps) {
             <button onClick={() => reset?.()} className="rounded-lg bg-slate-100 px-6 py-2.5 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-200">
               다시 시도
             </button>
-            <Link href="/admin/home" className="rounded-lg border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50">
+            <button onClick={() => window.location.reload()} className="rounded-lg border border-slate-200 px-6 py-2.5 text-sm font-medium text-slate-600 transition-colors hover:bg-slate-50">
               홈으로 이동
-            </Link>
+            </button>
           </>
         )}
       </div>

@@ -3,13 +3,15 @@ import { Loader2, Pencil, Save } from 'lucide-react';
 import { useState } from 'react';
 import { Modal } from 'shared/ui/modal';
 import { CommonFields } from './CommonField';
+import { useRoles } from 'entities/role';
 
 export const EditGenerationForm = ({ data }: { data: Generation }) => {
   const { editMutation } = useGenerationActions();
+  const { data: roleData } = useRoles();
 
   const initialValues: GenerationForm = {
     id: data.group_id,
-    role_id: 0,
+    role_id: roleData?.find((r) => r.roleName === data.role)?.roleId ?? 0,
     year: data.year,
     part: data.part
   };
