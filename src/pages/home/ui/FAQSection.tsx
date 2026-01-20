@@ -1,9 +1,9 @@
 import { SectionTitle } from './Components';
 import { FAQList } from 'features/faq';
-import { getFaqs } from 'entities/faq';
+import { faqApi } from 'entities/faq';
 
 export const FAQSection = async () => {
-  const faqData = await getFaqs();
+  const faqData = await faqApi.getAll();
 
   return (
     <section className="flex h-screen flex-col gap-16">

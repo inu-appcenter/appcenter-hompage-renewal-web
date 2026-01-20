@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
 import { Search, Loader2, Check, AlertCircle } from 'lucide-react';
-import { Member } from 'entities/member';
+import { Member, useSearchMember } from 'entities/member';
 
 interface SearchMemberProps {
   initialName?: string;
@@ -12,34 +11,31 @@ interface SearchMemberProps {
 export const SearchMember = ({ initialName = '', onSelect, isPending: externalPending }: SearchMemberProps) => {
   const [query, setQuery] = useState(initialName);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+
+  const [shouldSearch, setShouldSearch] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  const {
-    data: searchResults,
-    isLoading,
-    isFetching,
-    refetch,
-    isError
-  } = useQuery<Member[]>({
-    queryKey: ['memberSearch', query],
-    queryFn: async () => {
-      const response = await fetch(`/api/members/id/${encodeURIComponent(query.trim())}`);
-      if (!response.ok) throw new Error('Network response was not ok');
-      return response.json();
-    },
-    enabled: false,
-    retry: false
-  });
+  const { data: searchResults, isLoading, isFetching, isError } = useSearchMember(query, shouldSearch);
 
   const handleSearch = () => {
     if (!query.trim() || query.trim().length < 2) return;
+
     setHasSearched(true);
-    refetch();
+    setShouldSearch(true);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(e.target.value);
+    setSelectedId(null);
+    setShouldSearch(false);
+    if (hasSearched) setHasSearched(false);
   };
 
   const handleSelect = (member: Member) => {
     setSelectedId(member.member_id);
     setQuery(member.name);
+
+    setShouldSearch(false);
     setHasSearched(false);
     onSelect(member);
   };
@@ -59,11 +55,7 @@ export const SearchMember = ({ initialName = '', onSelect, isPending: externalPe
             } ${noResults ? 'border-amber-400' : ''}`}
             placeholder="이름을 입력하세요 (2글자 이상)"
             value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setSelectedId(null);
-              if (hasSearched) setHasSearched(false);
-            }}
+            onChange={handleInputChange}
             onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
           />
         </div>

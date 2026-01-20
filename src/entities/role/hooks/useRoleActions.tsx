@@ -1,37 +1,31 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import type { Role, RoleForm } from 'entities/role';
+import { roleKeys, roleOptions } from '../api/queries';
+import { roleApi } from '../api';
 
 export const useRoles = () => {
-  return useSuspenseQuery<Role[]>({
-    queryKey: ['roles'],
-    queryFn: async () => {
-      const res = await fetch('/api/roles/all-roles');
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
-      }
-      return res.json();
-    },
-    staleTime: 60 * 60 * 1000 // 1시간
-  });
+  return useSuspenseQuery({ ...roleOptions.all() });
 };
 
 export const useRoleActions = () => {
   const queryClient = useQueryClient();
 
+  const invalidateRoles = () => {
+    return queryClient.invalidateQueries({ queryKey: roleKeys.lists() });
+  };
+
   const addMutation = useMutation({
-    mutationFn: (newRole: RoleForm) => fetch('/api/roles', { method: 'POST', body: JSON.stringify(newRole) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['roles'] })
+    mutationFn: roleApi.create,
+    onSuccess: invalidateRoles
   });
 
   const editMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: RoleForm }) => fetch(`/api/roles?id=${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['roles'] })
+    mutationFn: roleApi.update,
+    onSuccess: invalidateRoles
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => fetch(`/api/roles/${id}`, { method: 'DELETE' }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['roles'] })
+    mutationFn: roleApi.delete,
+    onSuccess: invalidateRoles
   });
 
   return { addMutation, editMutation, deleteMutation };

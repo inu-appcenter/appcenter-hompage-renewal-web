@@ -47,8 +47,6 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
     if (!['GET', 'HEAD'].includes(req.method)) {
       const arrayBuffer = await req.arrayBuffer();
       fetchOptions.body = arrayBuffer;
-      // @ts-expect-error
-      fetchOptions.duplex = 'half';
     }
 
     const response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);

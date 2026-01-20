@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Loader2, Plus, Save } from 'lucide-react';
-import { AddGeneration, useGenerationActions } from 'entities/generation';
+import { GenerationForm, useGenerationActions } from 'entities/generation';
 import { Modal } from 'shared/ui/modal';
 import { SearchMember } from './SearchMember';
 import { CommonFields } from './CommonField';
@@ -30,17 +30,17 @@ export const AddGenerationForm = () => {
   );
 };
 
-const DEFAULT_FORM: AddGeneration = {
-  member_id: 0,
+const DEFAULT_FORM: GenerationForm = {
+  id: 0,
   role_id: 3, // 기본값을 파트원으로 설정
   year: new Date().getFullYear() - 2008, // 2026년인 경우 18기, 2027년인 경우 19기...
   part: 'Common'
 };
-const AddFormContent = ({ onSubmit, isPending }: { onSubmit: (data: AddGeneration) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<AddGeneration>(DEFAULT_FORM);
+const AddFormContent = ({ onSubmit, isPending }: { onSubmit: (data: GenerationForm) => void; isPending: boolean }) => {
+  const [formData, setFormData] = useState<GenerationForm>(DEFAULT_FORM);
   const [selectedName, setSelectedName] = useState('');
 
-  const isValid = formData.member_id !== 0 && formData.year && formData.role_id && formData.part;
+  const isValid = formData.id !== 0 && formData.year && formData.role_id && formData.part;
 
   return (
     <div className="space-y-7 py-2">

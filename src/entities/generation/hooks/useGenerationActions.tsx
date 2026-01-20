@@ -1,19 +1,11 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { Generation } from 'entities/generation';
 import { Part } from 'shared/types/part';
-import { AddGeneration, EditGeneration } from '../types/generation';
+import { generationOptions } from '../api/queries';
+import { generationApi } from '../api';
 
 export const useGeneration = () => {
-  return useSuspenseQuery<Generation[]>({
-    queryKey: ['generations'],
-    queryFn: async () => {
-      const res = await fetch('/api/groups/public/all-groups-members');
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
-      }
-      return res.json();
-    }
+  return useSuspenseQuery({
+    ...generationOptions.all()
   });
 };
 
@@ -52,21 +44,23 @@ export const useGroupYear = () => {
 export const useGenerationActions = () => {
   const queryClient = useQueryClient();
 
+  const invalidateGenerations = () => {
+    queryClient.invalidateQueries({ queryKey: ['generations'] });
+  };
+
   const addMutation = useMutation({
-    mutationFn: (newGeneration: AddGeneration) =>
-      fetch(`/api/groups?member_id=${newGeneration.member_id}&role_id=${newGeneration.role_id}`, { method: 'POST', body: JSON.stringify({ part: newGeneration.part, year: newGeneration.year }) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['generations'] })
+    mutationFn: generationApi.create,
+    onSuccess: invalidateGenerations
   });
 
   const editMutation = useMutation({
-    mutationFn: ({ data }: { data: EditGeneration }) =>
-      fetch(`/api/groups?groupId=${data.group_id}&roleId=${data.role_id}`, { method: 'PATCH', body: JSON.stringify({ part: data.part, year: data.year }) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['generations'] })
+    mutationFn: generationApi.update,
+    onSuccess: invalidateGenerations
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => fetch(`/api/groups/${id}`, { method: 'DELETE' }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['generations'] })
+    mutationFn: generationApi.delete,
+    onSuccess: invalidateGenerations
   });
 
   return { addMutation, editMutation, deleteMutation };

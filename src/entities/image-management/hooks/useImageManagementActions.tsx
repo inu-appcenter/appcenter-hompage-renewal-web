@@ -1,36 +1,33 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { ImageManagement } from '../types/image-management';
+import { imageManagementKeys, imageManagementOptions } from '../api/queries';
+import { imageManagementApi } from '../api';
 
 export const useImageManagement = () => {
-  return useSuspenseQuery<ImageManagement[]>({
-    queryKey: ['imageManagement'],
-    queryFn: async () => {
-      const res = await fetch('/api/photo-board/public/all-boards-contents');
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
-      }
-      return res.json();
-    }
+  return useSuspenseQuery({
+    ...imageManagementOptions.all()
   });
 };
 
 export const useImageManagementActions = () => {
   const queryClient = useQueryClient();
 
+  const invalidateImageManagement = () => {
+    queryClient.invalidateQueries({ queryKey: imageManagementKeys.lists() });
+  };
+
   const addMutation = useMutation({
-    mutationFn: (data: FormData) => fetch('/api/photo-board', { method: 'POST', body: data }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['imageManagement'] })
+    mutationFn: imageManagementApi.create,
+    onSuccess: invalidateImageManagement
   });
 
   const editMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: FormData }) => fetch(`/api/photo-board/${id}`, { method: 'PATCH', body: data }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['imageManagement'] })
+    mutationFn: imageManagementApi.update,
+    onSuccess: invalidateImageManagement
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => fetch(`/api/photo-board/${id}`, { method: 'DELETE' }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['imageManagement'] })
+    mutationFn: imageManagementApi.delete,
+    onSuccess: invalidateImageManagement
   });
 
   return { addMutation, editMutation, deleteMutation };

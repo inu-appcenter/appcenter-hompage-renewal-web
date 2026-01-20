@@ -1,4 +1,4 @@
-import { EditGeneration, Generation, useGenerationActions } from 'entities/generation';
+import { Generation, GenerationForm, useGenerationActions } from 'entities/generation';
 import { Loader2, Pencil, Save } from 'lucide-react';
 import { useState } from 'react';
 import { Modal } from 'shared/ui/modal';
@@ -7,8 +7,8 @@ import { CommonFields } from './CommonField';
 export const EditGenerationForm = ({ data }: { data: Generation }) => {
   const { editMutation } = useGenerationActions();
 
-  const initialValues: EditGeneration = {
-    group_id: data.group_id,
+  const initialValues: GenerationForm = {
+    id: data.group_id,
     role_id: 0,
     year: data.year,
     part: data.part
@@ -29,7 +29,7 @@ export const EditGenerationForm = ({ data }: { data: Generation }) => {
           memberName={data.member}
           isPending={editMutation.isPending}
           onSubmit={async (formData) => {
-            await editMutation.mutateAsync({ data: formData });
+            await editMutation.mutateAsync(formData);
             close();
           }}
         />
@@ -38,9 +38,9 @@ export const EditGenerationForm = ({ data }: { data: Generation }) => {
   );
 };
 
-const EditFormContent = ({ initialData, memberName, onSubmit, isPending }: { initialData: EditGeneration; memberName: string; onSubmit: (data: EditGeneration) => void; isPending: boolean }) => {
-  const [formData, setFormData] = useState<EditGeneration>(initialData);
-  const isValid = formData.role_id !== 0 && formData.year && formData.part;
+const EditFormContent = ({ initialData, memberName, onSubmit, isPending }: { initialData: GenerationForm; memberName: string; onSubmit: (data: GenerationForm) => void; isPending: boolean }) => {
+  const [formData, setFormData] = useState<GenerationForm>(initialData);
+  const isValid = formData.role_id !== null && formData.year && formData.part;
 
   return (
     <div className="space-y-7 py-2">
@@ -49,12 +49,13 @@ const EditFormContent = ({ initialData, memberName, onSubmit, isPending }: { ini
         <p className="text-sm font-bold text-slate-700">
           {memberName}{' '}
           <span className="font-normal text-slate-400">
-            ({formData.year}기 {formData.part}) #{formData.group_id}
+            ({formData.year}기 {formData.part}) #{formData.id}
           </span>
         </p>
       </div>
 
       <CommonFields formData={formData} setFormData={setFormData} />
+
       <div className="pt-2">
         <button
           disabled={isPending || !isValid}

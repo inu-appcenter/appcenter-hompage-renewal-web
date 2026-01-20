@@ -14,15 +14,9 @@ export interface Generation {
   readonly lastModifiedDate: string;
 }
 
-export interface AddGeneration {
-  member_id: number;
-  role_id: number;
+export interface GenerationForm {
+  id: number;
   year: number;
   part: Part;
-}
-export interface EditGeneration {
-  group_id: number;
   role_id: number;
-  year: number;
-  part: Part;
 }

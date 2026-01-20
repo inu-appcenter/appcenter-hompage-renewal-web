@@ -1,36 +1,41 @@
-import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import type { Member, MemberForm } from 'entities/member';
+import { useMutation, useQuery, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
+import { memberKeys, memberOptions } from '../api/queries';
+import { memberApi } from '../api';
 
 export const useMember = () => {
-  return useSuspenseQuery<Member[]>({
-    queryKey: ['members'],
-    queryFn: async () => {
-      const res = await fetch('/api/members/all-members');
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
-      }
-      return res.json();
-    }
+  return useSuspenseQuery({
+    ...memberOptions.all()
+  });
+};
+
+export const useSearchMember = (query: string, enabled = false) => {
+  return useQuery({
+    ...memberOptions.search(query),
+    enabled: enabled,
+    retry: false
   });
 };
 
 export const useMemberActions = () => {
   const queryClient = useQueryClient();
 
+  const invalidateMembers = () => {
+    return queryClient.invalidateQueries({ queryKey: memberKeys.lists() });
+  };
+
   const addMutation = useMutation({
-    mutationFn: (newMember: MemberForm) => fetch('/api/members', { method: 'POST', body: JSON.stringify(newMember) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['members'] })
+    mutationFn: memberApi.create,
+    onSuccess: invalidateMembers
   });
 
   const editMutation = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: MemberForm }) => fetch(`/api/members?id=${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['members'] })
+    mutationFn: memberApi.update,
+    onSuccess: invalidateMembers
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id: number) => fetch(`/api/members/${id}`, { method: 'DELETE' }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['members'] })
+    mutationFn: memberApi.delete,
+    onSuccess: invalidateMembers
   });
 
   return { addMutation, editMutation, deleteMutation };
