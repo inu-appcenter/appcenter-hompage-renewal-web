@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
+import { generationApi } from '.';
 
 export const generationKeys = {
   all: ['generations'] as const,
@@ -9,6 +10,6 @@ export const generationOptions = {
   all: () =>
     queryOptions({
       queryKey: generationKeys.lists(),
-      queryFn: () => fetch('/api/groups/public/all-groups-members').then((res) => res.json())
+      queryFn: () => generationApi.getAll()
     })
 };
