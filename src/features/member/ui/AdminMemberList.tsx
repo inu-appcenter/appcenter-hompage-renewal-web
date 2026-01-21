@@ -32,7 +32,7 @@ export const AdminMemberList = () => {
           <TableHeaderCell className="w-68">기본 정보</TableHeaderCell>
           <TableHeaderCell className="w-48">학과/학번</TableHeaderCell>
           <TableHeaderCell>등록된 링크</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {filteredMembers.map((member) => (

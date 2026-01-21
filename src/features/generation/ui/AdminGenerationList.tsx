@@ -107,7 +107,7 @@ export const AdminGenerationList = () => {
           <TableHeaderCell className="w-72">멤버 정보</TableHeaderCell>
           <TableHeaderCell className="w-40">역할 / 파트</TableHeaderCell>
           <TableHeaderCell>등록된 링크</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {filteredData.map((gen) => (

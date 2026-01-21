@@ -6,3 +6,4 @@ export { AdminRolePage } from './ui/AdminRolePage';
 export { AdminImagePage } from './ui/AdminImagePage';
 export { AdminGenerationPage } from './ui/AdminGenerationPage';
 export { AdminFAQPage } from './ui/AdminFAQPage';
+export { AdminSkillPage } from './ui/AdminSkillPage';

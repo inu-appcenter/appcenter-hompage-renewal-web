@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -35,9 +34,9 @@ export function Error({ error, reset }: ErrorProps) {
 
       <div className="mt-8 flex gap-3">
         {isUnauthorized ? (
-          <Link href="/admin" className="rounded-xl bg-slate-900 px-8 py-3 text-sm font-bold text-white transition-all hover:bg-indigo-600 hover:shadow-lg hover:shadow-indigo-100 active:scale-95">
+          <a href="/admin" className="rounded-xl bg-slate-900 px-8 py-3 text-sm font-bold text-white transition-all hover:bg-slate-800 hover:shadow-lg hover:shadow-indigo-100 active:scale-95">
             로그인하러 가기
-          </Link>
+          </a>
         ) : (
           <>
             <button

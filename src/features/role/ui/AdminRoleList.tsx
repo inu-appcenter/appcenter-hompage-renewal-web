@@ -16,7 +16,7 @@ export const AdminRoleList = () => {
           <TableHeaderCell className="w-16">id</TableHeaderCell>
           <TableHeaderCell>역할명</TableHeaderCell>
           <TableHeaderCell className="w-80">업데이트 일자</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {data.map((role) => (

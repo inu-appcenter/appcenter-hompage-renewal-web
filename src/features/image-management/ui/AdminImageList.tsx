@@ -17,7 +17,7 @@ export const AdminImageList = () => {
           <TableHeaderCell className="w-60">내용</TableHeaderCell>
           <TableHeaderCell>이미지</TableHeaderCell>
           <TableHeaderCell className="w-48">등록일</TableHeaderCell>
-          <TableHeaderCell className="w-32">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {data.map((item) => (

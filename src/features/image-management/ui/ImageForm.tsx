@@ -123,7 +123,7 @@ export const ImageForm = ({ initialData, onSubmit, isPending }: ImageFormProps) 
           value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="내용을 입력해주세요."
-          className="min-h-30 w-full rounded-xl border border-slate-200 p-3 text-sm focus:border-blue-500 focus:outline-none"
+          className="min-h-30 w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
         />
       </div>
 
