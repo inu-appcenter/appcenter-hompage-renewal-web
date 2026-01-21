@@ -1,6 +1,5 @@
 'use client';
-import { useState, useMemo, Suspense } from 'react';
-import type { Faq } from 'entities/faq';
+import { useState, useMemo } from 'react';
 import { useFAQs } from 'entities/faq';
 
 import { PART, PART_COLORS } from 'shared/constants/part';
@@ -10,10 +9,9 @@ import { AddFAQForm, DeleteFAQButton, EditFAQForm } from './FAQForm';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { SearchBar } from 'shared/ui/searchbar';
-import { TableSkeleton } from 'shared/skeleton/TableSkeleton';
 
-export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
-  const { data } = useFAQs(initialData);
+export const AdminFAQList = () => {
+  const { data } = useFAQs();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedPart, setSelectedPart] = useState<Part | 'All'>('All');
 
@@ -28,7 +26,7 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
   }, [searchTerm, selectedPart, data]);
 
   return (
-    <Suspense fallback={<TableSkeleton />}>
+    <>
       <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-1 rounded-xl bg-slate-50 p-1">
           {filterOptions.map((part) => (
@@ -59,7 +57,7 @@ export const AdminFAQList = ({ initialData }: { initialData: Faq[] }) => {
           {filteredFaqs.length === 0 && <EmptyResult />}
         </TableBody>
       </Table>
-    </Suspense>
+    </>
   );
 };
 

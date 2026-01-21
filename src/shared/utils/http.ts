@@ -1,10 +1,10 @@
 const getBaseUrl = () => {
+  // BFF 서버 주소
   if (typeof window !== 'undefined') {
-    return '';
+    return 'http://localhost:3000/api';
   }
 
-  // BFF 서버 주소
-  return 'http://localhost:3000';
+  return process.env.API_URL;
 };
 
 async function request<T>(url: string, options?: RequestInit): Promise<T> {

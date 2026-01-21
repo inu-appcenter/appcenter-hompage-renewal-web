@@ -1,12 +1,10 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { faqApi } from '../api';
 import { faqOptions, faqKeys } from '../api/queries';
-import type { Faq } from 'entities/faq';
 
-export const useFAQs = (initialData?: Faq[]) => {
+export const useFAQs = () => {
   return useSuspenseQuery({
-    ...faqOptions.all(),
-    initialData
+    ...faqOptions.all()
   });
 };
 

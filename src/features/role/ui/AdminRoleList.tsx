@@ -44,7 +44,7 @@ const Item = ({ data }: { data: ReturnType<typeof useRoles>['data'][number] }) =
       <td className="px-6 py-5">
         <div className="flex items-center gap-2 text-slate-500">
           <Calendar size={14} className="text-slate-300" />
-          <span className="text-xs font-medium">{data.lastModifiedDate}</span>
+          <span className="text-xs font-medium">{new Date(data.lastModifiedDate).toLocaleDateString()}</span>
         </div>
       </td>
       <td className="px-8 py-5 text-right">

@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
 import type { Role, RoleForm } from 'entities/role';
 import { useRoleActions } from 'entities/role';
-
 import { Modal } from 'shared/ui/modal';
 
 export const AddRoleForm = () => {
@@ -79,7 +78,13 @@ const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; on
   });
 
   return (
-    <div className="space-y-6">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(formData);
+      }}
+      className="space-y-6"
+    >
       <input
         disabled={isPending}
         className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
@@ -89,13 +94,13 @@ const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; on
         onChange={(e) => setFormData({ ...formData, roleName: e.target.value })}
       />
       <button
+        type="submit"
         disabled={isPending || !formData.roleName}
-        onClick={() => onSubmit(formData)}
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
       >
         {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
         {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '데이터베이스에 저장'}
       </button>
-    </div>
+    </form>
   );
 };

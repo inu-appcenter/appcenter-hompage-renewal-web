@@ -88,12 +88,19 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
   });
 
   return (
-    <div className="space-y-6">
+    <form
+      className="space-y-6"
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(formData);
+      }}
+    >
       <div>
-        <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">Part</label>
+        <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">파트</label>
         <div className="flex flex-wrap gap-2">
           {PART.map((p) => (
             <button
+              type="button"
               key={p}
               disabled={isPending}
               onClick={() => setFormData({ ...formData, part: p })}
@@ -106,6 +113,7 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
           ))}
         </div>
       </div>
+      <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">질문</label>
       <input
         disabled={isPending}
         className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
@@ -113,21 +121,22 @@ const FAQForm = ({ initialData, initialPart, onSubmit, isPending }: { initialDat
         value={formData.question}
         onChange={(e) => setFormData({ ...formData, question: e.target.value })}
       />
-      <textarea
+      <label className="mb-2 block text-xs font-bold text-slate-400 uppercase">답변</label>
+      <input
         disabled={isPending}
-        className="min-h-35 w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
+        className="w-full rounded-2xl bg-slate-50 p-4 text-sm outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
         placeholder="답변 내용"
         value={formData.answer}
         onChange={(e) => setFormData({ ...formData, answer: e.target.value })}
       />
       <button
+        type="submit"
         disabled={isPending || !formData.question || !formData.answer}
-        onClick={() => onSubmit(formData)}
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-500 py-4 font-bold text-white transition-all hover:bg-emerald-600 disabled:bg-slate-300"
       >
         {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
         {isPending ? '처리 중...' : initialData ? '변경사항 저장' : '데이터베이스에 저장'}
       </button>
-    </div>
+    </form>
   );
 };

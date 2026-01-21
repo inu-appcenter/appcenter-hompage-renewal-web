@@ -2,6 +2,7 @@ import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-q
 import { Part } from 'shared/types/part';
 import { generationOptions } from '../api/queries';
 import { generationApi } from '../api';
+import { http } from 'shared/utils/http';
 
 export const useGeneration = () => {
   return useSuspenseQuery({
@@ -14,12 +15,7 @@ export const usePart = () => {
   return useSuspenseQuery<{ parts: Part[] }>({
     queryKey: ['parts'],
     queryFn: async () => {
-      const res = await fetch('/api/groups/public/all-parts');
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
-      }
-      return res.json();
+      return http.get<{ parts: Part[] }>('/groups/public/all-parts');
     },
     staleTime: Infinity
   });
@@ -30,12 +26,7 @@ export const useGroupYear = () => {
   return useSuspenseQuery<{ yearList: number[] }>({
     queryKey: ['groupYears'],
     queryFn: async () => {
-      const res = await fetch('/api/groups/public/all-groups-years');
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.msg || '데이터를 불러오는 중 에러가 발생했습니다.');
-      }
-      return res.json();
+      return http.get<{ yearList: number[] }>('/groups/public/all-groups-years');
     },
     staleTime: Infinity
   });

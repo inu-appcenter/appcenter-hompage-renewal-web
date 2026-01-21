@@ -3,18 +3,18 @@ import type { Role, RoleForm } from '../types/role';
 
 export const roleApi = {
   getAll: () => {
-    return http.get<Role[]>('/api/roles/all-roles');
+    return http.get<Role[]>('/roles/all-roles');
   },
 
   create: (newRole: RoleForm) => {
-    return http.post<Role>('/api/roles', newRole);
+    return http.post<Role>('/roles', newRole);
   },
 
   update: ({ id, data }: { id: number; data: RoleForm }) => {
-    return http.patch<Role>(`/api/roles?id=${id}`, data);
+    return http.patch<Role>(`/roles?id=${id}`, data);
   },
 
   delete: (id: number) => {
-    return http.delete<{ success: boolean }>(`/api/roles/${id}`);
+    return http.delete<{ success: boolean }>(`/roles/${id}`);
   }
 };

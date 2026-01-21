@@ -93,9 +93,15 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
   };
 
   return (
-    <div className="space-y-8">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        onSubmit(formData);
+      }}
+      className="space-y-6"
+    >
       {/* 0. 프로필 이미지 섹션 */}
-      <section className="flex flex-col items-center justify-center space-y-4 py-4">
+      <section className="flex flex-col items-center justify-center space-y-4">
         <div className="group relative">
           <div className="h-20 w-20 overflow-hidden rounded-full bg-slate-50 shadow-inner">
             {formData.profileImage ? (
@@ -132,6 +138,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
             <User className="absolute top-2.5 left-4 text-slate-300" size={16} />
             <input
               disabled={isPending}
+              required
               className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm font-semibold outline-none focus:ring-2 focus:ring-slate-900/10"
               placeholder="이름 (필수)"
               value={formData.name || ''}
@@ -169,6 +176,7 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
             <Hash className="absolute top-2.5 left-4 text-slate-300" size={16} />
             <input
               disabled={isPending}
+              required
               className="w-full rounded-lg bg-slate-50 p-2 pl-11 text-sm font-semibold outline-none focus:ring-2 focus:ring-slate-900/10"
               placeholder="학번 (필수)"
               value={formData.studentNumber || ''}
@@ -242,12 +250,12 @@ const MemberForm = ({ initialData, onSubmit, isPending }: { initialData?: Member
 
       <button
         disabled={isPending || !formData.name}
-        onClick={() => onSubmit(formData)}
+        type="submit"
         className="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 py-4 font-bold text-white transition-all hover:bg-slate-800 disabled:bg-slate-300"
       >
         {isPending ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
         {isPending ? '처리 중...' : initialData ? '멤버 정보 수정' : '새 멤버 등록'}
       </button>
-    </div>
+    </form>
   );
 };

@@ -89,7 +89,7 @@ export const SearchMember = ({ initialName = '', onSelect, isPending: externalPe
       </div>
 
       {hasSearched && searchResults && searchResults.length > 0 && (
-        <div className="animate-in fade-in zoom-in-95 absolute z-50 mt-1 max-h-52 w-full overflow-y-auto rounded-xl border border-slate-100 bg-white shadow-2xl">
+        <div className="animate-in fade-in zoom-in-95 absolute z-50 -mt-8 max-h-52 w-full overflow-y-auto rounded-xl border border-slate-100 bg-white shadow-2xl">
           {searchResults.map((m) => (
             <button
               key={m.member_id}

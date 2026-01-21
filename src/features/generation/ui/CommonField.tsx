@@ -12,7 +12,7 @@ export const CommonFields = ({ formData, setFormData }: { formData: any; setForm
   };
 
   return (
-    <>
+    <form className="space-y-4">
       <div className="space-y-3">
         <label className="flex items-center gap-2 px-1 text-xs font-bold text-slate-400">기수 선택</label>
         <div className="flex flex-wrap gap-2">
@@ -60,6 +60,6 @@ export const CommonFields = ({ formData, setFormData }: { formData: any; setForm
           ))}
         </div>
       </div>
-    </>
+    </form>
   );
 };

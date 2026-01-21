@@ -49,7 +49,7 @@ const AddFormContent = ({ onSubmit, isPending }: { onSubmit: (data: GenerationFo
           initialName={selectedName}
           isPending={isPending}
           onSelect={(member) => {
-            setFormData((prev) => ({ ...prev, member_id: member.member_id }));
+            setFormData((prev) => ({ ...prev, id: member.member_id }));
             setSelectedName(member.name);
           }}
         />
