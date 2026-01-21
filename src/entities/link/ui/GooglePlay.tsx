@@ -1,9 +1,9 @@
-import Link from 'next/link';
+import { cn } from 'shared/utils/cn';
 
-export const GooglePlay = ({ href = '' }: { href: string }) => {
+export const GooglePlay = ({ href = '', className = '' }: { href: string; className?: string }) => {
   return (
-    <Link href={href} target="_blank">
-      <svg width="196" height="59" viewBox="0 0 196 59" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+    <a href={href} target="_blank" rel="noopener noreferrer" className={cn`${className} h-12 transition-transform hover:scale-105`}>
+      <svg viewBox="0 0 196 59" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="h-full w-auto">
         <rect width="195.933" height="58.2059" fill="url(#pattern0_788_847)" />
         <defs>
           <pattern id="pattern0_788_847" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -18,6 +18,6 @@ export const GooglePlay = ({ href = '' }: { href: string }) => {
           />
         </defs>
       </svg>
-    </Link>
+    </a>
   );
 };

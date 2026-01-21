@@ -48,7 +48,7 @@ export const AdminMemberList = () => {
 const MemberItem = ({ data }: { data: ReturnType<typeof useMember>['data'][number] }) => {
   return (
     <tr className="group transition-colors hover:bg-slate-50/50">
-      <td className="px-6 py-5 text-center font-mono text-sm text-slate-400">#{data.member_id}</td>
+      <td className="px-6 py-5 text-center text-sm text-slate-400">#{data.member_id}</td>
 
       <td className="px-6 py-5">
         <div className="flex items-center gap-3">

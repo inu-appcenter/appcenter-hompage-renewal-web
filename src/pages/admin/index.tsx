@@ -7,3 +7,4 @@ export { AdminImagePage } from './ui/AdminImagePage';
 export { AdminGenerationPage } from './ui/AdminGenerationPage';
 export { AdminFAQPage } from './ui/AdminFAQPage';
 export { AdminSkillPage } from './ui/AdminSkillPage';
+export { AdminProjectWritePage } from './ui/AdminProjectWritePage';

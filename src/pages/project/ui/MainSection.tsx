@@ -1,5 +1,5 @@
-import { AppStore } from 'shared/ui/AppStore';
-import { GooglePlay } from 'shared/ui/GooglePlay';
+import { AppStore } from 'entities/link/ui/AppStore';
+import { GooglePlay } from 'entities/link/ui/GooglePlay';
 import myImage from 'shared/image/image.jpg';
 import Image from 'next/image';
 
