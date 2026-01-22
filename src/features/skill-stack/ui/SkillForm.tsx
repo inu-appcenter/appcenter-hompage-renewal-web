@@ -76,7 +76,6 @@ interface SkillFormProps {
   onSubmit: (formData: FormData) => Promise<void>;
   isPending: boolean;
 }
-
 export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) => {
   const [name, setName] = useState(initialData?.name || '');
   const [file, setFile] = useState<File | null>(null);

@@ -10,7 +10,6 @@ type PreviewUrls = {
   appIcon: string | null;
   mockupImage: string | null;
 };
-
 export const MainSectionForm = ({ setStep }: { setStep: React.Dispatch<React.SetStateAction<'main' | 'introduce' | 'grid'>> }) => {
   const [form, setForm] = useState<MainForm>({
     title: '',

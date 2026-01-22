@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
-import { useImageManagement } from 'entities/image-management';
+import { useImageManagement } from 'entities/workshop';
 import { AddImageForm, DeleteImageButton, EditImageForm } from './ImageForm';
 
 export const AdminImageList = () => {

@@ -5,20 +5,19 @@ import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { SearchBar } from 'shared/ui/searchbar';
 import { Project, useProject } from 'entities/project';
-import { AddProjectForm, EditProjectForm, DeleteProjectButton } from './ProjectForm';
-import { ProjectStatusToggle } from './ProjectStatusToggle';
+import { AddProjectForm, EditProjectForm, DeleteProjectButton, ProjectStatusToggle } from './ProjectForm';
 import { AppStore, GooglePlay, WebLink } from 'entities/link';
 
 export const AdminProjectList = () => {
   const { data } = useProject();
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredData = data.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase()) || project.subTitle?.toLowerCase().includes(searchTerm.toLowerCase()));
+  const filteredData = data.filter((project) => project.title.toLowerCase().includes(searchTerm.toLowerCase()));
 
   return (
     <>
       <div className="mb-6 flex items-center justify-between gap-4">
-        <SearchBar placeholder="프로젝트 이름, 설명으로 검색하세요..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <SearchBar placeholder="프로젝트 이름으로 검색하세요..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <AddProjectForm />
       </div>
 

@@ -1,5 +1,5 @@
-import { AdminImagePage } from 'pages/admin';
+import { AdminWorkShopPage } from 'pages/admin';
 
 export const dynamic = 'force-dynamic';
 
-export default AdminImagePage;
+export default AdminWorkShopPage;

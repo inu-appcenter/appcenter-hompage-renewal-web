@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
-import type { Role, RoleForm } from 'entities/role';
-import { useRoleActions } from 'entities/role';
+import { useRoleActions, type Role, type RoleForm } from 'entities/role';
 import { Modal } from 'shared/ui/modal';
 
 export const AddRoleForm = () => {

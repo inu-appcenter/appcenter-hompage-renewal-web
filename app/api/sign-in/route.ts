@@ -22,7 +22,7 @@ export async function POST(request: Request) {
     cookieStore.set('admin_access_token', data.token[0], {
       httpOnly: true,
       sameSite: 'strict',
-      expires: new Date(Date.now() + 60 * 60 * 1000),
+      expires: new Date(Date.now() + 120 * 60 * 1000),
       secure: true,
       path: '/'
     });

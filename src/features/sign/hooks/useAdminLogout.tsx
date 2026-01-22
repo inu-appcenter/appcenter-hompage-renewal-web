@@ -1,9 +1,7 @@
 'use client';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export function useAdminLogout() {
-  const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -16,8 +14,7 @@ export function useAdminLogout() {
       });
 
       if (res.ok) {
-        router.push('/admin');
-        router.refresh();
+        window.location.href = '/admin';
       } else {
         alert('로그아웃 처리에 실패했습니다.');
       }

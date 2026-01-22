@@ -1,9 +1,9 @@
 'use client';
 import { Suspense, useState } from 'react';
-import { IntroduceSectionForm, MainSectionForm, StepIndicator, type StepType } from 'features/project';
+import { GridSectionForm, IntroduceSectionForm, MainSectionForm, StepIndicator, type StepType } from 'features/project';
 
 export const AdminProjectWritePage = () => {
-  const [step, setStep] = useState<StepType>('introduce');
+  const [step, setStep] = useState<StepType>('main');
 
   const renderStepContent = () => {
     switch (step) {
@@ -16,7 +16,11 @@ export const AdminProjectWritePage = () => {
           </Suspense>
         );
       case 'grid':
-        return <div>그리드 폼 컴포넌트 (준비중)</div>;
+        return (
+          <Suspense>
+            <GridSectionForm setStep={setStep} />
+          </Suspense>
+        );
       default:
         return null;
     }

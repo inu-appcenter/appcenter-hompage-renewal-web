@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react';
 import { Pencil, Plus, Trash2, Loader2, X, Upload } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
-import { ImageManagement, useImageManagementActions } from 'entities/image-management';
+import { ImageManagement, useImageManagementActions } from 'entities/workshop';
 
 export const AddImageForm = () => {
   const { addMutation } = useImageManagementActions();
