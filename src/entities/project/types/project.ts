@@ -10,19 +10,6 @@ export interface Project {
   websiteLink: string;
   isActive: boolean;
   images: Record<string, string>;
-  stack: string[];
-  groups: string[];
-}
-
-export interface ProjectForm {
-  body: string;
-  multipartFiles: File[];
-  title: string;
-  subTitle: string;
-  androidStoreLink: string;
-  appleStoreLink: string;
-  websiteLink: string;
-  isActive: boolean;
-  stackIds: string[];
-  groupIds: string[];
+  stack: number[];
+  groups: number[];
 }
