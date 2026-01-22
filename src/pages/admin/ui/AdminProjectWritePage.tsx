@@ -3,7 +3,7 @@ import { Suspense, useState } from 'react';
 import { GridSectionForm, IntroduceSectionForm, MainSectionForm, StepIndicator, type StepType } from 'features/project';
 
 export const AdminProjectWritePage = () => {
-  const [step, setStep] = useState<StepType>('main');
+  const [step, setStep] = useState<StepType>('introduce');
 
   const renderStepContent = () => {
     switch (step) {

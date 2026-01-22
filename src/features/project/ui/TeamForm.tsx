@@ -54,7 +54,6 @@ export const TeamForm = ({ form, setForm }: { form: IntroduceForm; setForm: Reac
   return (
     <div className="relative flex h-full w-full flex-col">
       <div className="flex h-full w-full items-center justify-center overflow-hidden">
-        {/* 1. 선택된 팀원들 */}
         {selectedMemberObjects.length > 0 ? (
           <div className="custom-scrollbar flex h-full w-full flex-row items-start justify-center gap-8 overflow-x-auto p-4">
             {Object.entries(groupedSelectedMembers).map(([partName, members]) => (

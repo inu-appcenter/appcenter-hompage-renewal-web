@@ -8,7 +8,7 @@ interface SearchMemberProps {
   onSelect: (member: Member) => void;
   isPending?: boolean;
 }
-export const SearchMember = ({ initialName = '', onSelect, isPending: externalPending }: SearchMemberProps) => {
+export const SearchMember = ({ initialName = '', onSelect, isPending }: SearchMemberProps) => {
   const [query, setQuery] = useState(initialName);
   const [selectedId, setSelectedId] = useState<number | null>(null);
   const [shouldSearch, setShouldSearch] = useState(false);
@@ -48,7 +48,7 @@ export const SearchMember = ({ initialName = '', onSelect, isPending: externalPe
       <div className="flex gap-2">
         <div className="relative flex-1">
           <input
-            disabled={externalPending || isSearching}
+            disabled={isPending || isSearching}
             className={`w-full rounded-2xl border bg-slate-50 px-3 py-3 pl-5 text-sm transition-all outline-none ${
               selectedId ? 'border-emerald-500/50' : 'focus:border-brand-primary-cta border-slate-100'
             } ${noResults ? 'border-amber-400' : ''}`}
@@ -62,7 +62,7 @@ export const SearchMember = ({ initialName = '', onSelect, isPending: externalPe
         <button
           type="button"
           onClick={handleSearch}
-          disabled={externalPending || isSearching || query.trim().length < 2}
+          disabled={isPending || isSearching || query.trim().length < 2}
           className="bg-brand-primary-cta hover:bg-brand-primary-cta flex items-center justify-center rounded-2xl px-6 text-white transition-all active:scale-95 disabled:bg-slate-200 disabled:text-slate-400"
         >
           {isSearching ? <Loader2 size={20} className="animate-spin" /> : <Search size={20} />}
