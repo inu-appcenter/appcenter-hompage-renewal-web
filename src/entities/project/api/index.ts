@@ -10,15 +10,19 @@ export const projectApi = {
     return http.post<Project>('/introduction-board', newProject);
   },
 
-  update: ({ data, id }: { data: FormData; id: number }) => {
-    return http.patch<Project>(`/introduction-board?board_id=${id}`, data);
+  update: ({ data, id, modifiedIds }: { data: FormData; id: number; modifiedIds?: number[] }) => {
+    return http.patch<Project>(`/introduction-board${modifiedIds ? `/${modifiedIds.join(',')}` : ''}?board_id=${id}`, data);
   },
 
   delete: (id: number) => {
-    return http.delete<void>(`/introduction-board/${id}`);
+    return http.delete(`/introduction-board/${id}`);
   },
 
   toggleActive: ({ id, isActive }: { id: number; isActive: boolean }) => {
     return http.patch<Project>(`/introduction-board/${id}/activation?isActive=${isActive}`, {});
+  },
+
+  getById: (id: number) => {
+    return http.get<Project>(`/introduction-board/public/${id}`);
   }
 };

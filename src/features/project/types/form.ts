@@ -1,8 +1,29 @@
 import { Project } from 'entities/project';
 
-export type IntroduceForm = Pick<Project, 'stack' | 'groups'>;
+export type ProjectImage = { id: number; url: string; file?: never } | { id: number; url: string; file: File };
 
-export type MainForm = Pick<Project, 'title' | 'subTitle' | 'isActive' | 'androidStoreLink' | 'appleStoreLink' | 'websiteLink'> & {
-  appIcon: File | null;
-  mockupImage: File | null;
+export type ProjectFormType = Omit<Project, 'id' | 'createdDate' | 'lastModifiedDate' | 'images' | 'stacks' | 'groups'> & {
+  images: ProjectImage[];
+  stacks: number[];
+  groups: number[];
 };
+
+export type StepType = 'main' | 'introduce' | 'grid';
+
+export type GridItemType = 'image' | 'text';
+
+export interface GridItem {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  type: GridItemType;
+  content: string;
+}
+
+export interface SectionData {
+  id: string;
+  title?: string;
+  items: GridItem[];
+}

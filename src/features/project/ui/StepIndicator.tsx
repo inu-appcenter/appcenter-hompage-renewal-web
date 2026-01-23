@@ -1,6 +1,5 @@
 import { CheckIcon } from 'lucide-react';
-
-export type StepType = 'main' | 'introduce' | 'grid';
+import { StepType } from '../types/form';
 
 const STEPS: Array<{ id: StepType; label: string }> = [
   { id: 'main', label: '메인 정보' },

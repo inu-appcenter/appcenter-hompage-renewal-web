@@ -1,19 +1,5 @@
 import { useProjectActions } from 'entities/project';
-import { convertURLtoFile } from 'shared/utils/convertURLtoFile';
-
-interface ProjectSubmitPayload {
-  title: string;
-  subTitle: string;
-  isActive: boolean;
-  androidStoreLink?: string;
-  appleStoreLink?: string;
-  webSiteLink?: string;
-  body?: string;
-  stackIds?: number[];
-  groupIds?: number[];
-  // 순서 중요: [앱 아이콘, 목업 이미지]
-  images: Array<File | string | null>;
-}
+import { ProjectFormType } from '../types/form';
 
 interface EditProjectSubmitProps {
   mode: 'edit';
@@ -24,52 +10,42 @@ interface AddProjectSubmitProps {
   mode: 'create';
   onSuccess: () => void;
 }
-
 export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmitProps) => {
   const { addMutation, editMutation } = useProjectActions();
 
   const isPending = props.mode === 'create' ? addMutation.isPending : editMutation.isPending;
 
-  const submit = async (payload: ProjectSubmitPayload) => {
+  const submit = async (data: ProjectFormType) => {
     const formData = new FormData();
+    const modifiedIds: number[] = [];
 
     // 1. 기본 텍스트 데이터
-    formData.append('title', payload.title);
-    formData.append('subTitle', payload.subTitle);
-    formData.append('body', payload.body || '');
-    formData.append('isActive', String(payload.isActive));
-    formData.append('androidStoreLink', payload.androidStoreLink || '');
-    formData.append('appleStoreLink', payload.appleStoreLink || '');
-    formData.append('webSiteLink', payload.webSiteLink || '');
+    formData.append('title', data.title);
+    formData.append('subTitle', data.subTitle);
+    formData.append('body', data.body);
+    formData.append('isActive', String(data.isActive));
+    formData.append('androidStoreLink', data.androidStoreLink);
+    formData.append('appleStoreLink', data.appleStoreLink);
+    formData.append('webSiteLink', data.webSiteLink);
 
     // 2. 이미지 처리 로직 (File이면 그대로, URL이면 변환)
-    const filePromises = [...payload.images].map(async (item) => {
-      if (!item) return null;
-      if (item instanceof File) return item; // 이미 파일이면 그대로 반환
-      if (typeof item === 'string') {
-        try {
-          return await convertURLtoFile(item); // URL이면 파일로 변환
-        } catch (error) {
-          console.error('이미지 변환 실패:', item, error);
-          return null;
-        }
+    data.images.forEach((img) => {
+      if (img?.id && img?.file) {
+        modifiedIds.push(img.id);
+        formData.append('multipartFiles', img.file);
+      } else if (!img?.id && img?.file) {
+        formData.append('multipartFiles', img.file);
       }
-      return null;
     });
 
-    const files = await Promise.all(filePromises);
-
-    files.forEach((file) => {
-      if (file) formData.append('multipartFiles', file);
-    });
-
-    if (payload.stackIds) payload.stackIds.forEach((id) => formData.append('stackIds', String(id)));
-    if (payload.groupIds) payload.groupIds.forEach((id) => formData.append('groupIds', String(id)));
+    // 3. 스택 및 참여 파트원 배열 처리
+    if (data.stacks) data.stacks.forEach((id) => formData.append('stackIds', String(id)));
+    if (data.groups) data.groups.forEach((id) => formData.append('groupIds', String(id)));
 
     if (props.mode === 'create') {
       addMutation.mutate(formData, { onSuccess: props.onSuccess });
     } else {
-      editMutation.mutate({ data: formData, id: props.projectId }, { onSuccess: props.onSuccess });
+      editMutation.mutate({ data: formData, id: props.projectId, modifiedIds }, { onSuccess: props.onSuccess });
     }
   };
 

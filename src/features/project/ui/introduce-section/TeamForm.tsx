@@ -1,11 +1,11 @@
-import { useGeneration, usePart } from 'entities/generation';
+import { Generation, useGeneration, usePart } from 'entities/generation';
 import { Check, Plus, Search, Users, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Modal } from 'shared/ui/modal';
-import { IntroduceForm } from '../types/form';
+import { ProjectFormType } from '../../types/form';
 import { PART_COLORS } from 'shared/constants/part';
 
-export const TeamForm = ({ form, setForm }: { form: IntroduceForm; setForm: React.Dispatch<React.SetStateAction<IntroduceForm>> }) => {
+export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: allMembers } = useGeneration();
   const { data: partData } = usePart();
 
@@ -42,7 +42,7 @@ export const TeamForm = ({ form, setForm }: { form: IntroduceForm; setForm: Reac
   }, [allMembers, form.groups]);
 
   const groupedSelectedMembers = useMemo(() => {
-    const groups: Record<string, typeof selectedMemberObjects> = {};
+    const groups: Record<string, Generation[]> = {};
     selectedMemberObjects.forEach((member) => {
       const partName = typeof member.part === 'string' ? member.part : member.part || 'Unassigned';
       if (!groups[partName]) groups[partName] = [];

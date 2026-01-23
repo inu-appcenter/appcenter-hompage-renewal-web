@@ -5,7 +5,7 @@ import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { SearchBar } from 'shared/ui/searchbar';
 import { Project, useProject } from 'entities/project';
-import { AddProjectForm, EditProjectForm, DeleteProjectButton, ProjectStatusToggle } from './ProjectForm';
+import { AddProjectForm, EditProjectForm, DeleteProjectButton, ProjectStatusToggle } from './ProjectListButton';
 import { AppStore, GooglePlay, WebLink } from 'entities/link';
 
 export const AdminProjectList = () => {

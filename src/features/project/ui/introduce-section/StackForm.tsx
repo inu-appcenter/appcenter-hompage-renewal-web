@@ -2,19 +2,19 @@ import { useSkillStack } from 'entities/skill-stack';
 import { Check, Code2, Layers, Plus, RefreshCw, Search, Settings, X } from 'lucide-react';
 import { useState } from 'react';
 import { Modal } from 'shared/ui/modal';
-import { IntroduceForm } from '../types/form';
 import Link from 'next/link';
+import { ProjectFormType } from 'features/project/types/form';
 
-export const StackForm = ({ form, setForm }: { form: IntroduceForm; setForm: React.Dispatch<React.SetStateAction<IntroduceForm>> }) => {
+export const StackForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
   const { data: skillStack, refetch, isRefetching } = useSkillStack();
   const [searchTerm, setSearchTerm] = useState('');
 
   const toggleStack = (id: number) => {
     setForm((prev) => {
-      const isSelected = prev.stack.includes(id);
+      const isSelected = prev.stacks.includes(id);
       return {
         ...prev,
-        stack: isSelected ? prev.stack.filter((stackId) => stackId !== id) : [...prev.stack, id]
+        stacks: isSelected ? prev.stacks.filter((stackId) => stackId !== id) : [...prev.stacks, id]
       };
     });
   };
@@ -23,12 +23,12 @@ export const StackForm = ({ form, setForm }: { form: IntroduceForm; setForm: Rea
     e.stopPropagation();
     setForm((prev) => ({
       ...prev,
-      stack: prev.stack.filter((stackId) => stackId !== id)
+      stacks: prev.stacks.filter((stackId) => stackId !== id)
     }));
   };
 
   const filteredStack = skillStack.filter((skill) => skill.name.toLowerCase().includes(searchTerm.toLowerCase())) || [];
-  const selectedSkills = skillStack.filter((skill) => form.stack.includes(skill.id)) || [];
+  const selectedSkills = skillStack.filter((skill) => form.stacks.includes(skill.id)) || [];
 
   return (
     <div className="gpa-4 relative flex h-full w-full flex-col">
@@ -89,7 +89,7 @@ export const StackForm = ({ form, setForm }: { form: IntroduceForm; setForm: Rea
               {filteredStack.length > 0 ? (
                 <div className="flex flex-wrap gap-2">
                   {filteredStack.map((skill) => {
-                    const isSelected = form.stack.includes(skill.id);
+                    const isSelected = form.stacks.includes(skill.id);
                     return (
                       <div
                         key={skill.id}
@@ -146,7 +146,7 @@ export const StackForm = ({ form, setForm }: { form: IntroduceForm; setForm: Rea
               className="flex w-full items-center justify-center gap-2 rounded-2xl bg-slate-900 py-4 font-bold text-white shadow-lg shadow-slate-900/20 transition-all hover:bg-slate-800 active:scale-[0.98]"
             >
               <Check size={20} />
-              <span>선택 완료 ({form.stack.length}개)</span>
+              <span>선택 완료 ({form.stacks.length}개)</span>
             </button>
           </div>
         )}

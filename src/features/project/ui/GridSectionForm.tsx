@@ -4,25 +4,7 @@ import { Responsive, useContainerWidth } from 'react-grid-layout';
 import { Plus, Image as ImageIcon, Type, X, ArrowRight, Loader2, ArrowDownRight, LayoutGrid, Trash2, Layers } from 'lucide-react';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-
-// --- Types ---
-type GridItemType = 'image' | 'text';
-
-interface GridItem {
-  i: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  type: GridItemType;
-  content: string;
-}
-
-interface SectionData {
-  id: string;
-  title?: string;
-  items: GridItem[];
-}
+import { GridItem, GridItemType } from '../types/form';
 
 const SingleGridEditor = ({
   sectionId,
@@ -217,9 +199,7 @@ const SingleGridEditor = ({
   );
 };
 
-// --- 메인 부모 컴포넌트 ---
-export const GridSectionForm = ({ setStep }: { setStep: React.Dispatch<React.SetStateAction<'main' | 'introduce' | 'grid'>> }) => {
-  // 섹션 목록 관리 (초기값: 섹션 1개)
+export const GridSectionForm = () => {
   const [sections, setSections] = useState<SectionData[]>([
     {
       id: crypto.randomUUID(),
@@ -228,25 +208,21 @@ export const GridSectionForm = ({ setStep }: { setStep: React.Dispatch<React.Set
   ]);
   const [isPending, setIsPending] = useState(false);
 
-  // 새 섹션 추가
   const addSection = () => {
     setSections((prev) => [...prev, { id: crypto.randomUUID(), items: [] }]);
   };
 
-  // 섹션 삭제
   const removeSection = (sectionId: string) => {
     if (sections.length === 1) return alert('최소 하나의 섹션은 필요합니다.');
     setSections((prev) => prev.filter((s) => s.id !== sectionId));
   };
 
-  // 특정 섹션의 items 업데이트
   const updateSectionItems = useCallback((sectionId: string, newItems: GridItem[]) => {
     setSections((prev) => prev.map((section) => (section.id === sectionId ? { ...section, items: newItems } : section)));
   }, []);
 
   const handleSubmit = () => {
     setIsPending(true);
-    // sections 배열 전체를 저장
     console.log(JSON.stringify(sections, null, 2));
     setTimeout(() => {
       setIsPending(false);

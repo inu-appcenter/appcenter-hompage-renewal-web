@@ -1,78 +1,95 @@
 'use client';
-import Link from 'next/link';
-import { Pencil, Plus, Trash2, Loader2 } from 'lucide-react';
-import { Project, useProjectActions } from 'entities/project';
+import { Suspense, useState } from 'react';
+import { Project } from 'entities/project';
+import { ProjectFormType, StepType } from '../types/form';
+import { MainSectionForm } from './MainSectionForm';
+import { IntroduceSectionForm } from './IntroduceSectionForm';
+import { GridSectionForm } from './GridSectionForm';
+import { StepIndicator } from './StepIndicator';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import { useProjectSubmit } from '../hooks/useProjectSubmit';
 
-export const AddProjectForm = () => {
-  return (
-    <Link href="/admin/project/new">
-      <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
-        <Plus size={18} /> 새 프로젝트 추가
-      </button>
-    </Link>
+export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
+  const [step, setStep] = useState<StepType>('main');
+  const [form, setForm] = useState<ProjectFormType>({
+    title: initialData?.title || '',
+    subTitle: initialData?.subTitle || '',
+    isActive: initialData?.isActive ?? true,
+    androidStoreLink: initialData?.androidStoreLink || '',
+    appleStoreLink: initialData?.appleStoreLink || '',
+    webSiteLink: initialData?.webSiteLink || '',
+    body: initialData?.body || '',
+    stacks: initialData?.stacks.map((stack) => stack.id) || [],
+    groups: initialData?.groups.map((group) => group.group_id) || [],
+    images: Object.entries(initialData?.images || [null, null]).map(([id, url]) => ({
+      id: Number(id),
+      url: url as string
+    }))
+  });
+  console.log(form);
+  const isFormValid = form.title.trim().length > 0 && form.subTitle.trim().length > 0 && Boolean(form.images[0]) && Boolean(form.images[1]);
+
+  const { submit, isPending } = useProjectSubmit(
+    initialData?.id
+      ? {
+          mode: 'edit',
+          projectId: initialData.id,
+          onSuccess: () => setStep('introduce')
+        }
+      : {
+          mode: 'create',
+          onSuccess: () => setStep('introduce')
+        }
   );
-};
 
-export const EditProjectForm = ({ project }: { project: Project }) => {
-  return (
-    <Link href={`/admin/project/edit/${project.id}`}>
-      <button className="rounded-lg p-2 text-slate-400 hover:bg-emerald-50 hover:text-emerald-500">
-        <Pencil size={16} />
-      </button>
-    </Link>
-  );
-};
-
-export const DeleteProjectButton = ({ projectId }: { projectId: number }) => {
-  const { deleteMutation } = useProjectActions();
-
-  const handleDelete = () => {
-    if (confirm('정말 삭제하시겠습니까?')) {
-      deleteMutation.mutate(projectId);
+  const renderStepContent = () => {
+    switch (step) {
+      case 'main':
+        return <MainSectionForm form={form} setForm={setForm} setStep={setStep} />;
+      case 'introduce':
+        return (
+          <Suspense>
+            <IntroduceSectionForm form={form} setForm={setForm} setStep={setStep} />
+          </Suspense>
+        );
+      case 'grid':
+        return (
+          <Suspense>
+            <GridSectionForm />
+          </Suspense>
+        );
+      default:
+        return null;
     }
   };
 
   return (
-    <button disabled={deleteMutation.isPending} className="rounded-lg p-2 text-slate-400 hover:bg-red-50 hover:text-red-500 disabled:opacity-50" onClick={handleDelete}>
-      {deleteMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={16} />}
-    </button>
-  );
-};
-
-export const ProjectStatusToggle = ({ projectId, isActive }: { projectId: number; isActive: boolean }) => {
-  const { toggleMutation } = useProjectActions();
-
-  const isPending = toggleMutation.isPending;
-
-  const handleToggle = () => {
-    if (isPending) return;
-
-    toggleMutation.mutate({
-      id: projectId,
-      isActive: !isActive
-    });
-  };
-
-  return (
-    <button
-      onClick={handleToggle}
-      disabled={isPending}
-      title={isActive ? '비활성화하기' : '활성화하기'}
-      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:outline-none ${
-        isActive ? 'bg-emerald-500' : 'bg-slate-200'
-      } ${isPending ? 'cursor-not-allowed opacity-50' : ''}`}
-    >
-      <span className="sr-only">상태 변경</span>
-      <span
-        aria-hidden="true"
-        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${isActive ? 'translate-x-5' : 'translate-x-0'}`}
-      >
-        {isPending && (
-          <span className="absolute inset-0 flex items-center justify-center">
-            <Loader2 size={10} className="animate-spin text-slate-400" />
-          </span>
-        )}
-      </span>
-    </button>
+    <div className="flex h-full w-full flex-col p-6">
+      <div className="mx-auto mb-12 w-full max-w-3xl">
+        <StepIndicator currentStep={step} />
+      </div>
+      <section className="bg-background w-full flex-1 rounded-2xl border p-4 shadow-sm">
+        {renderStepContent()}
+        <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
+          <button
+            onClick={() => submit(form)}
+            disabled={!isFormValid || isPending}
+            className="group bg-brand-primary-cta text-custom-black flex items-center gap-2 rounded-full px-6 py-4 text-xl font-semibold shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-lg"
+          >
+            {isPending ? (
+              <>
+                <Loader2 className="animate-spin" size={20} />
+                <span className="font-medium">저장 중...</span>
+              </>
+            ) : (
+              <>
+                <span className="font-medium">다음 (저장)</span>
+                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
+              </>
+            )}
+          </button>
+        </div>
+      </section>
+    </div>
   );
 };
