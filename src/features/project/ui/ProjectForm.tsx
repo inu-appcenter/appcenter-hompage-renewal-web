@@ -10,7 +10,7 @@ import { ArrowRight, Loader2 } from 'lucide-react';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
-  const [step, setStep] = useState<StepType>('main');
+  const [step, setStep] = useState<StepType>('grid');
   const [form, setForm] = useState<ProjectFormType>({
     title: initialData?.title || '',
     subTitle: initialData?.subTitle || '',
@@ -34,11 +34,11 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
       ? {
           mode: 'edit',
           projectId: initialData.id,
-          onSuccess: () => setStep('introduce')
+          onSuccess: () => setStep('grid')
         }
       : {
           mode: 'create',
-          onSuccess: () => setStep('introduce')
+          onSuccess: () => setStep('grid')
         }
   );
 
@@ -55,11 +55,21 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
       case 'grid':
         return (
           <Suspense>
-            <GridSectionForm />
+            <GridSectionForm form={form} setForm={setForm} />
           </Suspense>
         );
       default:
         return null;
+    }
+  };
+
+  const handleNext = () => {
+    if (step === 'main' && isFormValid) {
+      setStep('introduce');
+    } else if (step === 'introduce') {
+      submit(form);
+    } else if (step === 'grid') {
+      submit(form);
     }
   };
 
@@ -72,7 +82,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         {renderStepContent()}
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
           <button
-            onClick={() => submit(form)}
+            onClick={handleNext}
             disabled={!isFormValid || isPending}
             className="group bg-brand-primary-cta text-custom-black flex items-center gap-2 rounded-full px-6 py-4 text-xl font-semibold shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-lg"
           >
@@ -83,7 +93,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
               </>
             ) : (
               <>
-                <span className="font-medium">다음 (저장)</span>
+                <span className="font-medium">다음</span>
                 <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={20} />
               </>
             )}

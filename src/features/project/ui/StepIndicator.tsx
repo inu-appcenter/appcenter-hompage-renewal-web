@@ -4,7 +4,7 @@ import { StepType } from '../types/form';
 const STEPS: Array<{ id: StepType; label: string }> = [
   { id: 'main', label: '메인 정보' },
   { id: 'introduce', label: '기술스택 / 팀원정보' },
-  { id: 'grid', label: '소개글' }
+  { id: 'grid', label: '소개 글' }
 ];
 export const StepIndicator = ({ currentStep }: { currentStep: StepType }) => {
   return (

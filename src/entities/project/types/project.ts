@@ -11,7 +11,7 @@ export interface Project {
   appleStoreLink: string;
   webSiteLink: string;
   isActive: boolean;
-  images: Record<string, string | File | null>;
+  images: Record<string, string>;
   stacks: Array<{ id: number; name: string; icon: string }>;
-  groups: Array<{ group_id: number; name: string; part: Part }>;
+  groups: Array<{ group_id: number; member: string; part: Part }>;
 }

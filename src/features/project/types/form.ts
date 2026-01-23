@@ -24,6 +24,5 @@ export interface GridItem {
 
 export interface SectionData {
   id: string;
-  title?: string;
   items: GridItem[];
 }

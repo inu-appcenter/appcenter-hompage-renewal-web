@@ -34,7 +34,7 @@ const Item = ({ data }: { data: Project }) => {
   return (
     <motion.div whileHover={{ y: -24, scale: 1.05 }} transition={{ duration: 0.4 }} className="group relative h-140 w-142 shrink-0 cursor-pointer snap-center overflow-hidden rounded-xl bg-gray-900">
       <Image src={myImage} alt={data.title} fill className="object-cover" />
-      <Link href={`/project/id=${data.title}`} className="absolute inset-0 z-10">
+      <Link href={`/project/105`} className="absolute inset-0 z-10">
         <motion.div
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
