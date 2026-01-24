@@ -1,8 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
-import type { Role, RoleForm } from 'entities/role';
-import { useRoleActions } from 'entities/role';
+import { useRoleActions, type Role, type RoleForm } from 'entities/role';
 import { Modal } from 'shared/ui/modal';
 
 export const AddRoleForm = () => {
@@ -83,16 +82,19 @@ const RoleForm = ({ initialData, onSubmit, isPending }: { initialData?: Role; on
         e.preventDefault();
         onSubmit(formData);
       }}
-      className="space-y-6"
+      className="space-y-4"
     >
-      <input
-        disabled={isPending}
-        className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
-        placeholder="역할 이름"
-        autoFocus
-        value={formData.roleName}
-        onChange={(e) => setFormData({ ...formData, roleName: e.target.value })}
-      />
+      <div className="flex flex-col gap-2">
+        <label className="ml-1 text-sm font-semibold text-slate-400">역할</label>
+        <input
+          disabled={isPending}
+          className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-60"
+          placeholder="역할 이름"
+          autoFocus
+          value={formData.roleName}
+          onChange={(e) => setFormData({ ...formData, roleName: e.target.value })}
+        />
+      </div>
       <button
         type="submit"
         disabled={isPending || !formData.roleName}

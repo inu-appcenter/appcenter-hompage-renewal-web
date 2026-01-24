@@ -1,4 +1,4 @@
-import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon, Building2 } from 'lucide-react';
+import { Users, Layout, Image as ImageIcon, MessageCircle, Activity, LucideIcon, Building2, Zap } from 'lucide-react';
 
 /* 
 기능이 추가로 생기면 아래에 넣어주세요.
@@ -41,7 +41,11 @@ export const ADMIN_MENU: AdminMenuType[] = [
     tag: 'project',
     description: '동아리에서 진행한 프로젝트 관리',
     path: '/admin/project',
-    icon: Layout
+    icon: Layout,
+    subMenu: [
+      { name: '프로젝트 관리', href: '/admin/project', icon: Layout },
+      { name: '기술 아이콘 관리', href: '/admin/skill', icon: Zap }
+    ]
   },
   {
     group: '이미지 관리',

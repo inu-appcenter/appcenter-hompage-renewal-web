@@ -1,6 +1,6 @@
 'use client';
-import { useState, useRef } from 'react';
-import { useScroll, useMotionValueEvent } from 'motion/react';
+import { useState, useRef, useEffect } from 'react';
+import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/react';
 
 export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
@@ -28,37 +28,53 @@ interface CarouselProps<T> {
   renderItem: (item: T, index: number) => React.ReactNode;
   className?: string;
 }
+
 export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps<T>) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const scrollRef = useRef<HTMLUListElement>(null);
+  const containerRef = useRef<HTMLUListElement>(null);
+  const xTranslation = useMotionValue(0);
 
-  const { scrollXProgress } = useScroll({
-    container: scrollRef
-  });
+  const duplicatedData = [...data, ...data, ...data];
 
-  useMotionValueEvent(scrollXProgress, 'change', (latest) => {
-    if (data.length <= 1) return;
-    const index = Math.round(latest * (data.length - 1));
+  useEffect(() => {
+    const contentWidth = containerRef.current?.scrollWidth || 0;
+    const singleSetWidth = contentWidth / 3;
+
+    const controls = animate(xTranslation, [0, -singleSetWidth], {
+      ease: 'linear',
+      duration: 40,
+      repeat: Infinity,
+      repeatType: 'loop'
+    });
+
+    return controls.stop;
+  }, [xTranslation, data.length]);
+
+  useMotionValueEvent(xTranslation, 'change', (latest) => {
+    const contentWidth = containerRef.current?.scrollWidth || 0;
+    const singleSetWidth = contentWidth / 3;
+
+    const progress = (Math.abs(latest) % singleSetWidth) / singleSetWidth;
+    const index = Math.round(progress * data.length) % data.length;
+
     if (index !== activeIndex) {
       setActiveIndex(index);
     }
   });
 
   return (
-    <div className={`flex flex-col gap-10`}>
-      <ul ref={scrollRef} className={`no-scrollbar flex flex-row overflow-x-auto px-8 pt-12 ${className}`}>
-        {data.map((item, index) => (
+    <div className={`${className} flex flex-col gap-7 overflow-hidden py-12`}>
+      <motion.ul ref={containerRef} style={{ x: xTranslation }} className={`flex gap-8 whitespace-nowrap`}>
+        {duplicatedData.map((item, index) => (
           <li key={index} className="shrink-0">
-            {renderItem(item, index)}
+            {renderItem(item, index % data.length)}
           </li>
         ))}
-      </ul>
+      </motion.ul>
 
-      <div className="flex justify-center gap-7">
+      <div className="flex justify-center gap-5">
         {data.map((_, index) => (
-          <div key={index} className="relative h-3 w-3">
-            <div className={`absolute inset-0 rounded-full transition-colors duration-300 ${activeIndex === index ? 'bg-brand-primary-cta' : 'bg-custom-gray-700'}`} />
-          </div>
+          <div key={index} className={`h-3 w-3 rounded-full transition-all duration-300 ${activeIndex === index ? 'bg-brand-primary-cta' : 'bg-custom-gray-700'}`} />
         ))}
       </div>
     </div>

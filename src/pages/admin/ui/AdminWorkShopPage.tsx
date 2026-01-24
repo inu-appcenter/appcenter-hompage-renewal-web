@@ -1,9 +1,9 @@
-import { AdminImageList } from 'features/image-management';
+import { AdminImageList } from 'features/workshop';
 import { PageTitle } from './Components';
 import { Suspense } from 'react';
 import { TableSkeleton } from 'shared/skeleton/TableSkeleton';
 
-export const AdminImagePage = () => {
+export const AdminWorkShopPage = () => {
   return (
     <>
       <PageTitle title="이미지 관리" description="동아리와 관련된 이미지들을 관리합니다." />

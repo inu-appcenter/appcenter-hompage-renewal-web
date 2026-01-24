@@ -1,13 +1,18 @@
+import { projectApi } from 'entities/project/api';
 import { GridSection } from './GridSection';
 import { IntroduceSection } from './IntroduceSection';
 import { MainSection } from './MainSection';
 
-export const ProjectDetailPage = () => {
+export async function ProjectDetailPage({ params }: { params: Promise<{ id: number }> }) {
+  const { id } = await params;
+  const data = await projectApi.getById(id);
+  console.log('ProjectDetailPage data', data);
+
   return (
     <>
-      <MainSection />
-      <IntroduceSection />
-      <GridSection />
+      <MainSection data={data} />
+      <IntroduceSection data={data} />
+      <GridSection data={data} />
     </>
   );
-};
+}

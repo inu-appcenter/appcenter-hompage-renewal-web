@@ -14,7 +14,7 @@ export const AdminMemberList = () => {
 
   const filteredMembers = useMemo(() => {
     return data.filter((m) => {
-      const searchStr = `${m.name} ${m.email || ''} ${m.phoneNumber || ''} ${m.department || ''} ${m.studentNumber || ''}`.toLowerCase();
+      const searchStr = `${m.name}`.toLowerCase();
       return searchStr.includes(searchTerm.toLowerCase());
     });
   }, [searchTerm, data]);
@@ -22,7 +22,7 @@ export const AdminMemberList = () => {
   return (
     <>
       <div className="mb-6 flex items-center justify-between gap-4">
-        <SearchBar placeholder="이름, 이메일, 학과 등으로 멤버를 검색하세요..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+        <SearchBar placeholder="이름으로 멤버를 검색하세요..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
         <AddMemberForm />
       </div>
 
@@ -32,7 +32,7 @@ export const AdminMemberList = () => {
           <TableHeaderCell className="w-68">기본 정보</TableHeaderCell>
           <TableHeaderCell className="w-48">학과/학번</TableHeaderCell>
           <TableHeaderCell>등록된 링크</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {filteredMembers.map((member) => (
@@ -48,7 +48,7 @@ export const AdminMemberList = () => {
 const MemberItem = ({ data }: { data: ReturnType<typeof useMember>['data'][number] }) => {
   return (
     <tr className="group transition-colors hover:bg-slate-50/50">
-      <td className="px-6 py-5 text-center font-mono text-sm text-slate-400">#{data.member_id}</td>
+      <td className="px-6 py-5 text-center text-sm text-slate-400">#{data.member_id}</td>
 
       <td className="px-6 py-5">
         <div className="flex items-center gap-3">

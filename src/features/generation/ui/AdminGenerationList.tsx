@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import { Github, NotebookPen, ExternalLink, RotateCcw, Mail } from 'lucide-react';
 
-import { DeleteGenerationButton } from './DeleteGenerationButton';
+import { DeleteGenerationButton, AddGenerationForm, EditGenerationForm } from './GenerationForm';
 
 import { useGeneration, useGroupYear, usePart } from 'entities/generation';
 
@@ -12,8 +12,6 @@ import { PART_COLORS } from 'shared/constants/part';
 import { Part } from 'shared/types/part';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { SearchBar } from 'shared/ui/searchbar';
-import { AddGenerationForm } from './AddForm';
-import { EditGenerationForm } from './EditForm';
 
 export const AdminGenerationList = () => {
   const { data } = useGeneration();
@@ -61,7 +59,7 @@ export const AdminGenerationList = () => {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <span className="px-1 text-[11px] font-bold tracking-widest text-slate-400">Generation (기수)</span>
+            <span className="px-1 text-[11px] font-bold tracking-widest text-slate-400">기수</span>
             <div className="flex flex-wrap gap-1.5">
               {yearOptions.map((year) => (
                 <button
@@ -79,7 +77,7 @@ export const AdminGenerationList = () => {
 
           {/* 파트 선택 */}
           <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-            <span className="px-1 text-xs font-bold tracking-widest text-slate-400">Part (파트)</span>
+            <span className="px-1 text-xs font-bold tracking-widest text-slate-400">파트</span>
             <div className="flex flex-wrap gap-1.5">
               {partOptions.map((part) => (
                 <button
@@ -99,7 +97,6 @@ export const AdminGenerationList = () => {
         <SearchBar placeholder="이름으로 검색하세요..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
       </div>
 
-      {/* 테이블 영역 */}
       <Table>
         <TableHeader>
           <TableHeaderCell className="w-16">ID</TableHeaderCell>
@@ -107,7 +104,7 @@ export const AdminGenerationList = () => {
           <TableHeaderCell className="w-72">멤버 정보</TableHeaderCell>
           <TableHeaderCell className="w-40">역할 / 파트</TableHeaderCell>
           <TableHeaderCell>등록된 링크</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {filteredData.map((gen) => (

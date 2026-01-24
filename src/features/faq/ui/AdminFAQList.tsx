@@ -48,7 +48,7 @@ export const AdminFAQList = () => {
           <TableHeaderCell className="w-16">ID</TableHeaderCell>
           <TableHeaderCell className="w-30">파트명</TableHeaderCell>
           <TableHeaderCell className="px-6">질문 및 답변</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {filteredFaqs.map((faq) => (

@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
-import { Part } from 'shared/types/part';
 import { generationOptions } from '../api/queries';
 import { generationApi } from '../api';
-import { http } from 'shared/utils/http';
 
 export const useGeneration = () => {
   return useSuspenseQuery({
@@ -10,25 +8,15 @@ export const useGeneration = () => {
   });
 };
 
-// 파트 불러오기
 export const usePart = () => {
-  return useSuspenseQuery<{ parts: Part[] }>({
-    queryKey: ['parts'],
-    queryFn: async () => {
-      return http.get<{ parts: Part[] }>('/groups/public/all-parts');
-    },
-    staleTime: Infinity
+  return useSuspenseQuery({
+    ...generationOptions.parts()
   });
 };
 
-// 기수 불러오기
 export const useGroupYear = () => {
-  return useSuspenseQuery<{ yearList: number[] }>({
-    queryKey: ['groupYears'],
-    queryFn: async () => {
-      return http.get<{ yearList: number[] }>('/groups/public/all-groups-years');
-    },
-    staleTime: Infinity
+  return useSuspenseQuery({
+    ...generationOptions.groupYears()
   });
 };
 

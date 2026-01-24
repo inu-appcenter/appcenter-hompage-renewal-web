@@ -1,4 +1,5 @@
 import { http } from 'shared/utils/http';
+import { Part } from 'shared/types/part';
 import { Generation, GenerationForm } from '../types/generation';
 
 export const generationApi = {
@@ -16,5 +17,13 @@ export const generationApi = {
 
   delete: (id: number) => {
     return http.delete<void>(`/groups/${id}`);
+  },
+
+  getGroupYears: () => {
+    return http.get<{ yearList: number[] }>('/groups/public/all-groups-years');
+  },
+
+  getParts: () => {
+    return http.get<{ parts: Part[] }>('/groups/public/all-parts');
   }
 };

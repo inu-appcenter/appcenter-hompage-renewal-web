@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Pencil, Plus, Save, Trash2, Loader2 } from 'lucide-react';
 import type { Faq, FAQForm } from 'entities/faq';

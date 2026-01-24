@@ -50,9 +50,12 @@ async function handleProxy(req: NextRequest, pathSegments: string[]) {
     }
 
     const response = await fetch(`${process.env.API_URL}/${path}${searchParams}`, fetchOptions);
-
+    if (!response.ok) {
+      const errorData = await response.text();
+      console.log('BFF Error Response:', errorData);
+      return NextResponse.json(errorData, { status: response.status });
+    }
     if (response.status === 204) return new NextResponse(null, { status: 204 });
-
     const resData = await response.json();
     return NextResponse.json(resData, { status: response.status });
   } catch (error) {

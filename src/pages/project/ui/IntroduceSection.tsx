@@ -2,9 +2,12 @@
 import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Project } from 'entities/project';
 
 const TABS = ['사용 스택', '팀원 정보', '이용 현황'];
-export const IntroduceSection = () => {
+// 레이아웃은 나중에 작성할 예정
+// 되는지만 테스트
+export const IntroduceSection = ({ data }: { data: Project }) => {
   const [selected, setSelected] = useState(0);
 
   return (
@@ -18,8 +21,18 @@ export const IntroduceSection = () => {
       <div className="bg-custom-black flex h-118.5 w-full items-center justify-center overflow-hidden rounded-2xl px-28 py-11.5 text-5xl whitespace-pre-line text-white">
         <AnimatePresence mode="wait">
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-            {selected === 0 && '백엔드 생기면 넣을 예정1\n 아래 사진과 글을 자유롭게 움직이고 줄여보세요'}
-            {selected === 1 && '백엔드 생기면 넣을 예정2'}
+            {selected === 0 && (
+              <div>
+                {data.stacks &&
+                  data.stacks.map((stack) => (
+                    <div key={stack.id}>
+                      <img src={stack.icon} alt={stack.name} className="mr-2 inline-block h-8 w-8 align-middle" />
+                      {stack.name}
+                    </div>
+                  ))}
+              </div>
+            )}
+            {selected === 1 && <div>{data.groups && data.groups.map((member) => <div key={member.group_id}>{member.member}</div>)}</div>}
             {selected === 2 && '백엔드 생기면 넣을 예정3'}
           </motion.div>
         </AnimatePresence>
