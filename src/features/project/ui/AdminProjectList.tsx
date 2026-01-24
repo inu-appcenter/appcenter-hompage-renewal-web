@@ -70,8 +70,8 @@ const Item = ({ data }: { data: Project }) => {
         <div className="flex flex-row gap-2">
           {data.androidStoreLink && <GooglePlay href={data.androidStoreLink} className="h-8" />}
           {data.appleStoreLink && <AppStore href={data.appleStoreLink} className="h-8" />}
-          {data.websiteLink && <WebLink href={data.websiteLink} className="h-8" />}
-          {!data.androidStoreLink && !data.appleStoreLink && !data.websiteLink && <span className="text-xs text-slate-400">등록된 링크 없음</span>}
+          {data.webSiteLink && <WebLink href={data.webSiteLink} className="h-8" />}
+          {!data.androidStoreLink && !data.appleStoreLink && !data.webSiteLink && <span className="text-xs text-slate-400">등록된 링크 없음</span>}
         </div>
       </td>
 

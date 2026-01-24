@@ -12,6 +12,6 @@ export interface Project {
   webSiteLink: string;
   isActive: boolean;
   images: Record<string, string>;
-  stacks: Array<{ id: number; name: string; icon: string }>;
-  groups: Array<{ group_id: number; member: string; part: Part }>;
+  stacks: Array<{ id: number; name: string; icon: string }> | [];
+  groups: Array<{ group_id: number; member: string; part: Part }> | [];
 }

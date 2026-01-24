@@ -12,7 +12,7 @@ export async function ProjectDetailPage({ params }: { params: Promise<{ id: numb
     <>
       <MainSection data={data} />
       <IntroduceSection data={data} />
-      <GridSection content={data.body} />
+      <GridSection data={data} />
     </>
   );
 }

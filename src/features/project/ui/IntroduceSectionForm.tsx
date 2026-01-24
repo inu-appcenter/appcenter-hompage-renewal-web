@@ -1,7 +1,8 @@
 'use client';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { ProjectFormType, StepType } from '../types/form';
 import { SelectButton, StackForm, TeamForm } from './introduce-section';
+import { Loader2 } from 'lucide-react';
 
 interface IntroduceSectionFormProps {
   form: ProjectFormType;
@@ -19,9 +20,17 @@ export const IntroduceSectionForm = ({ form, setForm }: IntroduceSectionFormProp
         ))}
       </div>
       <div className="bg-custom-black h-118.5 w-full overflow-hidden rounded-2xl p-8 text-5xl whitespace-pre-line text-white">
-        {selectedTab === 0 && <StackForm form={form} setForm={setForm} />}
-        {selectedTab === 1 && <TeamForm form={form} setForm={setForm} />}
-        {selectedTab === 2 && '아직 미구현'}
+        <Suspense
+          fallback={
+            <div className="flex h-full w-full items-center justify-center">
+              <Loader2 className="animate-spin" />
+            </div>
+          }
+        >
+          {selectedTab === 0 && <StackForm form={form} setForm={setForm} />}
+          {selectedTab === 1 && <TeamForm form={form} setForm={setForm} />}
+          {selectedTab === 2 && '아직 미구현'}
+        </Suspense>
       </div>
     </section>
   );

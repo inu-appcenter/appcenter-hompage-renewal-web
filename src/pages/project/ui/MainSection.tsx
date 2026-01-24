@@ -10,7 +10,11 @@ export const MainSection = ({ data }: { data: Project }) => {
   return (
     <section className="flex h-screen flex-row justify-between px-20 pt-65">
       <div className="flex w-140 flex-col">
-        <div className="bg-brand-secondary-light mb-4 w-fit rounded-[40px] px-3 py-2">서비스이용가능</div>
+        {data.isActive ? (
+          <div className="bg-brand-secondary-light mb-4 w-fit rounded-[40px] px-3 py-2">서비스이용가능</div>
+        ) : (
+          <div className="mb-4 w-fit rounded-[40px] bg-gray-600 px-3 py-2">서비스종료</div>
+        )}
         <h1 className="text-primary-gradient mb-29 text-[72px] font-bold">{data.title}</h1>
         <p className="text-primary-gradient text-xl/7">{data.subTitle}</p>
         <div className="mt-9 flex gap-3">
@@ -19,7 +23,7 @@ export const MainSection = ({ data }: { data: Project }) => {
           {data.webSiteLink && <WebLink href={data.webSiteLink} />}
         </div>
       </div>
-      <Image src={imageUrls[1]} alt="Main Section Image" width={600} height={600} />
+      <Image src={imageUrls[1]} alt="Main Section Image" width={2000} height={600} className="h-auto w-92" quality={100} unoptimized={true} />
     </section>
   );
 };

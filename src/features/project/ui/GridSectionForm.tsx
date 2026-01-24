@@ -1,11 +1,36 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Plus } from 'lucide-react';
+
 import { GridItem, ProjectFormType } from '../types/form';
 import { GridEditor } from './grid-section/GridEditor';
 
-export const GridSectionForm = ({ form, setForm }: { form: ProjectFormType; setForm: React.Dispatch<React.SetStateAction<ProjectFormType>> }) => {
-  const [sections, setSections] = useState<GridItem[][]>(form.body ? JSON.parse(form.body) : [[]]);
+interface GridSectionFormProps {
+  form: ProjectFormType;
+  setForm: React.Dispatch<React.SetStateAction<ProjectFormType>>;
+  projectId: number | null;
+}
+export const GridSectionForm = ({ form, setForm, projectId }: GridSectionFormProps) => {
+  const [sections, setSections] = useState<GridItem[][]>(() => {
+    if (!form.body) return [[]];
+    try {
+      return JSON.parse(form.body);
+    } catch {
+      return [
+        [
+          {
+            i: '1',
+            x: 0,
+            y: 0,
+            w: 12,
+            h: 10,
+            type: 'text',
+            content: form.body
+          }
+        ]
+      ];
+    }
+  });
 
   useEffect(() => {
     setForm((prev) => ({
@@ -40,11 +65,18 @@ export const GridSectionForm = ({ form, setForm }: { form: ProjectFormType; setF
 
       <div className="flex flex-col gap-10">
         {sections.map((items, index) => (
-          <GridEditor key={`section-${index}`} index={index} initialItems={items} onUpdate={(newItems) => updateSectionItems(index, newItems)} onRemoveSection={() => removeSection(index)} />
+          <GridEditor
+            key={`section-${index}`}
+            projectId={projectId}
+            index={index}
+            initialItems={items}
+            onUpdate={(newItems) => updateSectionItems(index, newItems)}
+            onRemoveSection={() => removeSection(index)}
+            currentForm={form}
+          />
         ))}
       </div>
 
-      {/* 섹션 추가 버튼 */}
       <div className="mt-12 mb-32 flex justify-center">
         <button
           onClick={addSection}

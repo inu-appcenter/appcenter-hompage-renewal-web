@@ -1,28 +1,24 @@
 'use client';
 
+import { Project } from 'entities/project';
 import { useMemo } from 'react';
 import { Responsive, useContainerWidth } from 'react-grid-layout';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
-interface GridSectionProps {
-  content?: string; // 서버에서 받은 JSON string
-}
-
-export const GridSection = ({ content }: GridSectionProps) => {
+export const GridSection = ({ data }: { data: Project }) => {
   const { width, containerRef, mounted } = useContainerWidth();
 
-  // 1. JSON 문자열을 객체 배열(GridItem[][])로 파싱
   const sections = useMemo(() => {
-    if (!content) return [];
+    if (!data.body) return [];
     try {
-      const parsed = JSON.parse(content);
+      const parsed = JSON.parse(data.body);
       return Array.isArray(parsed) ? parsed : [];
     } catch (e) {
       console.error('데이터 파싱 실패:', e);
       return [];
     }
-  }, [content]);
+  }, [data]);
 
   return (
     <div ref={containerRef} className="flex w-full flex-col gap-20 px-4 py-20 lg:px-20">
@@ -37,9 +33,8 @@ export const GridSection = ({ content }: GridSectionProps) => {
               rowHeight={30}
               margin={[16, 16]}
               width={width}
-              // ✅ 핵심: 조회 전용 설정
-              isDraggable={false}
-              isResizable={false}
+              dragConfig={{ enabled: false }}
+              resizeConfig={{ enabled: false }}
             >
               {layout.map((item: any) => (
                 <div key={item.i} className="overflow-hidden rounded-2xl">

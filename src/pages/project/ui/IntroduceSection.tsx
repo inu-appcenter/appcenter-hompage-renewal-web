@@ -21,8 +21,18 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
       <div className="bg-custom-black flex h-118.5 w-full items-center justify-center overflow-hidden rounded-2xl px-28 py-11.5 text-5xl whitespace-pre-line text-white">
         <AnimatePresence mode="wait">
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-            {selected === 0 && <div>{data.stacks && data.stacks.map((stack) => stack.name).join('\n')}</div>}
-            {selected === 1 && <div>{data.groups && data.groups.map((member) => member.member).join('\n')}</div>}
+            {selected === 0 && (
+              <div>
+                {data.stacks &&
+                  data.stacks.map((stack) => (
+                    <div key={stack.id}>
+                      <img src={stack.icon} alt={stack.name} className="mr-2 inline-block h-8 w-8 align-middle" />
+                      {stack.name}
+                    </div>
+                  ))}
+              </div>
+            )}
+            {selected === 1 && <div>{data.groups && data.groups.map((member) => <div key={member.group_id}>{member.member}</div>)}</div>}
             {selected === 2 && '백엔드 생기면 넣을 예정3'}
           </motion.div>
         </AnimatePresence>

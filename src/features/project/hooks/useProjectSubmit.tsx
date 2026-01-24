@@ -8,7 +8,7 @@ interface EditProjectSubmitProps {
 }
 interface AddProjectSubmitProps {
   mode: 'create';
-  onSuccess: () => void;
+  onSuccess: (id: number) => void;
 }
 export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmitProps) => {
   const { addMutation, editMutation } = useProjectActions();
@@ -28,13 +28,12 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
     formData.append('appleStoreLink', data.appleStoreLink);
     formData.append('webSiteLink', data.webSiteLink);
 
-    // 2. 이미지 처리 로직 (File이면 그대로, URL이면 변환)
     data.images.forEach((img) => {
-      if (img?.id && img?.file) {
-        modifiedIds.push(img.id);
+      if (img?.file) {
         formData.append('multipartFiles', img.file);
-      } else if (!img?.id && img?.file) {
-        formData.append('multipartFiles', img.file);
+        if (img.id) {
+          modifiedIds.push(img.id);
+        }
       }
     });
 
@@ -43,8 +42,19 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
     if (data.groups) data.groups.forEach((id) => formData.append('groupIds', String(id)));
 
     if (props.mode === 'create') {
-      addMutation.mutate(formData, { onSuccess: props.onSuccess });
+      addMutation.mutate(formData, {
+        onSuccess: (response: any) => {
+          // response.msg에서 숫자(ID) 추출
+          // {"msg" : "108 Board has been successfully saved."}
+          const idMatch = response.msg.match(/\d+/);
+          const generatedId = idMatch ? Number(idMatch[0]) : null;
+          if (generatedId) {
+            props.onSuccess(generatedId);
+          }
+        }
+      });
     } else {
+      console.log('modifiedIds:', data);
       editMutation.mutate({ data: formData, id: props.projectId, modifiedIds }, { onSuccess: props.onSuccess });
     }
   };

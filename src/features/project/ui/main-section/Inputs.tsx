@@ -51,8 +51,8 @@ export const LinkInput = ({ form, onChange }: InputProps) => {
           type="text"
           placeholder="웹사이트 URL을 입력하세요"
           className={'w-full bg-transparent text-sm text-gray-200 outline-none placeholder:text-gray-600'}
-          value={form.websiteLink}
-          onChange={onChange('websiteLink')}
+          value={form.webSiteLink}
+          onChange={onChange('webSiteLink')}
         />
       </div>
     </div>
