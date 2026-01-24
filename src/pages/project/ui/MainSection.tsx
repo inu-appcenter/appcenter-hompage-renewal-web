@@ -20,7 +20,7 @@ export const MainSection = ({ data }: { data: Project }) => {
         <div className="mt-9 flex gap-3">
           {data.androidStoreLink && <GooglePlay href={data.androidStoreLink} />}
           {data.appleStoreLink && <AppStore href={data.appleStoreLink} />}
-          {data.webSiteLink && <WebLink href={data.webSiteLink} />}
+          {data.websiteLink && <WebLink href={data.websiteLink} />}
         </div>
       </div>
       <Image src={imageUrls[1]} alt="Main Section Image" width={2000} height={600} className="h-auto w-92" quality={100} unoptimized={true} />

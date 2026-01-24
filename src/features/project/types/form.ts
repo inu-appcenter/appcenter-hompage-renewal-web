@@ -2,10 +2,11 @@ import { Project } from 'entities/project';
 
 export type ProjectImage = { id: number; url: string; file?: never } | { id: number; url: string; file: File };
 
-export type ProjectFormType = Omit<Project, 'id' | 'createdDate' | 'lastModifiedDate' | 'images' | 'stacks' | 'groups'> & {
+export type ProjectFormType = Omit<Project, 'id' | 'createdDate' | 'lastModifiedDate' | 'images' | 'stacks' | 'groups' | 'websiteLink'> & {
   images: ProjectImage[];
   stacks: number[];
   groups: number[];
+  webSiteLink: string; // 백엔드가 수정되기 전까지 임시로 사용
 };
 
 export type StepType = 'main' | 'introduce' | 'grid';

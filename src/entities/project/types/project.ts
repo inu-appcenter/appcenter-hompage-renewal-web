@@ -9,7 +9,7 @@ export interface Project {
   subTitle: string;
   androidStoreLink: string;
   appleStoreLink: string;
-  webSiteLink: string;
+  websiteLink: string;
   isActive: boolean;
   images: Record<string, string>;
   stacks: Array<{ id: number; name: string; icon: string }> | [];
