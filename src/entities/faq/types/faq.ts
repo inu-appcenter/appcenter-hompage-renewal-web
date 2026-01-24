@@ -10,4 +10,7 @@ export interface Faq extends FAQForm {
   readonly id: number;
   readonly createdDate: string;
   readonly lastModifiedDate: string;
+  part: Part;
+  question: string;
+  answer: string;
 }

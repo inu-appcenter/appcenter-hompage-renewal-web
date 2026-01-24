@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
-import { useImageManagement } from 'entities/image-management';
+import { useImageManagement } from 'entities/workshop';
 import { AddImageForm, DeleteImageButton, EditImageForm } from './ImageForm';
 
 export const AdminImageList = () => {
@@ -17,7 +17,7 @@ export const AdminImageList = () => {
           <TableHeaderCell className="w-60">내용</TableHeaderCell>
           <TableHeaderCell>이미지</TableHeaderCell>
           <TableHeaderCell className="w-48">등록일</TableHeaderCell>
-          <TableHeaderCell className="w-32">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {data.map((item) => (

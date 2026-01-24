@@ -1,25 +1,29 @@
-import { AppStore } from 'shared/ui/AppStore';
-import { GooglePlay } from 'shared/ui/GooglePlay';
-import myImage from 'shared/image/image.jpg';
+import { AppStore } from 'entities/link/ui/AppStore';
+import { GooglePlay } from 'entities/link/ui/GooglePlay';
 import Image from 'next/image';
+import { Project } from 'entities/project';
+import { WebLink } from 'entities/link';
 
-export const MainSection = () => {
+export const MainSection = ({ data }: { data: Project }) => {
+  const imageUrls = Object.values(data.images);
+
   return (
     <section className="flex h-screen flex-row justify-between px-20 pt-65">
       <div className="flex w-140 flex-col">
-        <div className="bg-brand-secondary-light mb-4 w-fit rounded-[40px] px-3 py-2">서비스이용가능</div>
-        <h1 className="text-primary-gradient mb-29 text-[72px] font-bold">프로젝트 제목</h1>
-        <p className="text-primary-gradient text-xl/7">
-          프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에
-          대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이
-          들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다.{' '}
-        </p>
+        {data.isActive ? (
+          <div className="bg-brand-secondary-light mb-4 w-fit rounded-[40px] px-3 py-2">서비스이용가능</div>
+        ) : (
+          <div className="mb-4 w-fit rounded-[40px] bg-gray-600 px-3 py-2">서비스종료</div>
+        )}
+        <h1 className="text-primary-gradient mb-29 text-[72px] font-bold">{data.title}</h1>
+        <p className="text-primary-gradient text-xl/7">{data.subTitle}</p>
         <div className="mt-9 flex gap-3">
-          <GooglePlay href="" />
-          <AppStore href="" />
+          {data.androidStoreLink && <GooglePlay href={data.androidStoreLink} />}
+          {data.appleStoreLink && <AppStore href={data.appleStoreLink} />}
+          {data.webSiteLink && <WebLink href={data.webSiteLink} />}
         </div>
       </div>
-      <Image src={myImage} alt="Main Section Image" width={600} height={600} />
+      <Image src={imageUrls[1]} alt="Main Section Image" width={2000} height={600} className="h-auto w-92" quality={100} unoptimized={true} />
     </section>
   );
 };

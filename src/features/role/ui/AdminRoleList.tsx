@@ -1,5 +1,5 @@
 'use client';
-import { Calendar, ShieldCheck } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { useRoles } from 'entities/role';
 import { AddRoleForm, DeleteRoleButton, EditRoleForm } from './RoleForm';
 import { EmptyResult } from 'shared/error/EmptyResult';
@@ -16,7 +16,7 @@ export const AdminRoleList = () => {
           <TableHeaderCell className="w-16">id</TableHeaderCell>
           <TableHeaderCell>역할명</TableHeaderCell>
           <TableHeaderCell className="w-80">업데이트 일자</TableHeaderCell>
-          <TableHeaderCell className="w-30">작업</TableHeaderCell>
+          <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
         <TableBody>
           {data.map((role) => (
@@ -35,9 +35,6 @@ const Item = ({ data }: { data: ReturnType<typeof useRoles>['data'][number] }) =
       <td className="px-6 py-5 text-slate-400">#{data.roleId}</td>
       <td className="px-6 py-5">
         <div className="flex items-center gap-3">
-          <div className="rounded-lg bg-slate-100 p-2 text-slate-500 transition-all group-hover:bg-white group-hover:shadow-sm">
-            <ShieldCheck size={16} />
-          </div>
           <span className="font-bold tracking-tight text-slate-800">{data.roleName}</span>
         </div>
       </td>

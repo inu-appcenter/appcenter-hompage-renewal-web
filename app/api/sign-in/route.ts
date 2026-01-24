@@ -16,7 +16,6 @@ export async function POST(request: Request) {
 
   const data: SignResponse = await res.json();
 
-  // 토큰이 정상적으로 발급되었으면 쿠키에 저장
   if (res.ok) {
     const cookieStore = await cookies();
     cookieStore.set('admin_access_token', data.token[0], {
