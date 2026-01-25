@@ -4,22 +4,60 @@ import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/rea
 
 export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
-    <div className={`flex- flex-row ${className}`}>
-      <h2 className="text-brand-primary-cta text-[80px]/37.5 font-bold">{title}</h2>
-      <p className="text-custom-gray-400 px-2.5 text-[40px]/7">{subtitle}</p>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-10% 0px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className={`flex flex-col items-baseline ${className}`}
+    >
+      <h2 className="text-brand-primary-cta text-[80px] font-bold tracking-tighter">{title}</h2>
+      <motion.p
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.6, duration: 0.6 }}
+        className="text-custom-gray-400 text-[40px] font-medium opacity-60"
+      >
+        {subtitle}
+      </motion.p>
+    </motion.div>
   );
 };
-
 export const SectionTitle = ({ title, description, className = '' }: { title: string; description: string; className?: string }) => {
   return (
-    <div id={title} className={`flex scroll-mt-[10vh] flex-col gap-5 ${className}`}>
-      <h2 className="text-primary-gradient font-product-design mb-8 text-[40px] font-normal uppercase">
+    <motion.div
+      id={title}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+      }}
+      className={`flex scroll-mt-[10vh] flex-col gap-5 ${className}`}
+    >
+      <motion.h2
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'circOut' } }
+        }}
+        className="text-primary-gradient font-product-design mb-8 text-[40px] font-normal tracking-widest uppercase"
+      >
         <span className="text-brand-primary-cta">{title.charAt(0)}</span>
         {title.slice(1)}
-      </h2>
-      <p className="text-primary-gradient mb-4 text-xl font-semibold">{description}</p>
-    </div>
+      </motion.h2>
+
+      <motion.p
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+        }}
+        className="text-primary-gradient mb-4 text-xl leading-relaxed font-semibold"
+      >
+        {description}
+      </motion.p>
+    </motion.div>
   );
 };
 

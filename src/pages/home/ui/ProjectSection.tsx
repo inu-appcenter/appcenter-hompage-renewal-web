@@ -20,7 +20,7 @@ const Item = ({ data }: { data: Project }) => {
   const imageUrls = Object.values(data.images);
   return (
     <motion.div whileHover={{ y: -24, scale: 1.05 }} transition={{ duration: 0.4 }} className="group relative h-140 w-142 shrink-0 cursor-pointer snap-center overflow-hidden rounded-xl">
-      <Image src={imageUrls[0]} alt={data.title} fill className="object-cover" quality={100} />
+      <Image loading="lazy" src={imageUrls[0]} alt={data.title} fill className="object-cover" quality={100} />
       <Link href={`/project/${data.id}`} className="absolute inset-0 z-10">
         <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-4 p-10 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <h1 className="text-brand-primary-cta text-[64px] font-extrabold break-keep whitespace-normal">{data.title}</h1>

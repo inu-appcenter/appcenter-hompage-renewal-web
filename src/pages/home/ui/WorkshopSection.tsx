@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { Carousel, SectionDetailTitle } from './Components';
 import { MoveRight } from 'lucide-react';
 import myImage from 'shared/image/image.jpg';
+import { motion } from 'motion/react';
 
 interface WorkshopData {
   title: string;
@@ -21,10 +22,16 @@ export const WorkshopSection = () => {
     <section className="my-20 flex h-screen flex-col gap-16">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
-        <p className="text-primary-gradient w-150 text-xl/7">
+        <motion.p
+          viewport={{ once: true }}
+          initial={{ opacity: 0, x: 20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="text-primary-gradient w-150 text-xl/7"
+        >
           프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에
           대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다.
-        </p>
+        </motion.p>
       </div>
       <Carousel data={data} renderItem={(item) => <Item data={item} />} className="gap-11.5" />
     </section>
@@ -34,7 +41,7 @@ export const WorkshopSection = () => {
 const Item = ({ data }: { data: WorkshopData }) => {
   return (
     <div className="group p relative h-120 w-174 cursor-pointer overflow-hidden rounded-xl bg-gray-900">
-      <Image src={myImage} alt={data.title} fill className="object-cover" />
+      <Image loading="lazy" src={myImage} alt={data.title} fill className="object-cover" />
       <Link href={`/workshop/id=${data.title}`} className="absolute inset-0 z-10">
         <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-2 px-6.75 py-3.25 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <span className="text-primary-gradient text-[36px]">{data.title}</span>
