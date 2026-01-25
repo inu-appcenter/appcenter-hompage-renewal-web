@@ -11,8 +11,8 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
   const [selectedCategory, setSelectedCategory] = useState<Part>('Common');
 
   return (
-    <div className="flex flex-row gap-16">
-      <div className="flex flex-col gap-13">
+    <div className="flex flex-col gap-7">
+      <div className="flex flex-row justify-between">
         {PART.map((category) => (
           <button
             key={category}
@@ -27,6 +27,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
         {data.map((item, index) => (
           <FAQItem key={index} data={item} category={selectedCategory} />
         ))}
+        {data.filter((item) => item.part === selectedCategory).length === 0 && <p className="mt-10 text-center text-xl/7 text-white">선택하신 카테고리에 해당하는 FAQ가 없습니다.</p>}
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { LandingSection } from './LandingSection';
 import { AboutSection } from './AboutSection';
 import { ProjectSection } from './ProjectSection';
@@ -8,19 +7,22 @@ import { WorkshopSection } from './WorkshopSection';
 import { ActivitiesSection } from './ActivitiesSection';
 import { FAQSection } from './FAQSection';
 import { LocationSection } from './LocationSection';
+import { Suspense } from 'react';
 
 export const HomePage = () => {
   return (
-    <Suspense>
+    <>
       <LandingSection />
       <AboutSection />
-      <ProjectSection />
-      <ActivitySection />
-      <OurTeamSection />
-      <WorkshopSection />
-      <ActivitiesSection />
-      <FAQSection />
+      <Suspense>
+        <ProjectSection />
+        <ActivitySection />
+        <OurTeamSection />
+        <ActivitiesSection />
+        <WorkshopSection />
+        <FAQSection />
+      </Suspense>
       <LocationSection />
-    </Suspense>
+    </>
   );
 };

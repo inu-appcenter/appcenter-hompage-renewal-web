@@ -4,51 +4,104 @@ import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/rea
 
 export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
-    <div className={`flex- flex-row ${className}`}>
-      <h2 className="text-brand-primary-cta text-[80px]/37.5 font-bold">{title}</h2>
-      <p className="text-custom-gray-400 px-2.5 text-[40px]/7">{subtitle}</p>
-    </div>
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: '-10% 0px' }}
+      transition={{ duration: 0.8, ease: 'easeOut' }}
+      className={`flex flex-col items-baseline ${className}`}
+    >
+      <h2 className="text-brand-primary-cta text-[80px] font-bold tracking-tighter">{title}</h2>
+      <motion.p
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.6, duration: 0.6 }}
+        className="text-custom-gray-400 text-[40px] font-medium opacity-60"
+      >
+        {subtitle}
+      </motion.p>
+    </motion.div>
   );
 };
-
 export const SectionTitle = ({ title, description, className = '' }: { title: string; description: string; className?: string }) => {
   return (
-    <div id={title} className={`flex scroll-mt-[10vh] flex-col gap-5 ${className}`}>
-      <h2 className="text-primary-gradient mb-8 text-[40px] font-normal uppercase">
+    <motion.div
+      id={title}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+      }}
+      className={`flex scroll-mt-[10vh] flex-col gap-5 ${className}`}
+    >
+      <motion.h2
+        variants={{
+          hidden: { opacity: 0, y: 30 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'circOut' } }
+        }}
+        className="text-primary-gradient font-product-design mb-8 text-[40px] font-normal tracking-widest uppercase"
+      >
         <span className="text-brand-primary-cta">{title.charAt(0)}</span>
         {title.slice(1)}
-      </h2>
-      <p className="text-primary-gradient mb-4 text-xl font-semibold">{description}</p>
-    </div>
+      </motion.h2>
+
+      <motion.p
+        variants={{
+          hidden: { opacity: 0, y: 20 },
+          visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+        }}
+        className="text-primary-gradient mb-4 text-xl leading-relaxed font-semibold"
+      >
+        {description}
+      </motion.p>
+    </motion.div>
   );
 };
 
+// 무한 케로셀을 위해 데이터 3배로 복제 및 애니메이션 처리
+// /3은 3배 복제된 데이터셋에서 현재 위치를 계산하기 위함
 interface CarouselProps<T> {
   data: T[];
   renderItem: (item: T, index: number) => React.ReactNode;
   className?: string;
 }
-
 export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps<T>) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLUListElement>(null);
   const xTranslation = useMotionValue(0);
+  const controlsRef = useRef<any>(null);
 
+  // 3배로 복제된 데이터
   const duplicatedData = [...data, ...data, ...data];
 
-  useEffect(() => {
+  // 애니메이션 실행 함수
+  const startAnimation = (fromValue?: number) => {
     const contentWidth = containerRef.current?.scrollWidth || 0;
     const singleSetWidth = contentWidth / 3;
+    const startX = fromValue ?? xTranslation.get();
 
-    const controls = animate(xTranslation, [0, -singleSetWidth], {
+    const remainingDistance = Math.abs(-singleSetWidth - startX);
+    const totalDistance = singleSetWidth;
+    const dynamicDuration = 40 * (remainingDistance / totalDistance);
+
+    controlsRef.current = animate(xTranslation, [startX, -singleSetWidth], {
       ease: 'linear',
-      duration: 40,
-      repeat: Infinity,
-      repeatType: 'loop'
+      duration: dynamicDuration > 0 ? dynamicDuration : 40,
+      onComplete: () => {
+        xTranslation.set(0); // 끝에 도달하면 0으로 리셋하여 무한 루프
+        startAnimation(0);
+      }
     });
+  };
 
-    return controls.stop;
-  }, [xTranslation, data.length]);
+  useEffect(() => {
+    startAnimation();
+    return () => controlsRef.current?.stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useMotionValueEvent(xTranslation, 'change', (latest) => {
     const contentWidth = containerRef.current?.scrollWidth || 0;
@@ -62,9 +115,28 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
     }
   });
 
+  const handleDotClick = (index: number) => {
+    const contentWidth = containerRef.current?.scrollWidth || 0;
+    const singleSetWidth = contentWidth / 3;
+    const itemWidth = singleSetWidth / data.length;
+    const targetX = -(index * itemWidth);
+
+    // 클릭한 지점으로 부드럽게 이동
+    animate(xTranslation, targetX, {
+      type: 'spring',
+      stiffness: 200,
+      damping: 25,
+      onComplete: () => {
+        startAnimation(targetX);
+      }
+    });
+
+    setActiveIndex(index);
+  };
+
   return (
     <div className={`${className} flex flex-col gap-7 overflow-hidden py-12`}>
-      <motion.ul ref={containerRef} style={{ x: xTranslation }} className={`flex gap-8 whitespace-nowrap`}>
+      <motion.ul ref={containerRef} style={{ x: xTranslation }} className="flex gap-8 whitespace-nowrap">
         {duplicatedData.map((item, index) => (
           <li key={index} className="shrink-0">
             {renderItem(item, index % data.length)}
@@ -74,7 +146,12 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
 
       <div className="flex justify-center gap-5">
         {data.map((_, index) => (
-          <div key={index} className={`h-3 w-3 rounded-full transition-all duration-300 ${activeIndex === index ? 'bg-brand-primary-cta' : 'bg-custom-gray-700'}`} />
+          <button
+            key={index}
+            onClick={() => handleDotClick(index)}
+            className={`h-3 w-3 rounded-full transition-all duration-300 focus:outline-none ${activeIndex === index ? 'bg-brand-primary-cta scale-125' : 'bg-custom-gray-700'}`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
         ))}
       </div>
     </div>

@@ -35,5 +35,5 @@ export const RandomShuffleNumber = ({ value }: { value: number }) => {
     return () => clearInterval(timer);
   }, [isInView, value]);
 
-  return <span ref={ref}>{Intl.NumberFormat('en-US').format(displayValue)}</span>;
+  return <span ref={ref}>{displayValue}</span>;
 };

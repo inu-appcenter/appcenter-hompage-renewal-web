@@ -1,8 +1,7 @@
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 @import 'tailwindcss';
 
 body {
-  font-family: 'Pretendard', ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-pretendard), ui-sans-serif, system-ui, sans-serif;
   background-color: var(--color-background);
 }
 
@@ -49,6 +48,8 @@ button {
     }
   }
   --animate-wiggle-right: move-right-left 1s ease-in-out infinite;
+
+  --font-product-design: 'ProductDesign', ui-sans-serif, system-ui;
 }
 
 @layer utilities {

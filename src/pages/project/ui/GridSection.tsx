@@ -14,9 +14,20 @@ export const GridSection = ({ data }: { data: Project }) => {
     try {
       const parsed = JSON.parse(data.body);
       return Array.isArray(parsed) ? parsed : [];
-    } catch (e) {
-      console.error('데이터 파싱 실패:', e);
-      return [];
+    } catch {
+      return [
+        [
+          {
+            i: '1',
+            x: 0,
+            y: 0,
+            w: 12,
+            h: 10,
+            type: 'text',
+            content: data.body
+          }
+        ]
+      ];
     }
   }, [data]);
 
