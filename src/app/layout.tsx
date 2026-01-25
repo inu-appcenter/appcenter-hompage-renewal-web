@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ReactQueryProvider } from './provider/ReactQueryProvider';
+import { productDesignFont, pretendardFont } from './fonts';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 
 export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable}`}>
       <body className="antialiased">
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
