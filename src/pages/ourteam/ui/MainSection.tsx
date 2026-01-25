@@ -16,8 +16,8 @@ export const MainSection = () => {
     target: containerRef,
     offset: ['start end', 'end start']
   });
-  const xLeft = useTransform(scrollYProgress, [0, 0.5], [-500, 0]);
-  const xRight = useTransform(scrollYProgress, [0, 0.5], [500, 0]);
+  const xLeft = useTransform(scrollYProgress, [0, 0.3], [-500, 0]);
+  const xRight = useTransform(scrollYProgress, [0, 0.3], [500, 0]);
   const opacityScroll = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
 
   useEffect(() => {

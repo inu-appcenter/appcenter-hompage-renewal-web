@@ -1,9 +1,9 @@
 'use client';
 import { motion, useScroll, useTransform } from 'motion/react';
-import Link from 'next/link';
 import { useRef } from 'react';
 import { Hello } from 'shared/icon/Hello';
 import { OurTeam } from '../types/ourteam';
+import { AnimationButton } from 'shared/ui/animation-button';
 
 export const PartDescriptionSection = ({
   title,
@@ -75,24 +75,10 @@ const SectionDetailTitle = ({ title }: { title: string }) => {
   return (
     <div className="flex flex-1 flex-col gap-9">
       <h2 className="text-brand-primary-cta text-[120px]/[1] font-bold">{title}</h2>
-      <Link href="/joinus" className="group relative inline-block w-fit overflow-hidden rounded-[40px] bg-white/10 p-[1.5px]">
-        <motion.div
-          animate={{
-            rotate: [0, 360]
-          }}
-          transition={{
-            duration: 4,
-            repeat: Infinity,
-            ease: 'linear'
-          }}
-          className="absolute inset-[-200%] z-0 bg-[conic-gradient(from_0deg,transparent_70%,var(--color-brand-secondary)_85%,var(--color-brand-secondary-light)_95%,#ffffff_100%)]"
-        />
-
-        <div className="bg-background-surface group-hover:bg-surface-elevated relative z-10 flex items-center justify-center rounded-[40px] px-10 py-4 transition-colors">
-          <span className="text-primary-gradient text-[28px] font-bold">바로 지원하러 가기</span>
-          <span className="ml-2 text-white/60">→</span>
-        </div>
-      </Link>
+      <AnimationButton href="joinus">
+        <span className="text-primary-gradient text-[28px] font-bold">바로 지원하러 가기</span>
+        <span className="ml-2 text-white/60">→</span>
+      </AnimationButton>
     </div>
   );
 };

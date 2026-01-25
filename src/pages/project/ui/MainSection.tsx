@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { AppStore } from 'entities/link/ui/AppStore';
 import { GooglePlay } from 'entities/link/ui/GooglePlay';
-import Image from 'next/image';
 import { Project } from 'entities/project';
 import { WebLink } from 'entities/link';
 
@@ -23,7 +23,9 @@ export const MainSection = ({ data }: { data: Project }) => {
           {data.websiteLink && <WebLink href={data.websiteLink} />}
         </div>
       </div>
-      <Image src={imageUrls[1]} alt="Main Section Image" width={2000} height={600} className="h-auto w-92" quality={100} unoptimized={true} />
+      <div className="relative flex flex-1 justify-end">
+        <Image src={imageUrls[1]} alt="Main Section Image" width={2000} height={600} className="h-auto w-auto max-w-full object-contain" quality={100} unoptimized={true} />
+      </div>
     </section>
   );
 };

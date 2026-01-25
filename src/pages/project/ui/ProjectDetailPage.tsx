@@ -6,7 +6,6 @@ import { MainSection } from './MainSection';
 export async function ProjectDetailPage({ params }: { params: Promise<{ id: number }> }) {
   const { id } = await params;
   const data = await projectApi.getById(id);
-  console.log('ProjectDetailPage data', data);
 
   return (
     <>

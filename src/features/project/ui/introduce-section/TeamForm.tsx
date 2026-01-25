@@ -44,9 +44,8 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
   const groupedSelectedMembers = useMemo(() => {
     const groups: Record<string, Generation[]> = {};
     selectedMemberObjects.forEach((member) => {
-      const partName = typeof member.part === 'string' ? member.part : member.part || 'Unassigned';
-      if (!groups[partName]) groups[partName] = [];
-      groups[partName].push(member);
+      if (!groups[member.part]) groups[member.part] = [];
+      groups[member.part].push(member);
     });
     return groups;
   }, [selectedMemberObjects]);
