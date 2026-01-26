@@ -10,9 +10,9 @@ export const AboutSection = () => {
   ];
 
   return (
-    <section className="relative flex h-screen flex-col justify-center gap-17">
+    <section className="relative mb-30 flex flex-col justify-center gap-8 sm:h-screen">
       <SectionTitle title="about" description="앱센터에 대한 간단한 설명이 있었으면 좋겠어요" />
-      <ul className="flex flex-row justify-between sm:gap-8 md:gap-12 lg:gap-20">
+      <ul className="flex flex-row justify-between gap-4 sm:mt-17 sm:gap-20">
         {aboutData.map((data, index) => (
           <Item key={index} title={data.title} subNumber={data.subNumber} smallSubtitle={data.smallSubtitle} />
         ))}
@@ -23,11 +23,11 @@ export const AboutSection = () => {
 
 const Item = ({ title, subNumber, smallSubtitle }: { title: string; subNumber: number; smallSubtitle?: string }) => {
   return (
-    <li className="bg-surface-elevated group border-text-primary hover:border-brand-primary-cta flex h-64 w-90 cursor-default flex-col items-center gap-6 rounded-2xl border py-11.75 drop-shadow-[0_0_16px_#EDEDED66] transition-colors duration-500 hover:drop-shadow-[0_0_16px_#57ff8566]">
-      <span className="text-primary-gradient group-hover:text-brand-primary-cta text-2xl font-normal duration-500">{title}</span>
-      <span className="text-primary-gradient group-hover:text-brand-primary-cta text-[88px] leading-none font-medium duration-500">
+    <li className="bg-surface-elevated group border-text-primary hover:border-brand-primary-cta flex flex-1 cursor-default flex-col items-center gap-1 rounded-sm border py-4 drop-shadow-[0_0_16px_#EDEDED66] transition-colors duration-500 hover:drop-shadow-[0_0_16px_#57ff8566] sm:gap-6 sm:rounded-2xl sm:py-11.75">
+      <span className="text-primary-gradient group-hover:text-brand-primary-cta line-clamp-1 text-[8px] font-normal duration-500 sm:text-2xl">{title}</span>
+      <span className="text-primary-gradient group-hover:text-brand-primary-cta line-clamp-1 text-[18px] leading-none font-medium duration-500 sm:text-[88px]">
         <RandomShuffleNumber value={subNumber} />
-        {smallSubtitle && <small className="ml-1 text-[40px]">{smallSubtitle}</small>}
+        {smallSubtitle && <small className="ml-0.5 text-[8px] sm:ml-1 sm:text-[40px]">{smallSubtitle}</small>}
       </span>
     </li>
   );

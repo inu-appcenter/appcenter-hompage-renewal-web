@@ -9,9 +9,9 @@ import { Project, useProject } from 'entities/project';
 export const ProjectSection = () => {
   const { data } = useProject();
   return (
-    <section className="relative flex h-screen flex-col justify-center gap-10">
+    <section className="relative flex flex-col justify-center gap-10 sm:h-screen">
       <SectionTitle title="project" description="앱센터에서 만든 앱들을 소개합니다" />
-      <Carousel data={data} renderItem={(item) => <Item data={item} />} className="-mx-24 gap-16" />
+      <Carousel data={data} renderItem={(item) => <Item data={item} />} className="-mx-20 gap-8 sm:gap-16" />
     </section>
   );
 };
@@ -19,20 +19,24 @@ export const ProjectSection = () => {
 const Item = ({ data }: { data: Project }) => {
   const imageUrls = Object.values(data.images);
   return (
-    <motion.div whileHover={{ y: -24, scale: 1.05 }} transition={{ duration: 0.4 }} className="group relative h-140 w-142 shrink-0 cursor-pointer snap-center overflow-hidden rounded-xl">
+    <motion.div
+      whileHover={{ y: -24, scale: 1.05 }}
+      transition={{ duration: 0.4 }}
+      className="group relative h-75 w-75 shrink-0 cursor-pointer snap-center overflow-hidden rounded-xl sm:h-140 sm:w-142"
+    >
       <Image loading="lazy" src={imageUrls[0]} alt={data.title} fill className="object-cover" quality={100} />
       <Link href={`/project/${data.id}`} className="absolute inset-0 z-10">
-        <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-4 p-10 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <h1 className="text-brand-primary-cta text-[64px] font-extrabold break-keep whitespace-normal">{data.title}</h1>
-          <div className="flex gap-4">
-            {data.androidStoreLink && <span className="text-[36px] font-medium">Android</span>}
-            {data.appleStoreLink && <span className="text-[36px] font-medium">iOS</span>}
-            {data.websiteLink && <span className="text-[36px] font-medium">Web</span>}
+        <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-2 p-10 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-4">
+          <h1 className="text-brand-primary-cta text-[32px] font-extrabold break-keep whitespace-normal sm:text-[64px]">{data.title}</h1>
+          <div className="flex gap-2 sm:gap-4">
+            {data.androidStoreLink && <span className="text-[18px] font-medium sm:text-[36px]">Android</span>}
+            {data.appleStoreLink && <span className="text-[18px] font-medium sm:text-[36px]">iOS</span>}
+            {data.websiteLink && <span className="text-[18px] font-medium sm:text-[36px]">Web</span>}
           </div>
           {data.isActive ? (
-            <span className="border-brand-primary-cta text-brand-primary-cta rounded-[31px] border-2 px-4 pt-3 pb-2 text-xl font-semibold">서비스 이용 가능</span>
+            <span className="border-brand-primary-cta text-brand-primary-cta rounded-[31px] border px-2 py-1.5 text-[10px] font-semibold sm:border-2 sm:px-4 sm:py-3 sm:text-xl">서비스 이용 가능</span>
           ) : (
-            <span className="rounded-[31px] border-2 border-gray-500 px-4 pt-3 pb-2 text-xl font-semibold">서비스 종료</span>
+            <span className="rounded-[31px] border border-gray-500 px-2 py-1.5 text-[10px] font-semibold sm:border-2 sm:px-4 sm:py-3 sm:text-xl">서비스 종료</span>
           )}
           <MoveRight className="text-custom-gray-500 absolute right-12 bottom-12" size={40} />
         </div>

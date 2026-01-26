@@ -40,7 +40,7 @@ export const FloatingButton = () => {
       </button>
 
       <div
-        className={`bg-custom-gray-800 absolute flex flex-col items-center gap-2 overflow-hidden rounded-full pt-20 pb-8 transition-all duration-500 ease-in-out ${isOpen ? 'max-h-125 py-8 opacity-100' : 'max-h-0 py-0 opacity-0'}`}
+        className={`bg-custom-gray-800 absolute flex flex-col items-center gap-2 overflow-hidden rounded-full pt-20 pb-8 transition-all duration-500 ease-in-out ${isOpen ? 'max-h-125 opacity-100' : 'max-h-0 opacity-0'}`}
       >
         {OurTeamData.map((part) => {
           const isActive = activeSection === part.title;
@@ -48,7 +48,7 @@ export const FloatingButton = () => {
             <Link
               key={part.title}
               href={`#${part.title}`}
-              className={`w-full cursor-pointer px-2 py-3 text-center font-semibold whitespace-nowrap transition-all duration-300 hover:scale-110 ${isActive ? 'text-brand-primary-cta bg-custom-gray-900 opacity-100' : 'text-custom-black'} `}
+              className={`w-full cursor-pointer px-2 py-3 text-center font-semibold transition-all duration-300 hover:scale-110 ${isActive ? 'text-brand-primary-cta bg-custom-gray-900 opacity-100' : 'text-custom-black'} `}
             >
               {part.title}
             </Link>

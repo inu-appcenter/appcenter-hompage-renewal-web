@@ -6,7 +6,7 @@ export const FAQSection = async () => {
   const faqData = await faqApi.getAll();
 
   return (
-    <section className="flex h-screen flex-col gap-16">
+    <section className="flex flex-col gap-16 sm:h-screen">
       <SectionTitle title="faq" description="자주 묻는 질문" />
       <FAQList data={faqData} />
     </section>

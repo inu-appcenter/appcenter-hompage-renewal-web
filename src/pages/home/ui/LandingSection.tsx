@@ -6,16 +6,18 @@ export const LandingSection = () => {
   return (
     <>
       <BackgroundAnimation />
-      <section className="relative flex h-screen flex-col justify-center gap-8">
-        <h1 className="text-primary-gradient font-product-design pl-2 text-[120px] uppercase">
+      <section className="relative flex h-screen flex-col items-center justify-center gap-4 sm:gap-8 md:items-start">
+        <h1 className="text-primary-gradient font-product-design pl-2 text-[40px] uppercase sm:text-[120px]">
           <ScrambleText text="APP" />{' '}
           <span className="text-brand-primary-light">
             <ScrambleText text="CENTER" />
           </span>
         </h1>
 
-        <p className="text-primary-gradient text-xl font-semibold">오랫동안 사용되어 온 앱센터가 정보전산원 산하의 AI 빅데이터 센터에 소속된 IT 이노베이션 랩으로 명칭 정식 변경되었습니다.</p>
-        <p className="text-primary-gradient text-xl font-semibold whitespace-pre-line">
+        <p className="text-primary-gradient text-center text-[13px] font-semibold whitespace-pre-line sm:text-left sm:text-xl">
+          {`오랫동안 사용되어 온 앱센터가 정보전산원 산하의 AI 빅데이터 센터에 소속된 IT 이노베이션 랩으로 명칭 정식 변경되었습니다.`}
+        </p>
+        <p className="text-primary-gradient mb-4 text-center text-[13px] font-semibold whitespace-pre-line sm:text-left sm:text-xl">
           {'인천대학교 학생들이 애플리케이션과 서비스를 직접 만드는 공간입니다.\n활동에 필요한 비용의 일부를 소속 기관으로부터 지원받고 있습니다.'}
         </p>
 

@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 
@@ -19,9 +18,9 @@ export const BackgroundAnimation = () => {
   };
 
   return (
-    <div className="pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-full -translate-x-1/2 overflow-hidden bg-black">
+    <div className="pointer-events-none absolute top-0 left-1/2 -z-10 hidden h-screen w-full -translate-x-1/2 overflow-hidden bg-black sm:inline-block">
       <video ref={videoRef} autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="h-full w-full object-cover">
-        <source src="/videos/landing.mp4" type="video/mp4" />
+        <source src="/videos/landing.mp4" type="video/mp4" media="(min-width: 640px)" />
       </video>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: isEnding ? 1 : 0 }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="absolute inset-0 bg-black" />

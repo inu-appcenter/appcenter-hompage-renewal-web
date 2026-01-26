@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/react';
+import { cn } from 'shared/utils/cn';
 
 export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title: string; subtitle: string; className?: string }) => {
   return (
@@ -11,13 +12,13 @@ export const SectionDetailTitle = ({ title, subtitle, className = '' }: { title:
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className={`flex flex-col items-baseline ${className}`}
     >
-      <h2 className="text-brand-primary-cta text-[80px] font-bold tracking-tighter">{title}</h2>
+      <h2 className="text-brand-primary-cta text-[20px] font-bold tracking-tighter sm:text-[80px]">{title}</h2>
       <motion.p
         initial={{ opacity: 0, x: -20 }}
         whileInView={{ opacity: 1, x: 0 }}
         viewport={{ once: true }}
         transition={{ delay: 0.6, duration: 0.6 }}
-        className="text-custom-gray-400 text-[40px] font-medium opacity-60"
+        className="text-custom-gray-400 text-[10px] font-medium opacity-60 sm:text-[40px]"
       >
         {subtitle}
       </motion.p>
@@ -35,14 +36,14 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
         hidden: { opacity: 0 },
         visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
       }}
-      className={`flex scroll-mt-[10vh] flex-col gap-5 ${className}`}
+      className={`flex scroll-mt-[10vh] flex-col gap-2 sm:gap-5 ${className}`}
     >
       <motion.h2
         variants={{
           hidden: { opacity: 0, y: 30 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'circOut' } }
         }}
-        className="text-primary-gradient font-product-design mb-8 text-[40px] font-normal tracking-widest uppercase"
+        className="text-primary-gradient font-product-design text-[32px] font-normal tracking-widest uppercase sm:mb-8 sm:text-[40px]"
       >
         <span className="text-brand-primary-cta">{title.charAt(0)}</span>
         {title.slice(1)}
@@ -53,7 +54,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
         }}
-        className="text-primary-gradient mb-4 text-xl leading-relaxed font-semibold"
+        className="text-primary-gradient text-[16px] leading-relaxed font-semibold sm:mb-4 sm:text-xl"
       >
         {description}
       </motion.p>
@@ -135,8 +136,8 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
   };
 
   return (
-    <div className={`${className} flex flex-col gap-7 overflow-hidden py-12`}>
-      <motion.ul ref={containerRef} style={{ x: xTranslation }} className="flex gap-8 whitespace-nowrap">
+    <div className={cn`${className} flex flex-col gap-7 overflow-hidden py-12`}>
+      <motion.ul ref={containerRef} style={{ x: xTranslation }} className={cn`flex gap-8 whitespace-nowrap ${className}`}>
         {duplicatedData.map((item, index) => (
           <li key={index} className="shrink-0">
             {renderItem(item, index % data.length)}
@@ -144,12 +145,12 @@ export const Carousel = <T,>({ data, renderItem, className = '' }: CarouselProps
         ))}
       </motion.ul>
 
-      <div className="flex justify-center gap-5">
+      <div className="flex justify-center gap-2 sm:gap-5">
         {data.map((_, index) => (
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`h-3 w-3 rounded-full transition-all duration-300 focus:outline-none ${activeIndex === index ? 'bg-brand-primary-cta scale-125' : 'bg-custom-gray-700'}`}
+            className={`h-1 w-1 rounded-full transition-all duration-300 focus:outline-none sm:h-3 sm:w-3 ${activeIndex === index ? 'bg-brand-primary-cta scale-125' : 'bg-custom-gray-700'}`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

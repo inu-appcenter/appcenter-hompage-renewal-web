@@ -9,13 +9,12 @@ const POSITION = { lat: 37.37658, lng: 126.6358 };
 
 export const LocationSection = () => {
   return (
-    <section id="location" className="flex min-h-screen flex-col gap-16 pt-160 pb-80">
+    <section id="location" className="flex min-h-screen flex-col gap-16 pt-40 pb-20 sm:pt-160 sm:pb-80">
       <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
 
       <SectionTitle title="Location" description="위치정보" />
-
-      <div className="flex flex-col gap-10 lg:flex-row lg:gap-16">
-        <div className="relative h-150 flex-1 overflow-hidden rounded-3xl border border-white/10 shadow-2xl">
+      <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
+        <div className="relative h-150 w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:flex-1">
           <Map center={POSITION} style={{ width: '100%', height: '100%' }} level={3}>
             <CustomOverlayMap position={POSITION}>
               <div className="relative flex flex-col items-center">
@@ -33,13 +32,17 @@ export const LocationSection = () => {
           </Map>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between gap-5">
+        <div className="flex flex-col justify-between gap-5">
           <div className="flex flex-row items-center gap-8">
-            <div className="border-brand-secondary-light text-brand-secondary-light bg-surface-elevated flex justify-center rounded-[40px] border px-8 py-2.5 text-[28px] font-bold">주소</div>
+            <div className="border-brand-secondary-light text-brand-secondary-light bg-surface-elevated flex justify-center rounded-[40px] border px-8 py-2.5 text-[28px] font-bold whitespace-nowrap">
+              주소
+            </div>
             <div className="text-xl text-white">인천광역시 아카데미로119 4호관 정보전산원(BM컨텐츠관) 107호</div>
           </div>
           <div className="flex flex-row items-start gap-8">
-            <div className="border-brand-secondary-light text-brand-secondary-light bg-surface-elevated flex justify-center rounded-[40px] border px-12 py-2.5 text-[28px] font-bold">오시는 길</div>
+            <div className="border-brand-secondary-light text-brand-secondary-light bg-surface-elevated flex justify-center rounded-[40px] border px-12 py-2.5 text-[28px] font-bold whitespace-nowrap">
+              오시는 길
+            </div>
             <div className="mt-4 flex flex-col gap-2 text-xl">
               <div className="text-white">
                 지하철 <span className="rounded-lg bg-sky-600 px-1">인천1</span> 인천대입구역 하차 후
@@ -54,7 +57,9 @@ export const LocationSection = () => {
             </div>
           </div>
           <div className="flex flex-row items-center gap-8">
-            <div className="border-brand-secondary-light text-brand-secondary-light bg-surface-elevated flex justify-center rounded-[40px] border px-12 py-2.5 text-[28px] font-bold">대표번호</div>
+            <div className="border-brand-secondary-light text-brand-secondary-light bg-surface-elevated flex justify-center rounded-[40px] border px-12 py-2.5 text-[28px] font-bold whitespace-nowrap">
+              대표번호
+            </div>
             <div className="text-xl text-white">032-000-0000</div>
           </div>
         </div>

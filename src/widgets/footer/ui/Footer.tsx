@@ -13,8 +13,8 @@ export const Footer = () => {
   };
 
   return (
-    <footer className="bg-custom-black relative w-full px-10 py-16 md:px-96">
-      <div className="flex w-full flex-col items-start justify-between gap-10 md:flex-row md:items-start">
+    <footer className="bg-custom-black relative w-full px-10 py-16">
+      <div className="mx-auto flex max-w-380 flex-col items-start justify-between gap-10 sm:max-w-400 sm:flex-row sm:items-start">
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-3">
             <Logo className="h-10 w-10" />
