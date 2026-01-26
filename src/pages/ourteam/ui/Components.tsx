@@ -26,11 +26,11 @@ export const PartDescriptionSection = ({
   const transformRotate = useTransform(scrollYProgress, [0, 0.5], rotate);
 
   return (
-    <div ref={containerRef} className="relative space-y-10">
-      <section className="mx-30 flex flex-col overflow-hidden">
-        <div className="flex h-screen w-full flex-row items-center">
+    <div ref={containerRef} className="relative space-y-10" id={title}>
+      <section className="flex flex-col overflow-hidden">
+        <div className="flex h-screen w-full flex-row items-center justify-between gap-20">
           <SectionDetailTitle title={title} />
-          <motion.div style={{ x: transformX, y: transformY, scale: transformScale, rotate: transformRotate }} className="z-50 flex">
+          <motion.div style={{ x: transformX, y: transformY, scale: transformScale, rotate: transformRotate }} className="z-50">
             {icon}
           </motion.div>
         </div>
@@ -46,7 +46,7 @@ export const PartDescriptionSection = ({
         </div>
       </section>
 
-      <div className="mb-135 flex gap-10 px-30">
+      <div className="mb-135 flex gap-10">
         <div className="bg-surface-elevated flex h-109 flex-1 flex-col justify-end rounded-2xl p-14.75">
           <p className="text-primary-gradient text-[56px]/tight font-medium whitespace-pre-line">{description}</p>
         </div>
@@ -73,7 +73,7 @@ const StackItem = ({ number, title }: { number: string; title: string }) => (
 
 const SectionDetailTitle = ({ title }: { title: string }) => {
   return (
-    <div className="flex flex-1 flex-col gap-9">
+    <div className="flex flex-none flex-col gap-9">
       <h2 className="text-brand-primary-cta text-[120px]/[1] font-bold">{title}</h2>
       <AnimationButton href="joinus">
         <span className="text-primary-gradient text-[28px] font-bold">바로 지원하러 가기</span>

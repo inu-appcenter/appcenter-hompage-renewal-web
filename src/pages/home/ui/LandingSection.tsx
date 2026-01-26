@@ -8,7 +8,7 @@ export const LandingSection = () => {
       <BackgroundAnimation />
       <section className="relative flex h-screen flex-col justify-center gap-8">
         <h1 className="text-primary-gradient font-product-design pl-2 text-[120px] uppercase">
-          <ScrambleText text="APP" />
+          <ScrambleText text="APP" />{' '}
           <span className="text-brand-primary-light">
             <ScrambleText text="CENTER" />
           </span>

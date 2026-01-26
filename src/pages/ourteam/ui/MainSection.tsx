@@ -30,7 +30,7 @@ export const MainSection = () => {
         clearInterval(titleInterval);
         setPhase('subtitle');
       }
-    }, 120);
+    }, 80);
 
     return () => clearInterval(titleInterval);
   }, []);
@@ -46,7 +46,7 @@ export const MainSection = () => {
           clearInterval(subInterval);
           setPhase('done');
         }
-      }, 160);
+      }, 120);
 
       return () => clearInterval(subInterval);
     }

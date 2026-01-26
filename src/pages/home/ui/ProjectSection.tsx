@@ -30,7 +30,7 @@ const Item = ({ data }: { data: Project }) => {
             {data.websiteLink && <span className="text-[36px] font-medium">Web</span>}
           </div>
           {data.isActive ? (
-            <span className="border-brand-primary-cta rounded-[31px] border-2 px-4 pt-3 pb-2 text-xl font-semibold">서비스 이용 가능</span>
+            <span className="border-brand-primary-cta text-brand-primary-cta rounded-[31px] border-2 px-4 pt-3 pb-2 text-xl font-semibold">서비스 이용 가능</span>
           ) : (
             <span className="rounded-[31px] border-2 border-gray-500 px-4 pt-3 pb-2 text-xl font-semibold">서비스 종료</span>
           )}

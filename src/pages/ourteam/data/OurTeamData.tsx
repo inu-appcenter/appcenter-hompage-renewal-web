@@ -14,9 +14,9 @@ export const OurTeamData: OurTeam[] = [
     techStack: ['Android studio', 'Kotlin'],
     icon: <Android />,
     motionProps: {
-      x: ['0%', '10%'],
-      y: ['0%', '800px'],
-      scale: [1, 0.6]
+      x: ['0%', '16%'],
+      y: ['0%', '90%'],
+      scale: [0.8, 0.7]
     }
   },
   {
@@ -26,9 +26,9 @@ export const OurTeamData: OurTeam[] = [
     techStack: ['Figma'],
     icon: <Design />,
     motionProps: {
-      x: ['0%', '28%'],
-      y: ['0%', '720px'],
-      scale: [1, 0.6],
+      x: ['0%', '14%'],
+      y: ['0%', '100%'],
+      scale: [0.8, 0.7],
       rotate: [7, 0]
     }
   },
@@ -39,9 +39,9 @@ export const OurTeamData: OurTeam[] = [
     techStack: ['Xcode', 'Swift'],
     icon: <Ios />,
     motionProps: {
-      x: ['0%', '14%'],
-      y: ['0%', '740px'],
-      scale: [1, 0.9]
+      x: ['0%', '18%'],
+      y: ['0%', '105%'],
+      scale: [1, 0.8]
     }
   },
   {
@@ -52,7 +52,7 @@ export const OurTeamData: OurTeam[] = [
     icon: <Server />,
     motionProps: {
       x: ['0%', '24%'],
-      y: ['0%', '840px'],
+      y: ['0%', '110%'],
       scale: [1, 0.7]
     }
   },
@@ -63,10 +63,10 @@ export const OurTeamData: OurTeam[] = [
     techStack: ['React', 'TypeScript'],
     icon: <Web />,
     motionProps: {
-      x: ['0%', '18%'],
-      y: ['0%', '740px'],
-      scale: [0.8, 0.6],
-      rotate: [-7, 0]
+      x: ['0%', '16%'],
+      y: ['0%', '95%'],
+      scale: [1, 0.7],
+      rotate: [0, 0]
     }
   },
   {
@@ -76,8 +76,8 @@ export const OurTeamData: OurTeam[] = [
     techStack: ['React', 'Typescript'],
     icon: <Basic />,
     motionProps: {
-      x: ['0%', '36%'],
-      y: ['0%', '700px'],
+      x: ['0%', '30%'],
+      y: ['0%', '160%'],
       scale: [1, 0.8],
       rotate: [-12, 0]
     }

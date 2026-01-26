@@ -49,7 +49,7 @@ button {
   }
   --animate-wiggle-right: move-right-left 1s ease-in-out infinite;
 
-  --font-product-design: 'ProductDesign', ui-sans-serif, system-ui;
+  --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
 }
 
 @layer utilities {

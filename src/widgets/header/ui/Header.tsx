@@ -15,7 +15,7 @@ export const Header = () => {
       }}
       className="fixed z-50 flex h-30 w-full flex-row items-center justify-between bg-linear-to-b from-black/80 to-transparent px-30"
     >
-      <Link href="/">
+      <Link href="/" aria-label="홈으로 가기">
         <Logo />
       </Link>
 
