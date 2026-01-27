@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable}`}>
+    <html lang="ko" className={`${productDesignFont.variable} ${pretendardFont.variable} no-scrollbar`}>
       <body className="antialiased">
         <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>

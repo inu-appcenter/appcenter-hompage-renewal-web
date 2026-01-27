@@ -54,7 +54,7 @@ export const MainSection = () => {
 
   return (
     <>
-      <section className="flex h-screen w-full flex-col items-start justify-center px-20">
+      <section className="flex h-screen w-full flex-col items-start justify-center">
         <div className="flex flex-col gap-6">
           <div className="flex items-center">
             <h1 className="text-brand-primary-cta text-[100px]/25 font-bold">
@@ -76,7 +76,7 @@ export const MainSection = () => {
         </div>
       </section>
 
-      <section ref={containerRef} className="relative mb-31.75 flex h-screen w-full flex-col justify-between overflow-hidden p-20">
+      <section ref={containerRef} className="relative mb-31.75 flex h-screen w-full flex-col justify-between overflow-hidden py-20">
         <motion.p style={{ x: xLeft, opacity: opacityScroll }} className="text-primary-gradient text-[72px]/23 leading-tight font-bold">
           안녕하세요! <br />
           <span className="text-brand-primary-cta">앱센터</span>입니다.

@@ -9,7 +9,7 @@ import { Project, useProject } from 'entities/project';
 export const ProjectSection = () => {
   const { data } = useProject();
   return (
-    <section className="relative flex flex-col justify-center gap-10 sm:h-screen">
+    <section className="relative flex snap-start flex-col justify-center gap-10 sm:h-screen">
       <SectionTitle title="project" description="앱센터에서 만든 앱들을 소개합니다" />
       <Carousel data={data} renderItem={(item) => <Item data={item} />} className="-mx-20 gap-8 sm:gap-16" />
     </section>
@@ -22,7 +22,7 @@ const Item = ({ data }: { data: Project }) => {
     <motion.div
       whileHover={{ y: -24, scale: 1.05 }}
       transition={{ duration: 0.4 }}
-      className="group relative h-75 w-75 shrink-0 cursor-pointer snap-center overflow-hidden rounded-xl sm:h-140 sm:w-142"
+      className="group relative h-75 w-75 shrink-0 cursor-pointer snap-center overflow-hidden rounded-xl sm:h-120 sm:w-125"
     >
       <Image draggable={false} loading="lazy" src={imageUrls[0]} alt={data.title} fill className="object-cover" quality={100} />
       <Link draggable={false} href={`/project/${data.id}`} className="absolute inset-0 z-10">

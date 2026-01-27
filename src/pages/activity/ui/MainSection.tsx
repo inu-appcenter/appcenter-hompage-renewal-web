@@ -1,6 +1,6 @@
 export const MainSection = () => {
   return (
-    <section className="mx-20 flex h-screen flex-row justify-between pt-87">
+    <section className="flex h-screen flex-row justify-between pt-87">
       <div className="flex flex-col gap-40">
         <div className="flex flex-col gap-10">
           <h1 className="text-brand-primary-cta text-[100px]/25 font-bold">활동명</h1>

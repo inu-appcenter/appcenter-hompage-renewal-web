@@ -18,7 +18,7 @@ export const BackgroundAnimation = () => {
   };
 
   return (
-    <div className="pointer-events-none absolute top-0 left-1/2 -z-10 hidden h-screen w-full -translate-x-1/2 overflow-hidden bg-black sm:inline-block">
+    <div className="pointer-events-none absolute top-0 left-1/2 -z-10 hidden h-screen w-screen -translate-x-1/2 overflow-hidden bg-black sm:inline-block">
       <video ref={videoRef} autoPlay muted loop playsInline onTimeUpdate={handleTimeUpdate} className="h-full w-full object-cover">
         <source src="/videos/landing.mp4" type="video/mp4" media="(min-width: 640px)" />
       </video>

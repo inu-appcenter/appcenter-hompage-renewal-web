@@ -3,7 +3,7 @@ import image from '../assets/image1.png';
 
 export const ImageSection = () => {
   return (
-    <section className="mx-40 flex min-h-screen">
+    <section className="mx-20 flex h-screen">
       <div className="relative mr-10 flex flex-col items-center">
         <div className="border-brand-primary-cta bg-background-surface z-10 mt-1 h-8 w-8 shrink rounded-full border-8" />
         <div className="mt-2 h-full w-[1.5px] border-l-2 border-dashed border-zinc-700" />

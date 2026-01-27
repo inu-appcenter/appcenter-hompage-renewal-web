@@ -9,7 +9,7 @@ const POSITION = { lat: 37.37658, lng: 126.6358 };
 
 export const LocationSection = () => {
   return (
-    <section id="location" className="flex min-h-screen flex-col gap-16 pt-40 pb-20 sm:pt-160 sm:pb-80">
+    <section id="location" className="flex min-h-screen snap-start flex-col gap-16 pt-40 pb-20 sm:mt-80 sm:mb-80">
       <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
 
       <SectionTitle title="Location" description="위치정보" />

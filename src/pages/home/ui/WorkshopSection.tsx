@@ -19,7 +19,7 @@ const data: WorkshopData[] = [
 ];
 export const WorkshopSection = () => {
   return (
-    <section className="my-20 flex flex-col sm:h-screen sm:gap-16">
+    <section className="flex snap-start flex-col justify-center sm:h-screen sm:gap-16">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="정기워크샵" subtitle="Workshop" />
         <motion.p
@@ -40,7 +40,7 @@ export const WorkshopSection = () => {
 
 const Item = ({ data }: { data: WorkshopData }) => {
   return (
-    <div className="group relative h-30 w-44 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-120 sm:w-174 sm:rounded-xl">
+    <div className="group relative h-30 w-44 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-95 sm:w-171.5 sm:rounded-xl">
       <Image draggable={false} loading="lazy" src={myImage} alt={data.title} fill className="object-cover" />
       <Link draggable={false} href={`/workshop/id=${data.title}`} className="absolute inset-0 z-10">
         <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-0.5 px-3 py-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:px-6.75 sm:py-3.25">

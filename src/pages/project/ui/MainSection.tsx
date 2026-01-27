@@ -8,7 +8,7 @@ export const MainSection = ({ data }: { data: Project }) => {
   const imageUrls = Object.values(data.images);
 
   return (
-    <section className="flex h-screen flex-row justify-between px-20 pt-65">
+    <section className="flex h-screen flex-row justify-between pt-65">
       <div className="flex w-140 flex-col">
         {data.isActive ? (
           <div className="bg-brand-secondary-light mb-4 w-fit rounded-[40px] px-3 py-2">서비스이용가능</div>

@@ -10,14 +10,14 @@ export const IntroduceSection = ({ data }: { data: Project }) => {
   const [selected, setSelected] = useState(0);
 
   return (
-    <section className="mx-20 flex h-screen flex-col items-center justify-center gap-10">
+    <section className="flex h-screen flex-col items-center justify-center gap-10">
       <div className="relative flex flex-row gap-30">
         {['사용 스택', '팀원 정보', '이용 현황'].map((tab, index) => (
           <SelectButton key={index} text={tab} isSelected={selected === index} onClick={() => setSelected(index)} />
         ))}
       </div>
 
-      <div className="bg-custom-black flex h-118.5 w-full items-center justify-center overflow-hidden rounded-2xl px-28 py-11.5 whitespace-pre-line">
+      <div className="bg-custom-black flex h-110 w-full items-center justify-center overflow-hidden rounded-2xl px-20 py-11.5 whitespace-pre-line">
         <AnimatePresence mode="wait">
           <motion.div key={selected} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }} className="h-full w-full">
             {selected === 0 && <Stacks data={data.stacks} />}

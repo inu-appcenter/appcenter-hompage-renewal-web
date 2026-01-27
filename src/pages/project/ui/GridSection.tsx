@@ -32,7 +32,7 @@ export const GridSection = ({ data }: { data: Project }) => {
   }, [data]);
 
   return (
-    <div ref={containerRef} className="flex w-full flex-col gap-20 px-4 py-20 lg:px-20">
+    <div ref={containerRef} className="flex w-full flex-col gap-20 py-20">
       {mounted &&
         sections.map((layout, index) => (
           <section key={`view-section-${index}`} className="w-full">
