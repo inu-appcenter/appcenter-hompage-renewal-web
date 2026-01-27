@@ -23,7 +23,7 @@ export const FAQList = ({ data }: { data: Faq[] }) => {
           </button>
         ))}
       </div>
-      <div className="flex flex-1 flex-col gap-3 sm:gap-5">
+      <div className="flex flex-1 flex-col gap-2">
         {data.map((item, index) => (
           <FAQItem key={index} data={item} category={selectedCategory} />
         ))}

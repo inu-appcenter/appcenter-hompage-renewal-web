@@ -9,12 +9,12 @@ const POSITION = { lat: 37.37658, lng: 126.6358 };
 
 export const LocationSection = () => {
   return (
-    <section id="location" className="flex min-h-screen snap-start flex-col gap-16 pt-40 pb-20 sm:mt-80 sm:mb-80">
+    <section id="location" className="flex h-screen flex-col gap-16 py-30">
       <Script src={KAKAO_SDK_URL} strategy="beforeInteractive" />
 
       <SectionTitle title="Location" description="위치정보" />
-      <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
-        <div className="relative h-70 w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:h-150 sm:flex-1">
+      <div className="flex flex-1 flex-col gap-10 overflow-hidden sm:flex-row sm:gap-16">
+        <div className="relative h-full w-full overflow-hidden rounded-3xl border border-white/10 shadow-2xl sm:flex-1">
           <Map center={POSITION} style={{ width: '100%', height: '100%' }} level={3}>
             <CustomOverlayMap position={POSITION}>
               <div className="relative flex flex-col items-center">

@@ -15,9 +15,15 @@ export const HomePage = () => {
       <AboutSection />
       <Suspense>
         <ProjectSection />
-        <OurTeamSection />
+      </Suspense>
+      <OurTeamSection />
+      <Suspense>
         <ActivitiesSection />
+      </Suspense>
+      <Suspense>
         <WorkshopSection />
+      </Suspense>
+      <Suspense>
         <FAQSection />
       </Suspense>
       <LocationSection />

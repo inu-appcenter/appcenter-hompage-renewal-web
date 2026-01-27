@@ -17,7 +17,7 @@ const data: ActivityData[] = [
 ];
 export const ActivitiesSection = () => {
   return (
-    <section className="flex snap-start flex-col justify-center sm:h-screen sm:gap-16">
+    <section className="flex h-[25vh] flex-col justify-center sm:h-screen sm:gap-16">
       <div className="flex w-full justify-between">
         <SectionDetailTitle title="활동" subtitle="Activities" />
         <motion.p

@@ -26,9 +26,9 @@ export const OurTeamData: OurTeam[] = [
     techStack: ['Figma'],
     icon: <Design />,
     motionProps: {
-      x: ['0%', '14%'],
-      y: ['0%', '100%'],
-      scale: [0.8, 0.7],
+      x: ['0%', '22%'],
+      y: ['0%', '110%'],
+      scale: [0.8, 0.6],
       rotate: [7, 0]
     }
   },
