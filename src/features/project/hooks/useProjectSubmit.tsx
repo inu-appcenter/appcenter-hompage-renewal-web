@@ -24,6 +24,7 @@ export const useProjectSubmit = (props: EditProjectSubmitProps | AddProjectSubmi
     formData.append('subTitle', data.subTitle);
     formData.append('body', data.body);
     formData.append('isActive', String(data.isActive));
+    formData.append('githubLink', data.githubLink);
     formData.append('androidStoreLink', data.androidStoreLink);
     formData.append('appleStoreLink', data.appleStoreLink);
     formData.append('webSiteLink', data.webSiteLink);

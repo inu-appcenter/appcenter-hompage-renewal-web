@@ -93,8 +93,9 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
         images: [...currentForm.images, { id: 0, url: '', file: selectedFile }]
       };
       await submit(updatedForm);
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // 이미지 업로드 대기 시간 (마땅한 방법을 못찾음...)
+      await new Promise((resolve) => setTimeout(resolve, 3000)); // 이미지 업로드 대기 시간 (마땅한 방법을 못찾음...)
       const response = await projectApi.getById(projectId);
+      console.log('Uploaded image response:', response);
       if (response?.images) {
         const imageEntries = Object.entries(response.images);
         const [, latestUrl] = imageEntries[imageEntries.length - 1];
@@ -129,7 +130,7 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
   };
 
   return (
-    <div className="focus-within:border-brand-primary/20 mb-12 flex flex-col gap-6 rounded-4xl border border-white/5 bg-[#0f0f12] p-8 shadow-2xl transition-all">
+    <div className="focus-within:border-brand-primary/20 mb-12 flex flex-col gap-6 rounded-4xl border border-white/5 bg-[#0f0f12] p-4 shadow-2xl transition-all">
       {/* Header */}
       <div className="flex items-center justify-between px-2">
         <div className="flex items-center gap-3">
@@ -228,8 +229,8 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
           <Responsive
             className="layout"
             layouts={{ lg: items }}
-            breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-            cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+            breakpoints={{ lg: 1200 }}
+            cols={{ lg: 12 }}
             rowHeight={30}
             margin={[16, 16]}
             width={width}

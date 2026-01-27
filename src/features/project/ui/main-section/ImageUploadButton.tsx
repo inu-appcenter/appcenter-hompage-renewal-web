@@ -11,7 +11,7 @@ export const MockupImageUploader = ({ imageFile, onUpload, onRemove }: ImageUplo
     <div className="group flex flex-col">
       <label className="mb-2 ml-1 block text-xs font-bold tracking-wider text-gray-500">디바이스 목업 이미지 (필수)</label>
       <div
-        className={`relative flex h-150 w-150 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[40px] border-2 border-dashed transition-all duration-300 ${
+        className={`relative flex h-200 w-150 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[40px] border-2 border-dashed transition-all duration-300 ${
           imageFile ? 'border-transparent bg-black shadow-2xl' : 'hover:border-brand-primary/50 border-gray-700 bg-[#151518] hover:bg-[#1a1a1f]'
         }`}
       >

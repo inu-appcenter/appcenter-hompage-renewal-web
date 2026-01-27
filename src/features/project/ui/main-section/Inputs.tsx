@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import { WebLink, AppStore, GooglePlay } from 'entities/link';
 import { ProjectFormType } from 'features/project/types/form';
+import { GitHub } from 'shared/icon/GitHub';
 
 interface InputProps {
   form: ProjectFormType;
@@ -53,6 +54,22 @@ export const LinkInput = ({ form, onChange }: InputProps) => {
           className={'w-full bg-transparent text-sm text-gray-200 outline-none placeholder:text-gray-600'}
           value={form.webSiteLink}
           onChange={onChange('webSiteLink')}
+        />
+      </div>
+      <div
+        className={
+          'group bg-surface-elevated focus-within:border-brand-primary/50 focus-within:ring-brand-primary/50 flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 transition-all focus-within:bg-[#202024] focus-within:ring-1 hover:border-white/20'
+        }
+      >
+        <GitHub className="h-8 w-8" />
+        <span>GitHub</span>
+        <div className="h-4 w-px bg-gray-700"></div>
+        <input
+          type="text"
+          placeholder="깃허브 링크를 입력하세요"
+          className={'w-full bg-transparent text-sm text-gray-200 outline-none placeholder:text-gray-600'}
+          value={form.githubLink}
+          onChange={onChange('githubLink')}
         />
       </div>
     </div>

@@ -8,7 +8,7 @@ import { MainSectionForm } from './MainSectionForm';
 import { IntroduceSectionForm } from './IntroduceSectionForm';
 import { GridSectionForm } from './GridSectionForm';
 import { StepIndicator } from './StepIndicator';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Loader2 } from 'lucide-react';
 import { useProjectSubmit } from '../hooks/useProjectSubmit';
 
 export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
@@ -19,6 +19,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
     title: initialData?.title || '',
     subTitle: initialData?.subTitle || '',
     isActive: initialData?.isActive ?? true,
+    githubLink: initialData?.githubLink || '',
     androidStoreLink: initialData?.androidStoreLink || '',
     appleStoreLink: initialData?.appleStoreLink || '',
     webSiteLink: initialData?.websiteLink || '',
@@ -58,6 +59,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
                   title: updatedData.title,
                   subTitle: updatedData.subTitle,
                   isActive: updatedData.isActive,
+                  githubLink: updatedData.githubLink || '',
                   androidStoreLink: updatedData.androidStoreLink || '',
                   appleStoreLink: updatedData.appleStoreLink || '',
                   webSiteLink: updatedData.websiteLink || '',
@@ -104,21 +106,39 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
       submit(form);
     }
   };
+  const handlePrev = () => {
+    if (step === 'introduce') {
+      setStep('main');
+    } else if (step === 'grid') {
+      setStep('introduce');
+    }
+  };
 
   return (
-    <div className="flex h-full w-full flex-col p-6">
+    <div className="flex h-full w-full flex-col">
       <div className="mx-auto mb-12 w-full max-w-3xl">
         <StepIndicator currentStep={step} />
       </div>
 
-      <section className="bg-background w-full flex-1 rounded-2xl border p-4 shadow-sm">
+      <section className="bg-background w-full flex-1 rounded-2xl border shadow-sm">
         {renderStepContent()}
 
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">
+          {step !== 'main' && (
+            <button
+              type="button"
+              onClick={handlePrev}
+              disabled={isPending}
+              className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-4 text-xl font-semibold text-white backdrop-blur-md transition-all hover:border-white/20 hover:bg-white/10 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <ArrowLeft className="transition-transform duration-300 group-hover:-translate-x-1" size={20} />
+              <span className="font-medium">이전</span>
+            </button>
+          )}
           <button
             onClick={handleNext}
             disabled={!isFormValid || isPending}
-            className="group bg-brand-primary-cta text-custom-black flex items-center gap-2 rounded-full px-6 py-4 text-xl font-semibold shadow-lg transition-all hover:-translate-y-0.5 hover:shadow-xl hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            className="group bg-brand-primary-cta text-custom-black flex items-center gap-2 rounded-full px-6 py-4 text-xl font-semibold shadow-lg transition-all hover:shadow-xl hover:brightness-110 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isPending ? (
               <>

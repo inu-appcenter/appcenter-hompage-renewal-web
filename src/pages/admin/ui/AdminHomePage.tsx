@@ -12,7 +12,7 @@ export const AdminHomePage = () => {
         <h1 className="mb-3 text-sm font-semibold tracking-widest text-slate-400">관리자 페이지</h1>
         <h2 className="text-5xl font-bold tracking-tight text-slate-900">
           앱센터 관리자 페이지입니다 <br />
-          <span className="text-slate-400">아래 버튼을 눌러 시작해보세요</span>
+          <span className="text-slate-400">최대화된 화면으로 사용하길 권장합니다</span>
         </h2>
       </header>
 
