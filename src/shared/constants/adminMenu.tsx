@@ -48,9 +48,9 @@ export const ADMIN_MENU: AdminMenuType[] = [
     ]
   },
   {
-    group: '이미지 관리',
+    group: '게시판 관리',
     tag: 'image',
-    description: '동아리 사진 업로드 및 관리',
+    description: '동아리 활동 업로드 및 관리',
     icon: ImageIcon,
     path: '/admin/image'
   },

@@ -15,6 +15,7 @@ export const AdminSkillList = () => {
         <TableHeader>
           <TableHeaderCell className="w-16">ID</TableHeaderCell>
           <TableHeaderCell className="w-60">기술 스택명</TableHeaderCell>
+          <TableHeaderCell className="w-60">카테고리</TableHeaderCell>
           <TableHeaderCell>이미지</TableHeaderCell>
           <TableHeaderCell className="w-24">작업</TableHeaderCell>
         </TableHeader>
@@ -32,8 +33,9 @@ export const AdminSkillList = () => {
 const Item = ({ data }: { data: ReturnType<typeof useSkillStack>['data'][number] }) => {
   return (
     <tr className="group transition-colors hover:bg-slate-50/50">
-      <td className="px-6 py-5 text-center text-sm text-slate-400">#{data.id}</td>
-      <td className="px-6 py-5 text-sm font-medium text-slate-900">{data.name || '내용 없음'}</td>
+      <td className="px-6 py-5 text-center text-sm text-slate-500">#{data.id}</td>
+      <td className="px-6 py-5 text-sm font-medium text-slate-500">{data.name || '내용 없음'}</td>
+      <td className="px-6 py-5 text-sm font-medium text-slate-500">{data.category || '내용 없음'}</td>
       <td className="px-6 py-5">
         <div className="flex items-center gap-2 overflow-x-auto pb-2">
           <div key={data.id} className="relative h-20 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100 transition-transform hover:scale-105">

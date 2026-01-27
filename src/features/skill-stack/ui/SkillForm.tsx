@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Pencil, Plus, Trash2, Loader2, X, Upload, AlertCircle } from 'lucide-react';
 import { Modal } from 'shared/ui/modal';
 import { useSkillStackActions, type SkillStack } from 'entities/skill-stack';
+import { SKILL_CATEGORY, SKILL_CATEGORY_COLORS } from 'shared/constants/skillCategory';
 
 export const AddSkillForm = () => {
   const { addMutation } = useSkillStackActions();
@@ -78,6 +79,7 @@ interface SkillFormProps {
 }
 export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) => {
   const [name, setName] = useState(initialData?.name || '');
+  const [category, setCategory] = useState(initialData?.category || '');
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(initialData?.icon || null);
 
@@ -85,6 +87,7 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
     e.preventDefault();
     const formData = new FormData();
     formData.append('name', name);
+    formData.append('category', category);
     if (file) formData.append('iconImage', file);
 
     await onSubmit(formData);
@@ -110,6 +113,21 @@ export const SkillForm = ({ initialData, onSubmit, isPending }: SkillFormProps) 
           placeholder="예: React, TypeScript"
           className="w-full rounded-2xl bg-slate-50 p-4 text-sm font-semibold outline-none focus:ring-2 focus:ring-emerald-500/20"
         />
+      </div>
+      <div className="flex flex-col gap-2">
+        <label className="text-sm font-semibold text-slate-400">카테고리</label>
+        <div className="flex flex-wrap gap-2">
+          {SKILL_CATEGORY.map((c) => (
+            <button
+              key={c}
+              type="button"
+              onClick={() => setCategory(c)}
+              className={`rounded-xl px-5 py-2.5 text-xs font-bold transition-all hover:bg-slate-100 ${category === c ? `${SKILL_CATEGORY_COLORS[c].bg} ${SKILL_CATEGORY_COLORS[c].text}` : 'bg-slate-50 text-slate-400'}`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col gap-2">
