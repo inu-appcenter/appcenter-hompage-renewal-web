@@ -13,7 +13,7 @@ export const AddSkillForm = () => {
       title="기술 스택 등록"
       trigger={
         <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
-          <Plus size={18} /> 새 기술 아이콘 등록
+          <Plus size={18} /> 새 기술 아이콘 추가
         </button>
       }
     >

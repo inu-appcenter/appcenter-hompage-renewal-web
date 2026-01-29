@@ -2,9 +2,9 @@
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import removedImage from '../assets/removed_main.png';
-import mainImage from '../assets/main.png';
+import { Activity } from 'entities/activity';
 
-export const ImageTransitionSection = () => {
+export const ImageTransitionSection = ({ data }: { data: Activity }) => {
   return (
     <div className="relative ml-[calc(50%-50vw)] h-screen w-screen overflow-hidden">
       <motion.div
@@ -36,7 +36,7 @@ export const ImageTransitionSection = () => {
               }
             }}
           >
-            <Image src={mainImage} alt="Main Project" className="h-auto w-full rounded-2xl shadow-2xl" priority />
+            <Image src={data.thumbnail} quality={100} width={600} height={600} alt="Main Project" className="h-auto w-full rounded-2xl shadow-2xl" priority />
           </motion.div>
 
           <motion.div

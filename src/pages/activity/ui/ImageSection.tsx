@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image';
-import image from '../assets/image1.png';
 import { motion } from 'motion/react';
+import { ActivityContent } from 'entities/activity';
 
-export const ImageSection = () => {
+export const ImageSection = ({ data }: { data: ActivityContent }) => {
   return (
     <section className="flex h-screen">
       <div className="relative mr-14 flex h-full flex-col items-center">
@@ -35,17 +35,16 @@ export const ImageSection = () => {
         />
       </div>
 
-      <div className="flex h-full flex-1 flex-col justify-center pt-20 pb-20">
+      <div className="mx-auto flex h-full w-full flex-1 flex-col justify-center pt-20 pb-20">
         <motion.h2 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-brand-primary-cta mb-8 text-3xl font-bold">
-          작은 회사에서 성장하는 법
+          {data.subTitle}
         </motion.h2>
-
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="relative mb-8 overflow-hidden rounded-xl">
-          <Image src={image} alt="Activity Image" width={1920} height={1080} className="h-auto w-full object-cover" />
+          <Image src={data.imageUrls[0]} alt="Activity Image" width={1920} height={1080} className="h-full w-auto object-cover" />
         </motion.div>
 
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-primary-gradient text-xl/7">
-          프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다.
+          {data.text}
         </motion.p>
       </div>
     </section>

@@ -1,19 +1,18 @@
-export const MainSection = () => {
+import { Activity } from 'entities/activity';
+
+export const MainSection = ({ data }: { data: Activity }) => {
   return (
     <section className="flex h-screen flex-row justify-between pt-87">
       <div className="flex flex-col gap-40">
         <div className="flex flex-col gap-10">
-          <h1 className="text-brand-primary-cta text-[100px]/25 font-bold">활동명</h1>
-          <h2 className="text-custom-gray-400 pl-2.5 text-[40px]/7">활동명_영어</h2>
+          <h1 className="text-brand-primary-cta text-[100px]/25 font-bold">{data.title}</h1>
+          <h2 className="text-custom-gray-400 pl-2.5 text-[40px]/7">{data.titleEng}</h2>
         </div>
-        <p className="text-primary-gradient w-135 text-xl/7">
-          활동 설명 활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동
-          설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명활동 설명 활동 설명활동 설명활동 설명활동 설명
-        </p>
+        <p className="text-primary-gradient w-135 text-xl/7">{data.body}</p>
       </div>
       <div className="flex min-w-fit flex-col items-end gap-3">
-        <Item title="Date" subTitle="2025. 12. 25" />
-        <Item title="작성자" subTitle="남궁민정" />
+        <Item title="Date" subTitle={new Date(data.createdDate).toLocaleDateString()} />
+        <Item title="작성자" subTitle={data.author} />
       </div>
     </section>
   );

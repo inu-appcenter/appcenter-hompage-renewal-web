@@ -16,7 +16,7 @@ export const AddFAQForm = () => {
       title="FAQ 질문 등록"
       trigger={
         <button className="flex items-center gap-2 rounded-2xl bg-slate-900 px-6 py-3 font-bold text-white transition-all hover:bg-blue-600">
-          <Plus size={18} /> 새 질문 등록
+          <Plus size={18} /> 새 질문 추가
         </button>
       }
     >

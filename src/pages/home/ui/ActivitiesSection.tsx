@@ -3,19 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Carousel, SectionDetailTitle } from './Components';
 import { MoveRight } from 'lucide-react';
-import myImage from 'shared/image/image.jpg';
 import { motion } from 'motion/react';
+import { useActivities } from 'entities/activity';
 
-interface ActivityData {
-  title: string;
-  date: string;
-}
-const data: ActivityData[] = [
-  { title: '기타활동1', date: '2026/01/06' },
-  { title: '기타활동2', date: '2026/02/15' },
-  { title: '기타활동3', date: '2026/03/20' }
-];
 export const ActivitiesSection = () => {
+  const { data } = useActivities();
+
   return (
     <section className="flex h-[25vh] flex-col justify-center sm:h-screen sm:gap-16">
       <div className="flex w-full justify-between">
@@ -36,14 +29,14 @@ export const ActivitiesSection = () => {
   );
 };
 
-const Item = ({ data }: { data: ActivityData }) => {
+const Item = ({ data }: { data: ReturnType<typeof useActivities>['data'][number] }) => {
   return (
     <div className="group relative h-16 w-30 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
-      <Image draggable={false} loading="lazy" src={myImage} alt={data.title} fill className="object-cover" />
-      <Link draggable={false} href={`/activity/id=${data.title}`} className="absolute inset-0 z-10">
+      <Image draggable={false} loading="lazy" src={data.thumbnail} alt={data.title} fill className="object-cover" />
+      <Link draggable={false} href={`/activity/${data.id}`} className="absolute inset-0 z-10">
         <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-0.5 px-3 py-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:px-6.75 sm:py-3.25">
           <span className="text-primary-gradient text-[9px] sm:text-[36px]">{data.title}</span>
-          <span className="text-custom-gray-500 text-[4.5px] sm:text-lg">{data.date}</span>
+          <span className="text-custom-gray-500 text-[4.5px] sm:text-lg">{new Date(data.createdDate).toLocaleDateString()}</span>
           <MoveRight className="text-custom-gray-500 animate-wiggle-right absolute right-4 bottom-1 w-4 sm:right-6 sm:bottom-6 sm:w-10" />
         </div>
       </Link>
