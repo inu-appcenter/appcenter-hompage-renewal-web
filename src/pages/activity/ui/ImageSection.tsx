@@ -39,9 +39,13 @@ export const ImageSection = ({ data }: { data: ActivityContent }) => {
         <motion.h2 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-brand-primary-cta mb-8 text-3xl font-bold">
           {data.subTitle}
         </motion.h2>
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="relative mb-8 overflow-hidden rounded-xl">
-          <Image src={data.imageUrls[0]} alt="Activity Image" width={1920} height={1080} className="h-full w-auto object-cover" />
-        </motion.div>
+        <div className={`mb-8 grid h-full shrink gap-4 ${data.imageUrls?.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+          {data.imageUrls?.map((url, index) => (
+            <motion.div key={index} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.1 }} className="relative overflow-hidden rounded-xl">
+              <Image src={url} fill alt="..." className="object-cover" />
+            </motion.div>
+          ))}
+        </div>
 
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-primary-gradient text-xl/7">
           {data.text}

@@ -1,3 +1,2 @@
 export { AdminActivityList } from './ui/AdminActivityList';
-export { AddActivityForm } from './ui/AddActivityForm';
-export { EditActivityForm } from './ui/EditActivityForm';
+export { ActivityForm } from './ui/ActivityForm';
