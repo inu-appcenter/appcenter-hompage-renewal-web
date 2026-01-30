@@ -11,7 +11,7 @@ export const OurTeamData: OurTeam[] = [
     title: 'Android',
     partName: '안드로이드',
     description: `안드로이드 운영체제에서\n작동하는 앱을 구현합니다.`,
-    techStack: ['Android studio', 'Kotlin'],
+    techStack: ['Android Studio', 'Kotlin'],
     icon: <Android />,
     motionProps: {
       x: ['0%', '16%'],
@@ -73,7 +73,7 @@ export const OurTeamData: OurTeam[] = [
     title: 'Basic',
     partName: '베이직',
     description: `개발 기초에 대해\n학습합니다.`,
-    techStack: ['React', 'Typescript'],
+    techStack: ['React', 'TypeScript'],
     icon: <Basic />,
     motionProps: {
       x: ['0%', '30%'],

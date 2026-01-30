@@ -1,39 +1,50 @@
 'use client';
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 
-const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?';
 
 export const ScrambleText = ({ text, delay = 0 }: { text: string; delay?: number }) => {
-  const [result, setResult] = useState('');
+  const spanRef = useRef<HTMLSpanElement>(null);
 
-  const scramble = useCallback(() => {
+  const startScramble = useCallback(() => {
     let frame = 0;
-    const maxFrames = 30;
+    const step = 3;
+    const revealOffset = 10;
 
     const interval = setInterval(() => {
       const scrambled = text
         .split('')
         .map((char, i) => {
-          if (frame > i * 3 + 10) return char;
+          if (frame > i * step + revealOffset) return char;
           return CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
         })
         .join('');
 
-      setResult(scrambled);
+      if (spanRef.current) {
+        spanRef.current.innerText = scrambled;
+      }
 
-      if (frame > text.length * 3 + maxFrames) {
+      if (frame > text.length * step + revealOffset) {
         clearInterval(interval);
       }
       frame++;
-    }, 80);
+    }, 60);
 
-    return () => clearInterval(interval);
+    return interval;
   }, [text]);
 
   useEffect(() => {
-    const timer = setTimeout(scramble, delay);
-    return () => clearTimeout(timer);
-  }, [scramble, delay]);
+    let intervalId: NodeJS.Timeout;
 
-  return <>{result || text.replace(/[^\s]/g, '0')}</>;
+    const timeoutId = setTimeout(() => {
+      intervalId = startScramble();
+    }, delay);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [delay, startScramble]);
+
+  return <span ref={spanRef}>{text}</span>;
 };

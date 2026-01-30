@@ -9,10 +9,10 @@ export const OurTeamPage = () => {
     <>
       <MainSection />
       <IntroduceSection />
-      <FloatingButton />
       {OurTeamData.map((part) => (
         <PartDescriptionSection key={part.title} {...part} />
       ))}
+      <FloatingButton />
     </>
   );
 };

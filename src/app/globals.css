@@ -37,18 +37,6 @@ button {
   /* 특수한 색상 */
   --color-text-primary-gradient: radial-gradient(circle, #dcdcdc 0%, #dcdcdce6 70%, #dcdcdcb3 90%);
 
-  /* 애니메이션 */
-  @keyframes move-right-left {
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-    50% {
-      transform: translateX(12px);
-    }
-  }
-  --animate-wiggle-right: move-right-left 1s ease-in-out infinite;
-
   --font-product-design: var(--font-product-design), ui-sans-serif, system-ui;
 }
 

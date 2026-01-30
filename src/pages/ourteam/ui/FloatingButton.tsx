@@ -1,5 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Menu, X } from 'lucide-react';
 import { OurTeamData } from '../data/OurTeamData';
 import Link from 'next/link';
@@ -8,8 +9,10 @@ import { motion } from 'motion/react';
 export const FloatingButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const observerOptions = {
       root: null,
       rootMargin: '-40% 0px -40% 0px',
@@ -33,7 +36,9 @@ export const FloatingButton = () => {
     return () => observer.disconnect();
   }, []);
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 2.4 }} className="text-custom-black fixed top-1/4 right-8 z-60 flex flex-col items-center">
       <button onClick={() => setIsOpen(!isOpen)} className="bg-brand-primary-cta z-20 rounded-full p-5 shadow-lg transition-transform active:scale-90">
         {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -55,6 +60,7 @@ export const FloatingButton = () => {
           );
         })}
       </div>
-    </motion.div>
+    </motion.div>,
+    document.body
   );
 };

@@ -29,8 +29,7 @@ export const WorkshopSection = () => {
           transition={{ delay: 0.6, duration: 0.6 }}
           className="text-primary-gradient w-40 text-[5px]/2 sm:w-150 sm:text-xl/7"
         >
-          프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다. 프로젝트에
-          대한 설명이 들어가는 자리입니다. 프로젝트에 대한 설명이 들어가는 자리입니다.
+          일할 땐 열정적으로, 놀 땐 누구보다 진심으로!
         </motion.p>
       </div>
       <Carousel data={data} renderItem={(item) => <Item data={item} />} className="gap-3 sm:gap-11.5" />

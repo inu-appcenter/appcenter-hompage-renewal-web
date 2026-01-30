@@ -2,37 +2,38 @@
 import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'motion/react';
 
-const DURANTION = 1000; // 전체 애니메이션 시간
-const INTERVAL_TIME = 25; // 숫자가 바뀌는 속도
+const DURATION = 1000;
 
 export const RandomShuffleNumber = ({ value }: { value: number }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { amount: 0.5 });
+  const isInView = useInView(ref, { amount: 0.5, once: true });
 
   useEffect(() => {
     if (!isInView) return;
 
-    const startTime = Date.now();
+    let startTime: number | null = null;
+    let frameId: number;
 
-    const timer = setInterval(() => {
-      const now = Date.now();
-      const elapsed = now - startTime;
+    const digitCount = value.toString().length;
+    const min = Math.pow(10, digitCount - 1);
+    const max = Math.pow(10, digitCount) - 1;
 
-      if (elapsed >= DURANTION) {
-        setDisplayValue(value);
-        clearInterval(timer);
-      } else {
-        const digitCount = value.toString().length;
-        const min = Math.pow(10, digitCount - 1);
-        const max = Math.pow(10, digitCount) - 1;
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+
+      if (progress < DURATION) {
         const randomVal = Math.floor(Math.random() * (max - min + 1)) + min;
-
         setDisplayValue(randomVal);
+        frameId = requestAnimationFrame(step);
+      } else {
+        setDisplayValue(value);
       }
-    }, INTERVAL_TIME);
+    };
 
-    return () => clearInterval(timer);
+    frameId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frameId);
   }, [isInView, value]);
 
   return <span ref={ref}>{displayValue}</span>;

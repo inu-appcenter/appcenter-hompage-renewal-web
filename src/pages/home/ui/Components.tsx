@@ -43,7 +43,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
           hidden: { opacity: 0, y: 30 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'circOut' } }
         }}
-        className="text-primary-gradient font-product-design text-[32px] font-normal tracking-widest uppercase sm:text-[40px]"
+        className="text-primary-gradient font-product-design text-[32px] uppercase sm:text-[40px]"
       >
         <span className="text-brand-primary-cta">{title.charAt(0)}</span>
         {title.slice(1)}
@@ -54,7 +54,7 @@ export const SectionTitle = ({ title, description, className = '' }: { title: st
           hidden: { opacity: 0, y: 20 },
           visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
         }}
-        className="text-primary-gradient text-[16px] leading-relaxed font-semibold sm:text-xl"
+        className="text-primary-gradient text-[16px] font-semibold sm:text-2xl"
       >
         {description}
       </motion.p>
