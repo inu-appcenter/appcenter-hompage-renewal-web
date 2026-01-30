@@ -3,10 +3,7 @@ import Link from 'next/link';
 import { EmptyResult } from 'shared/error/EmptyResult';
 import { Table, TableBody, TableHeader, TableHeaderCell } from 'shared/ui/table';
 import { useActivities } from 'entities/activity';
-import { DeleteActivityButton } from './delete-activity/DeleteActivityButton';
-import { AddActivityButton } from './add-activity/AddActivityButton';
-import { EditActivityButton } from './edit-activity/EditActivityButton';
-
+import { AddActivityButton, DeleteActivityButton, EditActivityButton } from './ActivityListButton';
 import { User, ImageIcon, FileText } from 'lucide-react';
 
 export const AdminActivityList = () => {

@@ -120,7 +120,7 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
         <StepIndicator currentStep={step} />
       </div>
 
-      <section className="bg-background w-full flex-1 rounded-2xl border shadow-sm">
+      <section className="bg-background w-full flex-1 rounded-2xl">
         {renderStepContent()}
 
         <div className="fixed right-24 bottom-10 z-50 flex items-center gap-4">

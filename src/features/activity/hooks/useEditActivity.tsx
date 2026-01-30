@@ -3,6 +3,10 @@ import { useRouter } from 'next/navigation';
 import { ActivityForm } from '../types/form';
 import { useQueryClient } from '@tanstack/react-query';
 
+// 1단계. 활동 메타데이터 확인 -> 다르면 수정
+// 2단계. 썸네일 파일 확인 -> 파일이면 수정
+// 3단계. 각 콘텐츠 섹션별 이미지 파일 확인 -> 파일이면 수정
+
 export const useEditActivity = () => {
   const { editMetadataMutation, editThumbnailMutation, editImageMutation } = useActivityActions();
   const router = useRouter();
