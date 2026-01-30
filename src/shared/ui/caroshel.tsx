@@ -1,6 +1,6 @@
 'use client';
 import { useState, useRef, useEffect, useCallback } from 'react';
-import { useMotionValueEvent, useMotionValue, animate, motion } from 'framer-motion';
+import { useMotionValueEvent, useMotionValue, animate, motion } from 'motion/react';
 
 interface CarouselProps<T> {
   data: T[];

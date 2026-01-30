@@ -1,7 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import { Plus } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import { Part } from 'shared/types/part';
 import { Project } from 'entities/project';
 import { GitHub } from 'shared/icon/GitHub';

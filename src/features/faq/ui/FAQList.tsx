@@ -9,37 +9,73 @@ import { Part } from 'shared/types/part';
 
 export const FAQList = ({ data }: { data: Faq[] }) => {
   const [selectedCategory, setSelectedCategory] = useState<Part>('Common');
+  const filteredData = data.filter((item) => item.part === selectedCategory);
 
   return (
     <div className="flex flex-col gap-4 sm:gap-7">
+      {/* 카테고리 탭 */}
       <div className="flex flex-row justify-between">
         {PART.map((category) => (
           <button
             key={category}
-            className={`cursor-pointer rounded-2xl text-sm font-bold transition-all duration-300 sm:text-2xl ${selectedCategory === category ? 'text-brand-primary-cta' : 'text-primary-gradient hover:text-brand-primary-light'}`}
+            className={`cursor-pointer rounded-2xl text-sm font-bold transition-all duration-300 sm:text-2xl ${
+              selectedCategory === category ? 'text-brand-primary-cta' : 'text-primary-gradient hover:text-brand-primary-light'
+            }`}
             onClick={() => setSelectedCategory(category)}
           >
             {category}
           </button>
         ))}
       </div>
+
+      {/* FAQ 리스트 영역 */}
       <div className="flex flex-1 flex-col gap-2">
-        {data.map((item, index) => (
-          <FAQItem key={index} data={item} category={selectedCategory} />
-        ))}
-        {data.filter((item) => item.part === selectedCategory).length === 0 && <p className="mt-10 text-center text-[12px] text-white sm:text-xl/7">선택하신 카테고리에 해당하는 FAQ가 없습니다.</p>}
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={selectedCategory}
+            // 부모 컨테이너에서 자식들의 등장 간격을 제어 (Stagger)
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-50px' }}
+            variants={{
+              hidden: { opacity: 0 },
+              show: {
+                opacity: 1,
+                transition: { staggerChildren: 0.08 } // 여기서 순차적 지연을 제어
+              }
+            }}
+            className="flex flex-col gap-2"
+          >
+            {filteredData.map((item, index) => (
+              <FAQItem key={`${item.part}-${index}`} data={item} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+
+        {filteredData.length === 0 && (
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-10 text-center text-[12px] text-white sm:text-xl/7">
+            선택하신 카테고리에 해당하는 FAQ가 없습니다.
+          </motion.p>
+        )}
       </div>
     </div>
   );
 };
 
-const FAQItem = ({ data, category }: { data: Faq; category: Part }) => {
+const FAQItem = ({ data }: { data: Faq }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  if (data.part !== category) return null;
-
   return (
-    <div className="group flex cursor-pointer flex-col text-white" onClick={() => setIsOpen(!isOpen)}>
+    <motion.div
+      // 자식 요소는 부모의 'hidden'과 'show' 상태를 물려받음
+      variants={{
+        hidden: { opacity: 0, y: 20 },
+        show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } }
+      }}
+      layout // 아코디언 열릴 때 위치 자동 보정
+      className="group flex cursor-pointer flex-col text-white"
+      onClick={() => setIsOpen(!isOpen)}
+    >
       <div className="text-text-primary group-hover:text-brand-primary-light bg-surface-elevated flex flex-row items-center justify-between gap-2 rounded-2xl px-3 py-2 sm:px-5 sm:py-4">
         <h3 className="text-[12px] transition-colors sm:text-xl/7">
           <span className="text-[16px] font-bold sm:text-[28px]/7">Q.</span> {data.question}
@@ -48,15 +84,16 @@ const FAQItem = ({ data, category }: { data: Faq; category: Part }) => {
           <ChevronDown className="h-6 w-6" aria-hidden="true" />
         </motion.div>
       </div>
+
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
-            <p className="flex flex-row items-center gap-3 px-10 pt-5 text-[12px] sm:px-14 sm:text-xl/7">
+            <p className="flex flex-row items-center gap-3 px-10 py-5 text-[12px] sm:px-14 sm:text-xl/7">
               <CornerDownRight className="w-6 sm:w-10" /> {data.answer}
             </p>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };

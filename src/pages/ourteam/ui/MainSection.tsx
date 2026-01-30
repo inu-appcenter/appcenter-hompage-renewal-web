@@ -1,6 +1,6 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 const subtitleSteps = ['', 'ㅍ', '파', '파트', '파트ㅂ', '파트벼', '파트별', '파트별 ', '파트별 ㅅ', '파트별 소', '파트별 소ㄱ', '파트별 소개'];
 
