@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import { Project } from 'entities/project';
 import { useMemo } from 'react';
 import { Responsive, useContainerWidth } from 'react-grid-layout';
@@ -50,7 +50,7 @@ export const GridSection = ({ data }: { data: Project }) => {
               {layout.map((item: any) => (
                 <div key={item.i} className="overflow-hidden rounded-2xl">
                   {item.type === 'image' ? (
-                    <img src={item.content} alt="" className="h-full w-full object-cover transition-transform duration-500 hover:scale-105" />
+                    <Image src={item.content} alt="프로젝트 이미지" fill className="h-full w-full object-cover transition-transform duration-500" />
                   ) : (
                     <div className="flex h-full w-full items-start p-2">
                       <p className="text-lg leading-relaxed whitespace-pre-wrap text-gray-200">{item.content}</p>

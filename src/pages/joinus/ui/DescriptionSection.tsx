@@ -10,7 +10,7 @@ export const DescriptionSection = () => {
 
       <div className="bg-surface-elevated relative h-full w-full max-w-3xl rounded-lg p-10 pr-0">
         <div className="to-background-surface/0 from-background-surface pointer-events-none absolute inset-0 z-50 bg-linear-to-t from-6% to-28%" />
-        <div data-lenis-prevent className="custom-scrollbar h-full w-full overflow-y-auto pr-4">
+        <div className="custom-scrollbar h-full w-full overflow-y-auto pr-4">
           <p className="mb-25 text-[28px]/12.5 font-light whitespace-pre-line text-white">
             {`(모집 공고 설명문 들어가는 자리)
               앱센터 17.5기 신입멤버 모집

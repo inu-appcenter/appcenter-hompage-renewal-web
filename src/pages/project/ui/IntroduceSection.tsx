@@ -34,8 +34,8 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
   return (
     <button
       onClick={onClick}
-      className={`group relative flex cursor-pointer items-center gap-2.5 rounded-[40px] px-6 py-3 text-2xl transition-colors duration-300 ${
-        isSelected ? 'text-brand-primary-cta' : 'text-text-primary border-text-primary border'
+      className={`group bg-background relative flex cursor-pointer items-center gap-2 rounded-[40px] px-5 py-2 text-2xl transition-colors duration-300 ${
+        isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-600 border-custom-gray-600 border'
       }`}
     >
       {isSelected && (
@@ -47,7 +47,7 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
       )}
 
       <motion.div animate={{ rotate: isSelected ? 45 : 0 }} transition={{ duration: 0.3 }}>
-        <Plus fill={'currentColor'} strokeWidth={0.5} size={28} />
+        <Plus className="text-custom-gray-600" strokeWidth={1} size={28} />
       </motion.div>
 
       <span className="relative z-10">{text}</span>
