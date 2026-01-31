@@ -170,7 +170,7 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
         </div>
 
         <div className="flex flex-1 flex-col gap-2">
-          <label className="ml-1 block text-xs font-black text-gray-500 uppercase">{inputType === 'image' ? 'Image Preview & Upload' : 'Text Content'}</label>
+          <label className="ml-1 block text-xs font-black text-gray-500 uppercase">{inputType === 'image' ? '이미지 블록 입력' : '글자 블록 입력'}</label>
 
           <div className="group focus-within:border-brand-primary/50 flex min-h-20 items-center gap-4 rounded-xl border border-white/10 bg-[#1e1e22] px-4 py-3 transition-all hover:border-white/20">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-white/5 bg-black/40">
@@ -265,7 +265,7 @@ export const GridEditor = ({ initialItems, onUpdate, onRemoveSection, index, pro
                       <img src={item.content} alt="" className="h-full w-full rounded-xl object-cover select-none" />
                     ) : (
                       <div className="custom-scrollbar h-full w-full overflow-y-auto p-4">
-                        <p className="text-sm leading-relaxed whitespace-pre-wrap text-gray-300">{item.content}</p>
+                        <p className="text-md whitespace-pre-wrap text-gray-300">{item.content}</p>
                       </div>
                     )}
                   </div>

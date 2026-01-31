@@ -5,10 +5,9 @@ import { Carousel, SectionDetailTitle } from './Components';
 import { MoveRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useActivities } from 'entities/activity';
+import { AsyncBoundary } from 'shared/error/AsyncBoundary';
 
 export const ActivitiesSection = () => {
-  const { data } = useActivities();
-
   return (
     <section className="flex h-[25vh] flex-col justify-center sm:h-screen sm:gap-16">
       <div className="flex w-full justify-between">
@@ -23,22 +22,31 @@ export const ActivitiesSection = () => {
           단순히 서비스를 만드는 것을 넘어 인사이트를 나누고 함께 성장합니다. 모든 워크숍은 우리의 집단 지성이 비범한 것을 만들어내는 이정표입니다.
         </motion.p>
       </div>
-      <Carousel data={data} renderItem={(item) => <Item data={item} />} className="gap-3 sm:gap-11.5" />
+      <AsyncBoundary>
+        <ActivitiesCarousel />
+      </AsyncBoundary>
     </section>
   );
 };
 
-const Item = ({ data }: { data: ReturnType<typeof useActivities>['data'][number] }) => {
+const ActivitiesCarousel = () => {
+  const { data } = useActivities();
   return (
-    <div className="group relative h-16 w-30 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
-      <Image draggable={false} loading="lazy" src={data.thumbnail} alt={data.title} fill className="object-cover" />
-      <Link draggable={false} href={`/activity/${data.id}`} className="absolute inset-0 z-10">
-        <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-0.5 px-3 py-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:px-6.75 sm:py-3.25">
-          <span className="text-primary-gradient text-[9px] sm:text-[36px]">{data.title}</span>
-          <span className="text-custom-gray-500 text-[4.5px] sm:text-lg">{new Date(data.createdDate).toLocaleDateString()}</span>
-          <MoveRight className="text-custom-gray-500 animate-wiggle-right absolute right-4 bottom-1 w-4 sm:right-6 sm:bottom-6 sm:w-10" />
+    <Carousel
+      data={data}
+      className="gap-3 sm:gap-11.5"
+      renderItem={(item) => (
+        <div className="group relative h-16 w-30 cursor-pointer overflow-hidden rounded-sm bg-gray-900 sm:h-66.75 sm:w-119.5 sm:rounded-xl">
+          <Image draggable={false} loading="lazy" src={item.thumbnail} alt={item.title} fill className="object-cover" />
+          <Link draggable={false} href={`/activity/${item.id}`} className="absolute inset-0 z-10">
+            <div className="bg-background-surface/80 absolute inset-0 flex flex-col items-start justify-start gap-0.5 px-3 py-2 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:gap-2 sm:px-6.75 sm:py-3.25">
+              <span className="text-primary-gradient text-[9px] sm:text-[36px]">{item.title}</span>
+              <span className="text-custom-gray-500 text-[4.5px] sm:text-lg">{new Date(item.createdDate).toLocaleDateString()}</span>
+              <MoveRight className="text-custom-gray-500 animate-wiggle-right absolute right-4 bottom-1 w-4 sm:right-6 sm:bottom-6 sm:w-10" />
+            </div>
+          </Link>
         </div>
-      </Link>
-    </div>
+      )}
+    />
   );
 };

@@ -1,5 +1,5 @@
 import { Generation, useGeneration, usePart } from 'entities/generation';
-import { Check, Plus, Search, Users, X } from 'lucide-react';
+import { AlertCircle, Check, Plus, Search, Users, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { Modal } from 'shared/ui/modal';
 import { ProjectFormType } from '../../types/form';
@@ -102,9 +102,7 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
               <div className="flex flex-wrap gap-2">
                 <button
                   onClick={() => setSelectedPartName('All')}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                    selectedPartName === 'All' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
-                  }`}
+                  className={`rounded-xl px-3 py-1 text-xs font-medium transition-colors ${selectedPartName === 'All' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`}
                 >
                   All
                 </button>
@@ -112,7 +110,7 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
                   <button
                     key={part}
                     onClick={() => setSelectedPartName(part)}
-                    className={`rounded-full px-4 py-2 text-xs font-medium transition-colors ${
+                    className={`rounded-xl px-4 py-2 text-xs font-medium transition-colors ${
                       selectedPartName === part ? `${PART_COLORS[part].bg} ${PART_COLORS[part].text} hover:${PART_COLORS[part].bg}` : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
                     }`}
                   >
@@ -120,6 +118,12 @@ export const TeamForm = ({ form, setForm }: { form: ProjectFormType; setForm: Re
                   </button>
                 ))}
               </div>
+            </div>
+            <div className="flex items-center gap-2 rounded-lg bg-amber-50 p-3 text-xs font-medium text-amber-600">
+              <AlertCircle size={16} className="shrink-0" />
+              <span>
+                반드시 <b>활동 기수</b>를 확인한 후 팀원을 선택해주세요.
+              </span>
             </div>
 
             <div className="flex-1 overflow-y-auto px-1 py-4">

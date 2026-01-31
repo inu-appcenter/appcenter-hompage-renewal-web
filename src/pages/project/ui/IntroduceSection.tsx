@@ -47,7 +47,7 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
       )}
 
       <motion.div animate={{ rotate: isSelected ? 45 : 0 }} transition={{ duration: 0.3 }}>
-        <Plus className="text-custom-gray-600" strokeWidth={1} size={28} />
+        <Plus className={` ${isSelected ? 'text-brand-primary-cta' : 'text-custom-gray-600'}`} strokeWidth={1} size={28} />
       </motion.div>
 
       <span className="relative z-10">{text}</span>
@@ -62,22 +62,24 @@ const Stacks = ({ data }: { data: Project }) => {
   }
 
   return (
-    <div className="flex h-full flex-wrap content-center gap-8">
+    <div className="flex h-full flex-col justify-center gap-20">
       {data.githubLink && (
         <div className="flex items-center gap-4">
           <GitHub className="h-8 w-8" />
-          <a href={data.githubLink} target="_blank" rel="noopener noreferrer" className="text-primary-gradient text-2xl">
+          <a href={data.githubLink} target="_blank" rel="noopener noreferrer" className="text-custom-gray-100 text-2xl">
             {data.githubLink}
           </a>
         </div>
       )}
-      {data.stacks &&
-        data.stacks.map((stack) => (
-          <div key={stack.name} className="bg-custom-gray-900 flex shrink-0 items-center gap-2 rounded-full px-3 py-2">
-            <img src={stack.icon} alt={`${stack.name} icon`} className="h-4 w-4 object-contain" />
-            <span className="text-primary-gradient text-lg font-medium">{stack.name}</span>
-          </div>
-        ))}
+      <div className="flex flex-wrap gap-8">
+        {data.stacks &&
+          data.stacks.map((stack) => (
+            <div key={stack.name} className="bg-custom-gray-900 flex shrink-0 items-center gap-2 rounded-full px-3 py-2">
+              <img src={stack.icon} alt={`${stack.name} icon`} className="h-4 w-4 object-contain" />
+              <span className="text-primary-gradient text-lg font-medium">{stack.name}</span>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
@@ -100,8 +102,9 @@ const Groups = ({ data }: { data: Groups[] }) => {
   }, [data]);
 
   if (!data) return <div className="text-primary-gradient flex h-full items-center justify-center text-3xl">팀원 정보가 없습니다</div>;
+
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex h-full w-full justify-between px-8 xl:px-24">
       {data &&
         Object.entries(groupedByPart).map(([part, members]) => (
           <div key={part} className="flex shrink-0 flex-col items-start gap-6 rounded-full px-3 py-2">

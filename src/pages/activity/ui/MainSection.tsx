@@ -1,8 +1,12 @@
+import Image from 'next/image';
 import { Activity } from 'entities/activity';
 
 export const MainSection = ({ data }: { data: Activity }) => {
   return (
-    <section className="flex h-screen flex-row justify-between pt-87">
+    <section className="relative flex h-screen flex-row justify-between pt-87">
+      <div className="bg-surface/50 pointer-events-none absolute top-0 left-1/2 -z-10 h-screen w-screen -translate-x-1/2 overflow-hidden blur-sm">
+        <Image src={data.thumbnail} alt="메인 이미지" fill className="object-cover opacity-10" />
+      </div>
       <div className="flex flex-col gap-40">
         <div className="flex flex-col gap-10">
           <h1 className="text-brand-primary-cta text-[100px]/25 font-bold">{data.title}</h1>

@@ -5,7 +5,7 @@ import { ActivityContent } from 'entities/activity';
 
 export const ImageSection = ({ data }: { data: ActivityContent }) => {
   return (
-    <section className="flex h-screen">
+    <section className="mt-6 flex h-screen">
       <div className="relative mr-14 flex h-full flex-col items-center">
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
@@ -31,23 +31,23 @@ export const ImageSection = ({ data }: { data: ActivityContent }) => {
           whileInView={{ height: '100%', opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="mt-2 w-[1.5px] origin-top border-l-2 border-dashed border-zinc-700"
+          className="mt-24 -mb-24 w-[1.5px] origin-top border-l-2 border-dashed border-zinc-700"
         />
       </div>
 
       <div className="mx-auto flex h-full w-full flex-1 flex-col justify-center pt-20 pb-20">
-        <motion.h2 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-brand-primary-cta mb-8 text-3xl font-bold">
+        <motion.h2 initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.1 }} className="text-brand-primary-cta mb-16 text-3xl font-bold">
           {data.subTitle}
         </motion.h2>
-        <div className={`mb-8 grid h-full shrink gap-4 ${data.imageUrls?.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+        <div className={`mb-8 grid h-full shrink gap-4 px-32 ${data.imageUrls?.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
           {data.imageUrls?.map((url, index) => (
             <motion.div key={index} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: index * 0.1 }} className="relative overflow-hidden rounded-xl">
-              <Image src={url} fill alt="..." className="object-cover" />
+              <Image src={url} fill alt="활동 이미지" className="object-cover" />
             </motion.div>
           ))}
         </div>
 
-        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-primary-gradient text-xl/7">
+        <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-primary-gradient px-32 text-xl/7">
           {data.text}
         </motion.p>
       </div>
