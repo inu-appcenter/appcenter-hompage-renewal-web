@@ -1,17 +1,17 @@
 import { http } from 'shared/utils/http';
-import { ImageManagement } from '../types/image-management';
+import { WorkShop } from '../types/workshop';
 
-export const imageManagementApi = {
+export const workShopApi = {
   getAll: () => {
-    return http.get<ImageManagement[]>('/photo-board/public/all-boards-contents');
+    return http.get<WorkShop[]>('/photo-board/public/all-boards-contents');
   },
 
   create: (newFormData: FormData) => {
-    return http.post<ImageManagement>('/photo-board', newFormData);
+    return http.post<WorkShop>('/photo-board', newFormData);
   },
 
-  update: ({ id, data }: { id: number; data: FormData }) => {
-    return http.patch<ImageManagement>(`/photo-board?id=${id}`, data);
+  update: ({ id, data, photoId }: { id: number; data: FormData; photoId: number }) => {
+    return http.patch<WorkShop>(`/photo-board/${photoId}?board_id=${id}`, data);
   },
 
   delete: (id: number) => {

@@ -1,2 +1,2 @@
-export type { ImageManagement } from './types/image-management';
-export { useImageManagement, useImageManagementActions } from './hooks/useImageManagementActions';
+export type { WorkShop } from './types/workshop';
+export { useWorkShop, useWorkShopActions } from './hooks/useWorkShopActions';

@@ -1,15 +1,15 @@
 import { queryOptions } from '@tanstack/react-query';
-import { imageManagementApi } from '.';
+import { workShopApi } from '.';
 
-export const imageManagementKeys = {
-  all: ['imageManagement'] as const,
-  lists: () => [...imageManagementKeys.all, 'list'] as const
+export const workShopKeys = {
+  all: ['workShop'] as const,
+  lists: () => [...workShopKeys.all, 'list'] as const
 };
 
-export const imageManagementOptions = {
+export const workShopOptions = {
   all: () =>
     queryOptions({
-      queryKey: imageManagementKeys.lists(),
-      queryFn: imageManagementApi.getAll
+      queryKey: workShopKeys.lists(),
+      queryFn: workShopApi.getAll
     })
 };

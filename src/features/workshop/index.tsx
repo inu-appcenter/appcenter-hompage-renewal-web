@@ -1,1 +1,1 @@
-export { AdminImageList } from './ui/AdminImageList';
+export { AdminWorkShopList } from './ui/AdminWorkShopList';
