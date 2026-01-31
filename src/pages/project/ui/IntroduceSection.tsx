@@ -57,6 +57,7 @@ const SelectButton = ({ text, onClick, isSelected }: { text: string; onClick: ()
 
 const Stacks = ({ data }: { data: Project }) => {
   const hasNoContent = (!data.stacks || data.stacks.length === 0) && !data.githubLink;
+
   if (hasNoContent) {
     return <div className="text-primary-gradient flex h-full items-center justify-center text-3xl">사용 스택 정보가 없습니다</div>;
   }
