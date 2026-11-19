@@ -1,11 +1,11 @@
 'use server';
-import { revalidateTag as NextRevalidateTag } from 'next/cache';
+import { updateTag } from 'next/cache';
 
 export async function revalidateTag(tag: string) {
   try {
-    NextRevalidateTag(tag, 'default');
-    console.log(`[Cache Debug] Successfully requested revalidation for: ${tag}`);
+    updateTag(tag);
+    console.log(`[Cache Debug] Successfully expired tag: ${tag}`);
   } catch (error) {
-    console.error(`[Cache Error] Failed to revalidate tag ${tag}:`, error);
+    console.error(`[Cache Error] Failed to expire tag ${tag}:`, error);
   }
 }
