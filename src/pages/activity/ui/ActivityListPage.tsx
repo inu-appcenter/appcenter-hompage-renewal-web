@@ -3,6 +3,7 @@ import { ScrollToBottomButton } from 'entities/scroll';
 import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -42,7 +43,7 @@ const Item = ({ data }: { data: Awaited<ReturnType<typeof activityApi.getAll>>[n
     <Link href={`/activity/${data.id}`}>
       <li className="group border-custom-gray-600/30 sm:border-custom-gray-600 hover:bg-custom-black flex flex-col rounded-lg border p-2 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-white hover:shadow-lg sm:rounded-2xl sm:p-8">
         <div className="w-full overflow-hidden rounded-sm sm:rounded-2xl">
-          <Image src={data.thumbnail} alt={data.title} width={0} height={0} quality={75} sizes="100vw" className="h-auto w-full" placeholder="blur" />
+          <Image src={data.thumbnail} alt={data.title} width={0} height={0} quality={75} sizes="100vw" className="h-auto w-full" placeholder="blur" blurDataURL={BLUR_DATA_URL} />
         </div>
         <div className="mt-2 flex flex-col gap-0.5 sm:mt-11 sm:gap-3">
           <h2 className="text-brand-primary-cta line-clamp-1 text-[0.75rem]/3 font-semibold sm:text-[1.75rem]/7">{data.title}</h2>
