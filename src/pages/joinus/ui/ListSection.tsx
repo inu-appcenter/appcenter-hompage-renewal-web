@@ -1,6 +1,8 @@
 'use client';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Logo } from 'shared/icon/Logo';
@@ -111,7 +113,16 @@ const Item = ({ data }: { data: RecruitmentList }) => {
       className="bg-surface-elevated hover:border-brand-primary-cta border-background relative flex w-full cursor-pointer flex-row items-center gap-2 rounded-[9px] border p-3 transition-all duration-300 hover:shadow-[0px_0px_16px_0px_#57FF8566] sm:gap-6 sm:rounded-[18px] sm:px-6 sm:py-4"
     >
       {data.thumbnail ? (
-        <img src={data.thumbnail} alt="thumb" className="h-14 w-14 rounded-sm object-cover object-top sm:h-27 sm:w-27 sm:rounded-xl" />
+        <Image
+          src={data.thumbnail}
+          alt="thumb"
+          width={108}
+          height={108}
+          quality={75}
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
+          className="h-14 w-14 rounded-sm object-cover object-top sm:h-27 sm:w-27 sm:rounded-xl"
+        />
       ) : (
         <div className="bg-background flex h-14 w-14 items-center justify-center rounded-sm p-4 sm:h-27 sm:w-27 sm:rounded-xl">
           <Logo />

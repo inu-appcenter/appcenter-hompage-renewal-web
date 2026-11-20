@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 import { recruitmentApi } from 'entities/recruitment';
 import { Logo } from 'shared/icon/Logo';
 import { OtherRecruitments } from './OtherRecruitments';
@@ -37,7 +39,17 @@ export async function JoinUsDetailPage({ params }: { params: Promise<{ id: numbe
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-40">
           <div className="relative flex-1">
             {recruitmentData.thumbnail ? (
-              <img src={recruitmentData.thumbnail} alt={`${recruitmentData.title} 포스터 이미지`} className="h-auto w-full object-contain" />
+              <Image
+                src={recruitmentData.thumbnail}
+                alt={`${recruitmentData.title} 포스터 이미지`}
+                width={0}
+                height={0}
+                quality={75}
+                sizes="(max-width: 639px) 100vw, 50vw"
+                placeholder="blur"
+                blurDataURL={BLUR_DATA_URL}
+                className="h-auto w-full object-contain"
+              />
             ) : (
               <div className="bg-background flex aspect-video w-full items-center justify-center rounded-2xl p-4">
                 <Logo />

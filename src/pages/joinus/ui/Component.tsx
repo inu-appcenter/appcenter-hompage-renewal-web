@@ -1,5 +1,7 @@
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
+import { BLUR_DATA_URL } from 'shared/constants/blur';
 import { RecruitmentList } from 'entities/recruitment';
 import { Logo } from 'shared/icon/Logo';
 import { AnimationButton } from 'shared/ui/animation-button';
@@ -18,7 +20,17 @@ export function RecruitmentCard({ data, isActive, source }: { data: RecruitmentL
       } `}
     >
       {data.thumbnail ? (
-        <img src={data.thumbnail} alt={`${data.title} thumbnail`} className="aspect-square w-full rounded-md object-cover object-top sm:aspect-square sm:rounded-xl" />
+        <Image
+          src={data.thumbnail}
+          alt={`${data.title} thumbnail`}
+          width={0}
+          height={0}
+          quality={75}
+          sizes="(max-width: 639px) 70vw, 33vw"
+          placeholder="blur"
+          blurDataURL={BLUR_DATA_URL}
+          className="aspect-square h-auto w-full rounded-md object-cover object-top sm:aspect-square sm:rounded-xl"
+        />
       ) : (
         <div className="bg-background flex aspect-square w-full items-center justify-center rounded-md p-4 sm:rounded-xl">
           <Logo />
