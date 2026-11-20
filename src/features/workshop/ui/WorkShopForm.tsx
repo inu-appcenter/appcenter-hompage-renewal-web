@@ -6,6 +6,7 @@ import { Modal } from 'shared/ui/modal';
 import { SaveButton } from 'shared/ui/button';
 import { Input } from 'shared/ui/form-input';
 import { ImageInput } from 'shared/ui/image-input';
+import { getImageId } from 'shared/utils/getImageId';
 
 export const AddWorkShopForm = () => {
   const { addMutation } = useWorkShopActions();
@@ -34,7 +35,7 @@ export const AddWorkShopForm = () => {
 
 export const EditWorkShopForm = ({ workshop }: { workshop: WorkShop }) => {
   const { editMutation } = useWorkShopActions();
-  const photoId = workshop.imageUrl.split('/').pop();
+  const photoId = getImageId(workshop.imageUrl);
 
   return (
     <Modal
@@ -50,7 +51,7 @@ export const EditWorkShopForm = ({ workshop }: { workshop: WorkShop }) => {
           initialData={workshop}
           isPending={editMutation.isPending}
           onSubmit={async (formData) => {
-            await editMutation.mutateAsync({ id: workshop.id, data: formData, photoId: Number(photoId) });
+            await editMutation.mutateAsync({ id: workshop.id, data: formData, photoId });
             close();
           }}
         />

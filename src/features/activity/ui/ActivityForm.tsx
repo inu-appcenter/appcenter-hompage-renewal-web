@@ -9,6 +9,7 @@ import { SaveButton } from 'shared/ui/button';
 import { Input } from 'shared/ui/form-input';
 import { TextArea } from 'shared/ui/text-area';
 import { ImageInput } from 'shared/ui/image-input';
+import { getImageId } from 'shared/utils/getImageId';
 
 const DEFAULT_CONTENT = {
   sequence: 0,
@@ -94,7 +95,7 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
     }
 
     if (typeof existingUrl === 'string' && isEditMode) {
-      const imageId = Number(existingUrl.split('/').pop());
+      const imageId = getImageId(existingUrl);
       if (imageId) setDeletedImages((prev) => [...prev, { sectionId, imageId }]);
     }
 
@@ -103,9 +104,10 @@ export function ActivityForm({ initialData }: { initialData?: Activity }) {
       contents: prev.contents.map((s) => (s.id === sectionId ? { ...s, imageUrls: s.imageUrls.map((img, i) => (i === index ? file : img)) } : s))
     }));
   };
+
   const removeSectionImage = (sectionId: number, targetImage: string | File) => {
     if (typeof targetImage === 'string' && isEditMode) {
-      const imageId = Number(targetImage.split('/').pop());
+      const imageId = getImageId(targetImage);
       if (imageId) setDeletedImages((prev) => [...prev, { sectionId, imageId }]);
     }
     setForm((prev) => ({
