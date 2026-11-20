@@ -64,13 +64,16 @@ export const ProjectForm = ({ initialData }: { initialData?: Project }) => {
       removeSpecificImage(index);
       return;
     }
+
+    const existingId = form.images[index]?.id;
     setForm((prev) => {
       const newImages = [...prev.images];
       const existingImage = newImages[index];
-      const newId = existingImage.url === '' ? Date.now() + index : existingImage.id;
-      newImages[index] = { id: newId, url: URL.createObjectURL(file), file };
+      newImages[index] = { id: existingImage.id, url: URL.createObjectURL(file), file };
       return { ...prev, images: newImages };
     });
+
+    setDeletedImageIds((prev) => prev.filter((id) => id !== existingId));
   };
 
   const removeSpecificImage = async (index: 0 | 1) => {
