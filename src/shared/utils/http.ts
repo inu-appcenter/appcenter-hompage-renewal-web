@@ -1,9 +1,26 @@
+import { AUTH_ERROR_TYPES } from 'shared/constants/auth';
+
 const getBaseUrl = () => {
   if (typeof window !== 'undefined') return `/api`;
   return process.env.API_URL;
 };
 
-async function request<T>(url: string, options?: RequestInit): Promise<T> {
+// 진행 중인 토큰 재발급 요청. 동시에 401이 여러 개 와도 재발급은 이 Promise 하나만 사용한다.
+let refreshPromise: Promise<boolean> | null = null;
+
+const refreshOnce = () => {
+  if (!refreshPromise) {
+    refreshPromise = fetch('/api/refresh', { method: 'POST' })
+      .then((res) => res.ok)
+      .catch(() => false)
+      .finally(() => {
+        refreshPromise = null;
+      });
+  }
+  return refreshPromise;
+};
+
+async function request<T>(url: string, options?: RequestInit, isRetry = false): Promise<T> {
   const baseUrl = getBaseUrl();
   const isServer = typeof window === 'undefined';
 
@@ -34,6 +51,14 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
     ...options,
     headers
   });
+
+  // 브라우저에서 401을 받으면 토큰을 한 번만 재발급하고, 원래 요청을 한 번 다시 보낸다.
+  if (res.status === 401 && !isServer && !isRetry) {
+    const refreshed = await refreshOnce();
+    if (refreshed) return request<T>(url, options, true);
+
+    window.location.href = `/login?error=${AUTH_ERROR_TYPES.AUTH_EXPIRED}`;
+  }
 
   if (!res.ok) {
     const errorData = await res.json().catch(() => ({}));
